@@ -1,11 +1,10 @@
 /*----------------------- HEADER FILES -----------------------*/
 #include "GUI.h"
 #include "Utility.h"
+#include "flow.h"
 
 // MAIN
 int main() {
-    GUI start_game;
-    start_game.displayTitleHeader();
-    start_game.displayStartingMenu();
+    startFlow();
     return 0;
 }

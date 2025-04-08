@@ -18,7 +18,8 @@ public:
     // Displays the ASCII text for 'Exit'
     void displayExitText() const;
     // Displays a menu interface at the start of the program
-    void displayStartingMenu() const;
-    
+    void displayMenu();
 
+    void displayContinueMenu();
+    void displayStartMenu();
 };

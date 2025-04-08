@@ -13,6 +13,9 @@ void displayAlternatingFormat(size_t length, char firstSymbol, char secondSymbol
 // Displays a formatted block within the specified width and height using the specified symbol
 void displayBlockFormat(size_t width, size_t height, char symbol);
 
+//
+void displayFooter(size_t height, char symbol);
+
 // Outputs a newline escape sequence 'n' times
 void space(size_t n);
 

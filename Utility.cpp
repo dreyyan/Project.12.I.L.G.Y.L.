@@ -26,6 +26,16 @@ void displayBlockFormat(size_t width, size_t height, char symbol) {
     }
 }
 
+void displayFooter(size_t height, char symbol) {
+    for (size_t i = 1; i < height; ++i) {
+        displayFormat(132, symbol);
+    }
+
+    for (size_t i = 0; i < 132; ++i) {
+        cout << symbol;
+    } delayMs(150);
+}
+
 void space(size_t n) {
     for (size_t i = 0; i < n; ++i) { cout << '\n'; }
 }
