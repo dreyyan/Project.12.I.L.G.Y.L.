@@ -1,4 +1,3 @@
-/*------------------------ STATISTICS ------------------------*/
 // FINANCIAL STATISTICS:
 // Tracks the financial performance of the player's business
 struct FinancialStats {

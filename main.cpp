@@ -1,10 +1,7 @@
-/*----------------------- HEADER FILES -----------------------*/
-#include "GUI.h"
-#include "Utility.h"
-#include "flow.h"
+#include <iostream>
+using namespace std;
 
-// MAIN
 int main() {
-    startFlow();
+    
     return 0;
 }
