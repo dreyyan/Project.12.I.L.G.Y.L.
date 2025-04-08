@@ -1,8 +1,11 @@
 /*----------------------- HEADER FILES -----------------------*/
-#include "Portfolio.h"
 #include "GUI.h"
+#include "Utility.h"
 
+// MAIN
 int main() {
-    Portfolio start_game;
+    GUI start_game;
+    start_game.displayTitleHeader();
+    start_game.displayStartingMenu();
     return 0;
 }

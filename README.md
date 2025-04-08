@@ -1,5 +1,5 @@
 # [ PROJECT DETAILS ]  
-**Project:** Penny-Up!  
+**Project:** I.L.G.Y.L.(If Life Gives You Lemons)  
 **Project Code:** 00012  
 **Author:** dreyyan  
 **Language:** C++  
@@ -9,7 +9,7 @@
 ---
 
 ## [ INSTRUCTIONS ]  
-1. Set launch size (command prompt) to ****.  
+1. Set launch size (command prompt) to ** 132 x 50**.  
 
 ---
 

@@ -1,0 +1,3 @@
+C:/Code/.projects/Project.12.I.L.G.Y.L/cmake-build-debug/CMakeFiles/Project_12_I_L_G_Y_L.dir
+C:/Code/.projects/Project.12.I.L.G.Y.L/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Code/.projects/Project.12.I.L.G.Y.L/cmake-build-debug/CMakeFiles/rebuild_cache.dir
