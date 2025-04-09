@@ -49,5 +49,6 @@ int main() {
     displayStartMenu();
     delayS(3);
     exit(0);
+    cout << "h" << '\n';
     return 0;
 }
