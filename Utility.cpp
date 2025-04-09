@@ -9,20 +9,36 @@
 using namespace std;
 /*------------------- UTILITY DEFINITIONS --------------------*/
 void displayFormat(size_t length, char symbol) {
-    for (size_t i = 0; i < length; ++i) {
-        cout << symbol;
-    } delayMs(150); cout << '\n';
+    string repeated(length, symbol);
+    cout << repeated;
+    delayMs(50);
+}
+
+void displaySpacedFormat(size_t length, char symbol) {
+    string repeated(length, symbol); // create the string with repeated characters
+    cout << repeated;
+    delayMs(50);
+    cout << '\n';
 }
 
 void displayAlternatingFormat(size_t length, char firstSymbol, char secondSymbol) {
     for (size_t i = 0; i < length; ++i) {
         cout << (i % 2 == 0 ? firstSymbol : secondSymbol);
-    } delayMs(150); cout << '\n';
+    } delayMs(50);
 }
 
 void displayBlockFormat(size_t width, size_t height, char symbol) {
     for (size_t i = 0; i < height; ++i) {
         displayFormat(width, symbol);
+    }
+}
+
+void displayBlockSpacedFormat(size_t width, size_t height, char symbol) {
+    for (size_t i = 0; i < height; ++i) {
+        string repeated(width, symbol); // create the string with repeated characters
+        cout << repeated;
+        delayMs(50);
+        cout << '\n';
     }
 }
 
@@ -43,6 +59,11 @@ void characterDelayAnimation(string stringInput, int ms) {
         cout << stringInput[i];
         this_thread::sleep_for(chrono::milliseconds(ms));
     }
+}
+
+void lineDelayAnimation(string stringInput, int ms) {
+    cout << stringInput;
+    this_thread::sleep_for(chrono::milliseconds(ms));
 }
 
 void pressEnter(string process) {
@@ -68,17 +89,6 @@ void capitalize(string& stringInput) {
     for (int i = 1; i < stringInput.length(); ++i) {
         stringInput[i] = tolower(stringInput[i]);
     }
-}
-
-void moveCursor(int up, int down, int right, int left) {
-    cout << "\033[" << (up >= 0 ? up : 0) << 'A';
-    cout << "\033[" << (down >= 0 ? down : 0) << 'B';
-    cout << "\033[" << (right >= 0 ? right : 0) << 'C';
-    cout << "\033[" << (left >= 0 ? left : 0) << 'D';
-}
-
-void goTo(int y, int x) {
-    cout << "\033[" << x << ';' << y << 'H';
 }
 
 void clearScreen() {
@@ -107,4 +117,33 @@ void loadingBarAnimation(int x) {
         goTo(1, x);
         cout << '#';
     }
+}
+
+void centerText(string textInput) {
+    int consoleWidth = 72;
+    int margin = (consoleWidth - textInput.length()) / 2;
+
+    // Display Header
+    displayFormat(margin, ' ');
+    cout << textInput;
+    displayFormat(margin, ' ');
+}
+
+void hideCursor() {
+    cout << "\e[?25l";
+}
+  
+void showCursor() {
+    cout << "\e[?25h";
+}
+
+void moveCursor(int up, int down, int right, int left) {
+    cout << "\033[" << (up >= 0 ? up : 0) << 'A';
+    cout << "\033[" << (down >= 0 ? down : 0) << 'B';
+    cout << "\033[" << (right >= 0 ? right : 0) << 'C';
+    cout << "\033[" << (left >= 0 ? left : 0) << 'D';
+}
+
+void goTo(int y, int x) {
+    cout << "\033[" << x << ';' << y << 'H';
 }

@@ -32,6 +32,7 @@ struct GameStats {
     double totalProfit;     // Total profit earned by the business
 };
 
+
 class Portfolio {
     FinancialStats financial_statistics;
     PersonalStats personal_statistics;

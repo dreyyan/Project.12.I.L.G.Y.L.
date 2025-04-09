@@ -9,9 +9,9 @@
 ---
 
 ## [ INSTRUCTIONS ]  
-1. Set launch size (command prompt) to ** 132 x 50**.  
+1. Set launch size (command prompt) to **72 x 30**.  
 
 ---
 
 ## [ DEVELOPER'S NOTES ]  
-- https://patorjk.com/software/taag/#p=display&f=Rectangles&t=Type%20Something%20
+- 
