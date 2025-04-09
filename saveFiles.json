@@ -1,0 +1,95 @@
+[
+    {
+        "player_data": {
+          "characterName": "Lemo",
+          "standName": "Lemo-Aid",
+          "level": 3,
+          "currentChapter": 2,
+          "saveTimestamp": "2025-04-09 15:30",
+          "playtimeDuration": 120
+        },
+        "financial_statistics": {
+          "money": 250.0,
+          "revenue": 800.0,
+          "expenses": 550.0,
+          "debt": 100.0
+        },
+        "personal_statistics": {
+          "happiness": 75.0,
+          "stress": 40.0,
+          "motivation": 85.0
+        },
+        "business_statistics": {
+          "employees": 2,
+          "popularity": 65,
+          "recipesOwned": 3
+        },
+        "game_statistics": {
+          "productsSold": 340,
+          "totalProfit": 250.0,
+          "highestDailyProfit": 120.0
+        }
+      },
+      {
+        "player_data": {
+          "characterName": "Lemo",
+          "standName": "Lemo-Aid",
+          "level": 3,
+          "currentChapter": 2,
+          "saveTimestamp": "2025-04-09 15:30",
+          "playtimeDuration": 120
+        },
+        "financial_statistics": {
+          "money": 250.0,
+          "revenue": 800.0,
+          "expenses": 550.0,
+          "debt": 100.0
+        },
+        "personal_statistics": {
+          "happiness": 75.0,
+          "stress": 40.0,
+          "motivation": 85.0
+        },
+        "business_statistics": {
+          "employees": 2,
+          "popularity": 65,
+          "recipesOwned": 3
+        },
+        "game_statistics": {
+          "productsSold": 340,
+          "totalProfit": 250.0,
+          "highestDailyProfit": 120.0
+        }
+      },
+      {
+        "player_data": {
+          "characterName": "Lemo",
+          "standName": "Lemo-Aid",
+          "level": 3,
+          "currentChapter": 2,
+          "saveTimestamp": "2025-04-09 15:30",
+          "playtimeDuration": 120
+        },
+        "financial_statistics": {
+          "money": 250.0,
+          "revenue": 800.0,
+          "expenses": 550.0,
+          "debt": 100.0
+        },
+        "personal_statistics": {
+          "happiness": 75.0,
+          "stress": 40.0,
+          "motivation": 85.0
+        },
+        "business_statistics": {
+          "employees": 2,
+          "popularity": 65,
+          "recipesOwned": 3
+        },
+        "game_statistics": {
+          "productsSold": 340,
+          "totalProfit": 250.0,
+          "highestDailyProfit": 120.0
+        }
+      }
+]

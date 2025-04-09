@@ -1,5 +1,6 @@
 /*----------------------- HEADER FILES -----------------------*/
 #include <algorithm>
+#include <conio.h>
 #include <iostream>
 #include <chrono>
 #include <string>

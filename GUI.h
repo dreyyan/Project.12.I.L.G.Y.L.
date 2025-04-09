@@ -3,6 +3,8 @@
 /*----------------------- HEADER FILES -----------------------*/
 
 /*---------------------- GUI PROTOTYPES ----------------------*/
+void createNewGame();
+void displaySaveFiles();
 void displayHeader();
 void displayContinueMenu();
 void displayStartMenu();
