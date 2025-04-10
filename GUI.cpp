@@ -4,8 +4,9 @@
 #include <iostream>
 #include "json.hpp" // .json files
 #include <string>
-#include "Utility.h"
+#include "GUI.h"
 #include "Portfolio.h"
+#include "Utility.h"
 #include "Scenes.h"
 using namespace std;
 /*--------------------- GUI DEFINITIONS ----------------------*/
@@ -33,7 +34,6 @@ void playCutscene1() {
 
 void createNewGame() {
     SaveData savefile;
-
     // Loops infinitely until user saves changes
     while (true) {
         clearScreen();
@@ -195,6 +195,7 @@ void displaySaveFiles() {
 
     if (saveFile == 1) {
         createNewGame();
+        return;
     }
     /*---------------------- END of NAVIGATION -----------------------*/
 }

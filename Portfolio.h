@@ -1,3 +1,6 @@
+#include <string>
+using namespace std;
+
 // PLAYER STATISTICS:
 // Saves the player's data
 struct PlayerData {

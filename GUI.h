@@ -1,15 +1,14 @@
 #ifndef GUI_H
 #define GUI_H
 /*----------------------- HEADER FILES -----------------------*/
-
 /*---------------------- GUI PROTOTYPES ----------------------*/
 void displayHeader();
 void playCutscene1();
-void createNewGame();       // 4
-void displaySaveFiles();    // 3
+void createNewGame();
+void displaySaveFiles();
 // MENU
-void displayContinueMenu(); // 2
-void displayStartMenu();    // 2
-void displayExitMenu();     // 2
-void displayMainMenu();     // 1
+void displayContinueMenu();
+void displayStartMenu();
+void displayExitMenu();
+void displayMainMenu();
 #endif
