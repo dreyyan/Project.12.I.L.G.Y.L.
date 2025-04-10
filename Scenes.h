@@ -11,6 +11,13 @@ inline void displayText4();
 inline void displayText5();
 inline void displayText6();
 inline void displayText7();
+
+void showLemonadeStand();
+void hideLemonadeStand();
+
+void showStatsMenu();
+void showBottomNavigationMenu();
+
 void goToGameArea();
 void displayScene1();
 #endif

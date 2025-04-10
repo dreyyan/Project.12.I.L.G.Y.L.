@@ -44,6 +44,31 @@ void displayBlockSpacedFormat(size_t width, size_t height, char symbol) {
     } cout << '\n';
 }
 
+void displayBorder(size_t height, char symbol) {
+    for (int i = 0; i < height; ++i) {
+            cout << '#';
+            string repeated(70, ' ');
+            cout << repeated;
+            cout << '#';
+        cout << '\n';
+    }
+}
+
+void displayHLine(int x, int y, size_t length, char symbol) {
+    goTo(x, y);
+    for (int i = 0 ; i < length; ++i) {
+        cout << symbol;
+    }
+}
+
+void displayVLine(int x, int y, size_t length, char symbol) {
+    goTo(x, y);
+    for (int i = 0 ; i < length; ++i) {
+        cout << symbol;
+        goTo(x, y + i);
+    }
+}
+
 void space(size_t n) {
     for (size_t i = 0; i < n; ++i) { cout << '\n'; }
 }

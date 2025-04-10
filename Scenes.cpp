@@ -82,8 +82,51 @@ cout << R"(#####################################################################
 #####################                              #####################)";
 }
 
+void showLemonadeStand() {
+    goTo(0, 5);
+    moveCursor(0, 0, 7, 0); cout << "  ######"; space(1);
+    moveCursor(0, 0, 7, 0); cout << " ##    ##"; space(1);
+    moveCursor(0, 0, 7, 0); cout << "##########"; space(1);
+    moveCursor(0, 0, 7, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 7, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 7, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 7, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 7, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 7, 0); cout << " ######"; space(1);
+    moveCursor(0, 0, 7, 0); cout << " #    #"; space(1);
+    moveCursor(0, 0, 7, 0); cout << " #    #"; space(1);
+    moveCursor(0, 0, 7, 0); cout << " #    #"; space(1);
+    moveCursor(0, 0, 7, 0); cout << " ######"; space(1);
+}
+
+void hideLemonadeStand() {
+
+}
+
+void showStatsMenu() {
+    displayBlockFormat(51, 1, '#');
+    displayVLine(51, 20, 11, '#');
+    displayVLine(1, 20, 11, '#');
+    displayBlockFormat(51, 1, '#');
+    // displayBorder(9, '#');
+    // displayBlockFormat(52, 1, '#');
+}
+
+void showBottomNavigationMenu() {
+    displayHLine(51, 18, 22, '#');
+    displayVLine(72, 18, 12, '#');
+    displayHLine(51, 29, 22, '#');
+}
+
 void goToGameArea() {
-    cout << "Displaying game area...\n";
+    displayBlockFormat(72, 1, '#');
+    displayBorder(1, '#');
+    displayBlockFormat(72, 1, '#');
+    displayBorder(15, '#');
+
+    showStatsMenu();
+    showBottomNavigationMenu();
+    showLemonadeStand();
 }
 
 void displayScene1() {

@@ -20,6 +20,12 @@ void displayBlockFormat(size_t width, size_t height, char symbol);
 // Displays a formatted block within the specified width and height using the specified symbol /w newline character
 void displayBlockSpacedFormat(size_t width, size_t height, char symbol);
 
+void displayBorder(size_t height, char symbol);
+
+void displayHLine(int x, int y, size_t length, char symbol);
+
+void displayVLine(int x, int y, size_t length, char symbol);
+
 // Outputs a newline escape sequence 'n' times
 void space(size_t n);
 

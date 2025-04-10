@@ -3,6 +3,7 @@
 #include "Utility.h"
 #include "GUI.h"
 #include "Portfolio.h"
+#include "Scenes.h"
 using namespace std;
 
 // 1. Compilation
@@ -48,6 +49,7 @@ int main() {
     // displayMainMenu();
     // displayStartMenu();
     // createNewGame();
-    playCutscene1();
+    // playCutscene1();
+    goToGameArea();
     return 0;
 }
