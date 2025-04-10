@@ -3,11 +3,13 @@
 /*----------------------- HEADER FILES -----------------------*/
 
 /*---------------------- GUI PROTOTYPES ----------------------*/
-void createNewGame();
-void displaySaveFiles();
 void displayHeader();
-void displayContinueMenu();
-void displayStartMenu();
-void displayExitMenu();
-void displayMainMenu();
+void playCutscene1();
+void createNewGame();       // 4
+void displaySaveFiles();    // 3
+// MENU
+void displayContinueMenu(); // 2
+void displayStartMenu();    // 2
+void displayExitMenu();     // 2
+void displayMainMenu();     // 1
 #endif

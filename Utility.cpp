@@ -31,6 +31,7 @@ void displayAlternatingFormat(size_t length, char firstSymbol, char secondSymbol
 void displayBlockFormat(size_t width, size_t height, char symbol) {
     for (size_t i = 0; i < height; ++i) {
         displayFormat(width, symbol);
+        cout << '\n';
     }
 }
 
@@ -40,7 +41,7 @@ void displayBlockSpacedFormat(size_t width, size_t height, char symbol) {
         cout << repeated;
         delayMs(50);
         cout << '\n';
-    }
+    } cout << '\n';
 }
 
 void space(size_t n) {

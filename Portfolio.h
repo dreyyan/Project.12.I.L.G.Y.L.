@@ -5,8 +5,8 @@ struct PlayerData {
     string standName;           // Name of the Lemonade stand
     int level;                  // Current level of the player
     int currentChapter;         // Current chapter of the story
-    string saveTimestamp;       // Timestamp of the latest save
-    int playtimeDuration;       // Duration of gameplay in "HH-MM" format
+    // string saveTimestamp;       // Timestamp of the latest save
+    // int playtimeDuration;       // Duration of gameplay in "HH-MM" format
 };
 
 // FINANCIAL STATISTICS:
@@ -42,6 +42,8 @@ struct GameStats {
     double highestDailyProfit;  // Highest profit in a day
 };
 
+// MASTERSTRUCT: SaveData
+// Object to store all information
 struct SaveData {
     PlayerData player_data;
     FinancialStats financial_statistics;

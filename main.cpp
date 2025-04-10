@@ -6,7 +6,7 @@
 using namespace std;
 
 // 1. Compilation
-// g++ -o test main.cpp Utility.cpp GUI.cpp
+// g++ -o test main.cpp Utility.cpp GUI.cpp Scenes.cpp
 
 // 2. Run executable(.exe) in external console
 // Note: Edit path to your project
@@ -45,10 +45,9 @@ using namespace std;
 
 int main() {
     hideCursor();
-    displayMainMenu();
-    displayStartMenu();
-    delayS(3);
-    exit(0);
-    cout << "h" << '\n';
+    // displayMainMenu();
+    // displayStartMenu();
+    // createNewGame();
+    playCutscene1();
     return 0;
 }
