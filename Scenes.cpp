@@ -83,24 +83,68 @@ cout << R"(#####################################################################
 }
 
 void showLemonadeStand() {
-    goTo(0, 5);
-    moveCursor(0, 0, 7, 0); cout << "  ######"; space(1);
-    moveCursor(0, 0, 7, 0); cout << " ##    ##"; space(1);
-    moveCursor(0, 0, 7, 0); cout << "##########"; space(1);
-    moveCursor(0, 0, 7, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 7, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 7, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 7, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 7, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 7, 0); cout << " ######"; space(1);
-    moveCursor(0, 0, 7, 0); cout << " #    #"; space(1);
-    moveCursor(0, 0, 7, 0); cout << " #    #"; space(1);
-    moveCursor(0, 0, 7, 0); cout << " #    #"; space(1);
-    moveCursor(0, 0, 7, 0); cout << " ######"; space(1);
+    goTo(0, 4);
+    moveCursor(0, 0, 8, 0); cout << "  ######"; space(1);
+    moveCursor(0, 0, 8, 0); cout << " ##    ##"; space(1);
+    moveCursor(0, 0, 8, 0); cout << "##########"; space(1);
+    moveCursor(0, 0, 8, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 8, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 8, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 8, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 8, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 8, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 8, 0); cout << "  #####"; space(1);
+    moveCursor(0, 0, 8, 0); cout << " #    #"; space(1);
+    moveCursor(0, 0, 8, 0); cout << " #    #"; space(1);
+    moveCursor(0, 0, 8, 0); cout << " #    #"; space(1);
+    moveCursor(0, 0, 8, 0); cout << " ######"; space(1);
 }
 
 void hideLemonadeStand() {
+    goTo(0, 5);
+    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+}
 
+void showPlayer() {
+    goTo(0, 7);
+    moveCursor(0, 0, 2, 0); cout << "  ####--"; space(1);
+    moveCursor(0, 0, 2, 0); cout << " |  @|"; space(1);
+    moveCursor(0, 0, 2, 0); cout << " |   |"; space(1);
+    moveCursor(0, 0, 2, 0); cout << "  --- "; space(1);
+    moveCursor(0, 0, 2, 0); cout << " /| |\\"; space(1);
+    moveCursor(0, 0, 2, 0); cout << " || ||"; space(1);
+    moveCursor(0, 0, 2, 0); cout << " ||/ |"; space(1);
+    moveCursor(0, 0, 2, 0); cout << " |[] |"; space(1);
+    moveCursor(0, 0, 2, 0); cout << " \\___/"; space(1);
+    moveCursor(0, 0, 2, 0); cout << " |_||"; space(1);
+    moveCursor(0, 0, 2, 0); cout << " |__]]"; space(1);
+}
+
+void hidePlayer() {
+    goTo(0, 7);
+    moveCursor(0, 0, 2, 0); cout << "        "; space(1);
+    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
+    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
+    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
+    moveCursor(0, 0, 2, 0); cout << "       "; space(1);
+    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
+    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
+    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
+    moveCursor(0, 0, 2, 0); cout << "       "; space(1);
+    moveCursor(0, 0, 2, 0); cout << "     "; space(1);
+    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
 }
 
 void showStatsMenu() {
@@ -127,6 +171,7 @@ void goToGameArea() {
     showStatsMenu();
     showBottomNavigationMenu();
     showLemonadeStand();
+    showPlayer();
 }
 
 void displayScene1() {

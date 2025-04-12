@@ -15,6 +15,9 @@ inline void displayText7();
 void showLemonadeStand();
 void hideLemonadeStand();
 
+void showPlayer();
+void hidePlayer();
+
 void showStatsMenu();
 void showBottomNavigationMenu();
 
