@@ -3,8 +3,9 @@
 #include <iomanip>
 #include <iostream>
 #include <fstream>
-#include <string>
+#include <limits>
 #include <random>
+#include <string>
 #include "prep.h"
 #include "GUI.h"
 #include "Utility.h"
@@ -20,35 +21,52 @@ const double CUP_COST = 0.5;    // per cup
 /*------------------- FUNCTION IMPLEMENTATIONS -------------------*/
 void displayDayPrepMenu() {
     clearScreen();
-    displayHeader();
-    space(1);
-    
-    centerText("DAY PREPARATION");
-    space(2);
     displaySpacedFormat(72, '#');
     space(1);
-    
-    moveCursor(0, 0, 4, 0); cout << "1. RECIPE MANAGEMENT";
-    space(1);
-    moveCursor(0, 0, 4, 0); cout << "2. PURCHASE SUPPLIES";
-    space(1);
-    moveCursor(0, 0, 4, 0); cout << "3. CHECK WEATHER FORECAST";
-    space(1);
-    moveCursor(0, 0, 4, 0); cout << "4. SET PRICE";
-    space(1);
-    moveCursor(0, 0, 4, 0); cout << "5. VIEW DAY PLAN";
-    space(1);
-    moveCursor(0, 0, 4, 0); cout << "6. START THE DAY!";
+    centerText("[ D A Y - P R E P A R A T I O N ]");
     space(2);
+
     displaySpacedFormat(72, '#');
     space(1);
+    moveCursor(0, 0, 4, 0); cout << "[ RECIPES ";
+    space(2);
+    displaySpacedFormat(25, '=');
+
+    space(1);
+    moveCursor(0, 0, 4, 0); cout << "[ SUPPLIES";
+    space(2);
+    displaySpacedFormat(25, '=');
+
+    space(1);
+    moveCursor(0, 0, 4, 0); cout << "[ WEATHER FORECAST";
+    space(2);
+    displaySpacedFormat(25, '=');
+
+    space(1);
+    moveCursor(0, 0, 4, 0); cout << "[ PRICING";
+    space(2);
+    displaySpacedFormat(25, '=');
+
+    space(1);
+    moveCursor(0, 0, 4, 0); cout << "[ DAY PLAN";
+    space(2);
+    displaySpacedFormat(25, '=');
+
+    space(1);
+    moveCursor(0, 0, 4, 0); cout << "[ START DAY";
+    space(2);
+
+    displaySpacedFormat(72, '#');
     
+    displayVLine(26, 5, 25, '#');
+    goTo(1, 1);
+
     DayPlan plan = generateDefaultPlan();
     
     /*--------------------- START OF NAVIGATION ----------------------*/
     const int optionCount = 6;
     int x[optionCount] = {2, 2, 2, 2, 2, 2};
-    int y[optionCount] = {19, 20, 21, 22, 23, 24};
+    int y[optionCount] = {7, 11, 15, 19, 23, 27};
     int current = 0;
     char key;
     
@@ -96,30 +114,50 @@ void displayDayPrepMenu() {
     /*---------------------- END OF NAVIGATION -----------------------*/
 }
 
+/*------------------- UTILITY -------------------*/
+void updateMessage(string message) {
+    space(2);
+    centerText(" + " + message + " updated successfully!");
+    space(1);
+}
+
+void errorMessage(string message) {
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    centerText("ERROR: " + message);
+}
+
+void clearState() {
+    space(1);
+    errorMessage("Please enter a valid number");
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    goTo(1, 24); cout << "          ";
+    goTo(1, 23);
+}
+
 void displayRecipeMenu() {
-    clearScreen();
-    displayHeader();
-    space(1);
-    
-    centerText("RECIPE MANAGEMENT");
-    space(1);
-    displaySpacedFormat(72, '-');
-    space(1);
-    
     Recipe currentRecipe = {2, 100, 3, 5.0, 1000}; // Default recipe
-    
-    cout << "  Current Recipe:" << endl;
+
+    clearScreen();
+    displaySpacedFormat(72, '#');
     space(1);
-    cout << "    Lemons per Pitcher: " << currentRecipe.lemons << endl;
-    cout << "    Sugar (grams): " << currentRecipe.sugar << endl;
-    cout << "    Water (mL): " << currentRecipe.waterRatio << endl;
-    cout << "    Ice per Cup: " << currentRecipe.ice << endl;
-    cout << "    Price per Cup: $" << fixed << setprecision(2) << currentRecipe.price << endl;
+    centerText("[ R E C I P E ]");
+    space(2);
+    displaySpacedFormat(72, '=');
     space(1);
     
-    displaySpacedFormat(72, '-');
+    moveCursor(0, 0, 22, 0); cout << setw(20) << right << "Lemon per Pitcher : " << currentRecipe.lemons << '\n';
+    moveCursor(0, 0, 22, 0); cout << setw(20) << right << "Sugar : " << currentRecipe.sugar << " g\n";
+    moveCursor(0, 0, 22, 0); cout << setw(20) << right << "Water : " << currentRecipe.waterRatio << " mL\n";
+    moveCursor(0, 0, 22, 0); cout << setw(20) << right << "Ice per Cup : " << currentRecipe.ice << '\n';
+    moveCursor(0, 0, 22, 0); cout << setw(20) << right << "Price per Cup : " << currentRecipe.price << " php" << '\n';
+    space(1);
+    
+    displaySpacedFormat(72, '=');
     space(1);
     centerText("Adjust Recipe (A)     Save Recipe (S)     Load Recipe (L)     Back (B)");
+    space(2);
+    displaySpacedFormat(72, '#');
     
     char choice;
     do {
@@ -145,66 +183,109 @@ void displayRecipeMenu() {
 }
 
 void adjustRecipe(Recipe& currentRecipe) {
-    clearScreen();
-    displayHeader();
-    space(1);
+    while (true) {
+        clearScreen();
+        displaySpacedFormat(72, '#');
+        space(1);
+        centerText("[ A D J U S T - R E C I P E ]");
+        space(2);
+        displaySpacedFormat(72, '=');
+        space(1);
+        
+        moveCursor(0, 0, 22, 0); cout << setw(20) << right << "Lemon per Pitcher : " << currentRecipe.lemons << '\n';
+        moveCursor(0, 0, 22, 0); cout << setw(20) << right << "Sugar : " << currentRecipe.sugar << " g\n";
+        moveCursor(0, 0, 22, 0); cout << setw(20) << right << "Water : " << currentRecipe.waterRatio << " mL\n";
+        moveCursor(0, 0, 22, 0); cout << setw(20) << right << "Ice per Cup : " << currentRecipe.ice << '\n';
+        moveCursor(0, 0, 22, 0); cout << setw(20) << right << "price per Cup : " << currentRecipe.price << " php" << '\n';
+        space(1);
+        
+        displaySpacedFormat(72, '=');
+        space(1);
+        centerText("------ ADJUST ------");
+        space(2);
+        centerText("{ [1] Lemon -- [2] Sugar -- [3] Water -- [4] Ice/Cup }");
+        space(2);
+        centerText("{ [5] BACK }");
+        space(2);
+        displaySpacedFormat(72, '#');    
+        space(1);
+        
+        char choice = _getch();
+        int value;
+
+        switch (choice) {
+            case '1': {
+                while (true) {
+                    cout << " # of Lemons per Cup (1-10):\n";
+                    cout << " " << currentRecipe.lemons << " >> ";
+                    cin >> value;
+                    
+                    if (cin.fail()) clearState();
+                    else break;
+                }
+
+                if (value >= 1 && value <= 10) {
+                    currentRecipe.lemons = value;
+                    updateMessage("# of lemons");
+                } else errorMessage("Invalid # of lemons");
+                break;
+            }
+            case '2': {
+                while (true) {
+                    cout << " g of Sugar per Cup (1-500g):\n";
+                    cout << " " << currentRecipe.sugar << " >> ";
+                    cin >> value;
+        
+                    if (cin.fail()) clearState();
+                    else break;
+                }
+
+                if (value >= 1 && value <= 500) {
+                    currentRecipe.sugar = value;
+                    updateMessage("g of sugar");
+                } else errorMessage("Invalid g of sugar");
+                break;
+            }
+            case '3': {
+                while (true) {}
+                cout << " mL of Water per Cup (1-2000mL):\n";
+                cout << " " << currentRecipe.waterRatio << " >> ";
+                cin >> value;
     
-    centerText("ADJUST RECIPE");
-    space(1);
-    displaySpacedFormat(72, '-');
-    space(1);
-    
-    cout << "  1. Lemons per Pitcher: " << currentRecipe.lemons << endl;
-    cout << "  2. Sugar (grams): " << currentRecipe.sugar << endl;
-    cout << "  3. Water (mL): " << currentRecipe.waterRatio << endl;
-    cout << "  4. Ice per Cup: " << currentRecipe.ice << endl;
-    cout << "  5. Return to Recipe Menu" << endl;
-    space(1);
-    
-    displaySpacedFormat(72, '-');
-    space(1);
-    centerText("Select option: ");
-    
-    char choice = _getch();
-    int value;
-    
-    switch (choice) {
-        case '1':
-            cout << "\nEnter number of lemons (1-10): ";
-            cin >> value;
-            if (value >= 1 && value <= 10)
-                currentRecipe.lemons = value;
-            break;
-        case '2':
-            cout << "\nEnter grams of sugar (50-500): ";
-            cin >> value;
-            if (value >= 50 && value <= 500)
-                currentRecipe.sugar = value;
-            break;
-        case '3':
-            cout << "\nEnter water in mL (500-2000): ";
-            cin >> value;
-            if (value >= 500 && value <= 2000)
-                currentRecipe.waterRatio = value;
-            break;
-        case '4':
-            cout << "\nEnter ice cubes per cup (0-6): ";
-            cin >> value;
-            if (value >= 0 && value <= 6)
-                currentRecipe.ice = value;
-            break;
-        case '5':
-            displayRecipeMenu();
-            return;
+                if (cin.fail()) clearState();
+                else break;
+
+                if (value >= 1 && value <= 2000) {
+                    currentRecipe.waterRatio = value;
+                    updateMessage("mL of water");
+                } else errorMessage("Invalid mL of water");
+                break;
+            }
+            case '4': {
+                while (true) {
+                    cout << " # of Ice Cubes per Cup (1-10):\n";
+                    cout << " " << currentRecipe.sugar << " >> ";
+                    cin >> value;
+        
+                    if (cin.fail()) clearState();
+                    else break;
+                }
+
+                if (value >= 50 && value <= 500) {
+                    currentRecipe.ice = value;
+                    updateMessage("# of ice cubes");
+                } else errorMessage("Invalid # of ice cubes");
+                break;
+            }
+            case '5': {
+                displayRecipeMenu();
+                return;
+                break;
+            }
+        }
+        
+        pressEnterToContinue();
     }
-    
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-    
-    // Show recipe impact
-    displayRecipeStats(currentRecipe);
-    
-    pressEnterToContinue();
-    adjustRecipe(currentRecipe); 
 }
 
 void displayRecipeStats(const Recipe& recipe) {
@@ -253,11 +334,10 @@ Recipe loadRecipe(const char* recipeName) {
 
 void displaySupplyMenu() {
     clearScreen();
-    displayHeader();
+    displaySpacedFormat(72, '#');
     space(1);
-    
-    centerText("PURCHASE SUPPLIES");
-    space(1);
+    centerText("[ P U R C H A S E - S U P P L I E S ]");
+    space(2);
     displaySpacedFormat(72, '-');
     space(1);
     
@@ -305,11 +385,10 @@ void displaySupplyMenu() {
 
 void purchaseSupplies(SaveData& saveData) {
     clearScreen();
-    displayHeader();
+    displaySpacedFormat(72, '#');
     space(1);
-    
-    centerText("PURCHASE SUPPLIES");
-    space(1);
+    centerText("[ P U R C H A S E - S U P P L I E S ]");
+    space(2);
     displaySpacedFormat(72, '-');
     space(1);
     
@@ -408,11 +487,10 @@ Weather generateWeatherForecast() {
 
 void displayWeatherForecast(Weather& forecast) {
     clearScreen();
-    displayHeader();
+    displaySpacedFormat(72, '#');
     space(1);
-    
-    centerText("WEATHER FORECAST");
-    space(1);
+    centerText("[ W E A T H E R - F O R E C A S T ]");
+    space(2);
     displaySpacedFormat(72, '-');
     space(1);
     
@@ -452,11 +530,10 @@ void displayWeatherForecast(Weather& forecast) {
 
 void setPrice(Recipe& recipe) {
     clearScreen();
-    displayHeader();
+    displaySpacedFormat(72, '#');
     space(1);
-    
-    centerText("SET LEMONADE PRICE");
-    space(1);
+    centerText("[ S E T - L E M O N A D E - P R I C E ]");
+    space(2);
     displaySpacedFormat(72, '-');
     space(1);
     
@@ -544,11 +621,10 @@ DayPlan generateDefaultPlan() {
 
 void displayDayPlan(const DayPlan& plan) {
     clearScreen();
-    displayHeader();
+    displaySpacedFormat(72, '#');
     space(1);
-    
-    centerText("DAY PLAN SUMMARY");
-    space(1);
+    centerText("[ D A Y - P L A N ]");
+    space(2);
     displaySpacedFormat(72, '-');
     space(1);
     

@@ -29,10 +29,14 @@ struct DayPlan {
     int expectedCustomers;
     double profitEstimate;
 };
-
 /*------------------- FUNCTION PROTOTYPES -------------------*/
 // Main day preparation menu
 void displayDayPrepMenu();
+
+// UTILITY
+void updateMessage();
+void errorMessage();
+void clearState();
 
 // Recipe management
 void displayRecipeMenu();
