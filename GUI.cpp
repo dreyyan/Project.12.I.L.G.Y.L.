@@ -218,11 +218,11 @@ void displayInformation() {
     json data;
     file >> data;
 
-    int lemon = data[saveFileNum]["player_data"]["level"];
-    int water = data[saveFileNum]["player_data"]["day"];
-    int sugar = data[saveFileNum]["player_data"]["currentChapter"];
-    int ice = data[saveFileNum]["financial_statistics"]["money"];
-    int cups = data[saveFileNum]["financial_statistics"]["money"];
+    int lemon = data[saveFileNum]["stocks"]["lemon"];
+    int water = data[saveFileNum]["stocks"]["water"];
+    int sugar = data[saveFileNum]["stocks"]["sugar"];
+    int ice = data[saveFileNum]["stocks"]["ice"];
+    int cups = data[saveFileNum]["stocks"]["cups"];
 
     // Display Day
     goTo(34, 2);
