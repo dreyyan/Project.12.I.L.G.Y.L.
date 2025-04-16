@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <conio.h>
 #include <iostream>
+#include <fstream>
 #include <chrono>
 #include <string>
 #include <thread>
@@ -174,3 +175,50 @@ void moveCursor(int up, int down, int right, int left) {
 void goTo(int y, int x) {
     cout << "\033[" << x << ';' << y << 'H';
 }
+
+SaveData loadSaveData(int saveFileNum, const string& filename) {
+    ifstream file(filename);
+    json data;
+    file >> data;
+  
+    SaveData savefile;
+  
+    // For now, just load the first save slot (index 0)
+    auto j = data[saveFileNum];
+  
+    // Load player data
+    savefile.player_data.characterName = j["player_data"]["characterName"];
+    savefile.player_data.standName = j["player_data"]["standName"];
+    savefile.player_data.level = j["player_data"]["level"];
+    savefile.player_data.currentChapter = j["player_data"]["currentChapter"];
+  
+    // Financial stats
+    savefile.financial_statistics.money = j["financial_statistics"]["money"];
+    savefile.financial_statistics.revenue = j["financial_statistics"]["revenue"];
+    savefile.financial_statistics.expenses = j["financial_statistics"]["expenses"];
+    savefile.financial_statistics.debt = j["financial_statistics"]["debt"];
+  
+    // Personal stats
+    savefile.personal_statistics.happiness = j["personal_statistics"]["happiness"];
+    savefile.personal_statistics.stress = j["personal_statistics"]["stress"];
+    savefile.personal_statistics.motivation = j["personal_statistics"]["motivation"];
+  
+    // Business stats
+    savefile.business_statistics.employees = j["business_statistics"]["employees"];
+    savefile.business_statistics.popularity = j["business_statistics"]["popularity"];
+    savefile.business_statistics.recipesOwned = j["business_statistics"]["recipesOwned"];
+  
+    // Current Stocks
+    savefile.stocks.lemons = j["stocks"]["lemons"];
+    savefile.stocks.water = j["stocks"]["water"];
+    savefile.stocks.sugar = j["stocks"]["sugar"];
+    savefile.stocks.ice = j["stocks"]["ice"];
+    savefile.stocks.cups = j["stocks"]["cups"];
+
+    // Game stats
+    savefile.game_statistics.productsSold = j["game_statistics"]["productsSold"];
+    savefile.game_statistics.totalProfit = j["game_statistics"]["totalProfit"];
+    savefile.game_statistics.highestDailyProfit = j["game_statistics"]["highestDailyProfit"];
+  
+    return savefile;
+  }

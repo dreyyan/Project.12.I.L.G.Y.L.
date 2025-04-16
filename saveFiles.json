@@ -1,33 +1,119 @@
 [
-    {
-        "player_data": {
-          "characterName": "Lemo",
-          "standName": "Lemo-Aid",
-          "level": 3,
-          "currentChapter": 2,
-          "saveTimestamp": "2025-04-09 15:30",
-          "playtimeDuration": 120
-        },
-        "financial_statistics": {
-          "money": 250.0,
-          "revenue": 800.0,
-          "expenses": 550.0,
-          "debt": 100.0
-        },
-        "personal_statistics": {
-          "happiness": 75.0,
-          "stress": 40.0,
-          "motivation": 85.0
-        },
-        "business_statistics": {
-          "employees": 2,
-          "popularity": 65,
-          "recipesOwned": 3
-        },
-        "game_statistics": {
-          "productsSold": 340,
-          "totalProfit": 250.0,
-          "highestDailyProfit": 120.0
-        }
+  {
+    "player_data": {
+      "characterName": "Allanah",
+      "standName": "Allanah's Lemonan",
+      "level": 1,
+      "day": 1,
+      "currentChapter": 1,
+      "saveTimestamp": "2025-04-09 15:30",
+      "playtimeDuration": 0
+    },
+    "financial_statistics": {
+      "money": 50.0,
+      "revenue": 0.0,
+      "expenses": 0.0,
+      "debt": 0.0
+    },
+    "personal_statistics": {
+      "happiness": 0.0,
+      "stress": 0.0,
+      "motivation": 0.0
+    },
+    "business_statistics": {
+      "employees": 0,
+      "popularity": 0,
+      "recipesOwned": 1
+    },
+    "game_statistics": {
+      "productsSold": 0,
+      "totalProfit": 0.0,
+      "highestDailyProfit": 0.0
+    },
+    "stocks": {
+      "lemons": 0,
+      "water": 0,
+      "sugar": 0,
+      "ice": 0,
+      "cups": 0
     }
+  },
+  {
+    "player_data": {
+      "characterName": "Dominique",
+      "standName": "Dominique's Lemonada",
+      "level": 5,
+      "day": 7,
+      "currentChapter": 1,
+      "saveTimestamp": "2025-04-15 11:10",
+      "playtimeDuration": 295
+    },
+    "financial_statistics": {
+      "money": 470.0,
+      "revenue": 1300.0,
+      "expenses": 830.0,
+      "debt": 50.0
+    },
+    "personal_statistics": {
+      "happiness": 80.0,
+      "stress": 30.0,
+      "motivation": 90.0
+    },
+    "business_statistics": {
+      "employees": 3,
+      "popularity": 75,
+      "recipesOwned": 5
+    },
+    "game_statistics": {
+      "productsSold": 520,
+      "totalProfit": 470.0,
+      "highestDailyProfit": 190.0
+    },
+    "stocks": {
+      "lemons": 0,
+      "water": 0,
+      "sugar": 0,
+      "ice": 0,
+      "cups": 0
+    }
+  },
+  {
+    "player_data": {
+      "characterName": "Shalyn",
+      "standName": "Shalyn's Lemons",
+      "level": 10,
+      "day": 24,
+      "currentChapter": 2,
+      "saveTimestamp": "2025-04-05 09:45",
+      "playtimeDuration": 70
+    },
+    "financial_statistics": {
+      "money": 80.0,
+      "revenue": 300.0,
+      "expenses": 220.0,
+      "debt": 30.0
+    },
+    "personal_statistics": {
+      "happiness": 60.0,
+      "stress": 55.0,
+      "motivation": 65.0
+    },
+    "business_statistics": {
+      "employees": 1,
+      "popularity": 40,
+      "recipesOwned": 1
+    },
+    "game_statistics": {
+      "productsSold": 140,
+      "totalProfit": 80.0,
+      "highestDailyProfit": 60.0
+    },
+    "stocks": {
+      "lemons": 0,
+      "water": 0,
+      "sugar": 0,
+      "ice": 0,
+      "cups": 0
+    }
+  }
 ]

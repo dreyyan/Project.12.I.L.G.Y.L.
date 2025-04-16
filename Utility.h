@@ -3,6 +3,10 @@
 /*----------------------- HEADER FILES -----------------------*/
 #include <cstddef>
 #include <string>
+// .json
+#include "json.hpp"
+#include "Portfolio.h"
+using json = nlohmann::json;
 using namespace std;
 /*-------------------- UTILITY PROTOTYPES --------------------*/
 // Displays a formatted line within the specified length using the specified symbol
@@ -79,5 +83,7 @@ void moveCursor(int up, int down, int right, int left);
 
 // Navigate the CLI using coordinate(x, y) values by ANSI escape codes
 void goTo(int y, int x);
+
+SaveData loadSaveData(int saveFileNum, const string& filename);
 
 #endif

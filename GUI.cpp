@@ -2,14 +2,16 @@
 #include <conio.h> // _getch()
 #include <iomanip>
 #include <iostream>
-#include "json.hpp" // .json files
+#include <fstream>
 #include <string>
 #include "GUI.h"
-#include "Portfolio.h"
 #include "Utility.h"
 #include "Scenes.h"
 using namespace std;
 /*--------------------- GUI DEFINITIONS ----------------------*/
+int saveFileNum = 0;
+SaveData currentSaveFile;
+
 void displayHeader() {
     space(1);
     displaySpacedFormat(72, '#');
@@ -33,7 +35,6 @@ void playCutscene1() {
 }
 
 void createNewGame() {
-    SaveData savefile;
     // Loops infinitely until user saves changes
     while (true) {
         clearScreen();
@@ -42,13 +43,13 @@ void createNewGame() {
         
         cout << "    Enter Character Name: ";
         showCursor();
-        getline(cin, savefile.player_data.characterName);
+        getline(cin, currentSaveFile.player_data.characterName);
         space(2);
     
         displaySpacedFormat(72, '=');
         space(2);
         cout << "    Enter Name of Lemonade Stand: ";
-        getline(cin, savefile.player_data.standName);
+        getline(cin, currentSaveFile.player_data.standName);
         space(2);
         hideCursor();
     
@@ -107,45 +108,56 @@ void createNewGame() {
     }
 }
 
+void createOrLoad() {
+    // Get data from json file
+    ifstream file("saveFiles.json");
+    if (!file.is_open()) {
+      cerr << "Could not open saveFiles.json\n";
+      return;
+    }
+  
+    json data;
+    file >> data;
+    int day = data[saveFileNum]["player_data"]["day"];
+
+    // If day is 1, create new game, else, load game area
+    if (day == 1) createNewGame();
+    else {
+        currentSaveFile = loadSaveData(saveFileNum, "saveFiles.json");
+        goToGameArea();
+    }
+}
+
 void displaySaveFiles() {
-    string characterName[] = {"Allanah", "Dominique", "Shalyn"};
-    int level[] = {1, 2, 3};
-    string standName[] = {"Allanah's Lemonan", "Dominique's Lemonan", "Shalyn's Lemonan"};
-    int chapter[] = {1, 2, 3};
-    int money[] = {0, 500, 1000};
-
-    int saveFile; // To store the save file #
-
-    // Display SAVE #1
-    space(1);
-    centerText("SAVE #1"); space(1);
-    cout << "  " << setw(10) << "Name: " << characterName[0] << '\n'; delayMs(50);
-    cout << "  " << setw(10) << "Stand: " << standName[0] << '\n'; delayMs(50);
-    cout << "  " << setw(10) << "Lvl.: " << level[0] << '\n'; delayMs(50);
-    cout << "  " << setw(10) << "Chapter: " << chapter[0] << '\n'; delayMs(50);
-    cout << "  " << setw(10) << "Money: " << money[0] << " php" << '\n'; delayMs(50);
-    space(1);
-
-    // Display SAVE #2
-    displaySpacedFormat(72, '=');
-    space(1);
-    centerText("SAVE #2"); space(1);
-    cout << "  " << setw(10) << "Name: " << characterName[1] << '\n'; delayMs(50);
-    cout << "  " << setw(10) << "Stand: " << standName[1] << '\n'; delayMs(50);
-    cout << "  " << setw(10) << "Lvl.: " << level[1] << '\n'; delayMs(50);
-    cout << "  " << setw(10) << "Chapter: " << chapter[1] << '\n'; delayMs(50);
-    cout << "  " << setw(10) << "Money: " << money[1] << " php" << '\n'; delayMs(50);
-    space(1);
-
-    // Display SAVE #3
-    displaySpacedFormat(72, '=');
-    space(1);
-    centerText("SAVE #3"); space(1);
-    cout << "  " << setw(10) << "Name: " << characterName[2] << '\n'; delayMs(50);
-    cout << "  " << setw(10) << "Stand: " << standName[2] << '\n'; delayMs(50);
-    cout << "  " << setw(10) << "Lvl.: " << level[2] << '\n'; delayMs(50);
-    cout << "  " << setw(10) << "Chapter: " << chapter[2] << '\n'; delayMs(50);
-    cout << "  " << setw(10) << "Money: " << money[2] << " php" << '\n'; delayMs(50);
+    ifstream file("saveFiles.json");
+    if (!file.is_open()) {
+      cerr << "Could not open saveFiles.json\n";
+      return;
+    }
+  
+    json data;
+    file >> data;
+  
+    for (int i = 0; i < data.size(); ++i) {
+      space(1);
+      if (i != 0) displaySpacedFormat(72, '=');
+      centerText("SAVE #" + to_string(i + 1));
+      space(1);
+  
+      string name = data[i]["player_data"]["characterName"];
+      string stand = data[i]["player_data"]["standName"];
+      int lvl = data[i]["player_data"]["level"];
+      int day = data[i]["player_data"]["day"];
+      int chapter = data[i]["player_data"]["currentChapter"];
+      float money = data[i]["financial_statistics"]["money"];
+  
+      cout << "  " << setw(10) << "Name: " << name << '\n'; delayMs(50);
+      cout << "  " << setw(10) << "Stand: " << stand << '\n'; delayMs(50);
+      cout << "  " << setw(10) << "Lvl.: " << lvl << '\n'; delayMs(50);
+      cout << "  " << setw(10) << "Day: " << day << '\n'; delayMs(50);
+      cout << "  " << setw(10) << "Chapter: " << chapter << '\n'; delayMs(50);
+      cout << "  " << setw(10) << "Money: " << money << " php\n"; delayMs(50);
+    }
 
     /*--------------------- START of NAVIGATION ----------------------*/
     const int optionCount = 3;
@@ -188,18 +200,44 @@ void displaySaveFiles() {
         }
     }
 
-    // Navigate to the next screen
-    if (current == 0) saveFile = 1;
-    else if (current == 1) saveFile = 2;
-    else saveFile = 3;
-
-    if (saveFile == 1) {
-        createNewGame();
-        return;
-    }
+    // Set savefile # to the current
+    saveFileNum = current;
+    createOrLoad();
     /*---------------------- END of NAVIGATION -----------------------*/
 }
 
+void displayInformation() {
+    // Get data from json file
+    ifstream file("saveFiles.json");
+    if (!file.is_open()) {
+        cerr << "Could not open saveFiles.json\n";
+        return;
+    }
+
+        
+    json data;
+    file >> data;
+
+    int lemon = data[saveFileNum]["player_data"]["level"];
+    int water = data[saveFileNum]["player_data"]["day"];
+    int sugar = data[saveFileNum]["player_data"]["currentChapter"];
+    int ice = data[saveFileNum]["financial_statistics"]["money"];
+    int cups = data[saveFileNum]["financial_statistics"]["money"];
+
+    // Display Day
+    goTo(34, 2);
+    cout << "DAY " << data[saveFileNum]["player_data"]["day"];
+
+    // Display Stocks
+    goTo(0, 20);
+    moveCursor(0, 0, 62, 0); cout << "STOCKS" << '\n';
+    space(1);
+    moveCursor(0, 0, 60, 0); cout << setw(7) << "Lemon: " << lemon << '\n';
+    moveCursor(0, 0, 60, 0); cout << setw(7) << "Water: " << water << '\n';
+    moveCursor(0, 0, 60, 0); cout << setw(7) << "Sugar: " << sugar << '\n';
+    moveCursor(0, 0, 60, 0); cout << setw(7) << "Ice: " << ice << '\n';
+    moveCursor(0, 0, 60, 0); cout << setw(7) << "Cups: " << cups << '\n';
+}
 void displayContinueMenu() {
     displayHeader();
     space(2);

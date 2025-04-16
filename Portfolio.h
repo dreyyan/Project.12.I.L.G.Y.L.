@@ -1,3 +1,6 @@
+#ifndef PORTFOLIO_H
+#define PORTFOLIO_H
+
 #include <string>
 using namespace std;
 
@@ -45,6 +48,14 @@ struct GameStats {
     double highestDailyProfit;  // Highest profit in a day
 };
 
+struct Stocks {
+    int lemons;
+    int water;                  // in mL
+    double sugar;               // in g
+    int ice;
+    int cups;
+};
+
 // MASTERSTRUCT: SaveData
 // Object to store all information
 struct SaveData {
@@ -52,5 +63,8 @@ struct SaveData {
     FinancialStats financial_statistics;
     PersonalStats personal_statistics;
     BusinessStats business_statistics;
+    Stocks stocks;
     GameStats game_statistics;
 };
+
+#endif

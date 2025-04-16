@@ -84,94 +84,101 @@ cout << R"(#####################################################################
 
 void showLemonadeStand() {
     goTo(0, 4);
-    moveCursor(0, 0, 8, 0); cout << "  ######"; space(1);
-    moveCursor(0, 0, 8, 0); cout << " ##    ##"; space(1);
-    moveCursor(0, 0, 8, 0); cout << "##########"; space(1);
-    moveCursor(0, 0, 8, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 8, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 8, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 8, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 8, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 8, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 8, 0); cout << "  #####"; space(1);
-    moveCursor(0, 0, 8, 0); cout << " #    #"; space(1);
-    moveCursor(0, 0, 8, 0); cout << " #    #"; space(1);
-    moveCursor(0, 0, 8, 0); cout << " #    #"; space(1);
-    moveCursor(0, 0, 8, 0); cout << " ######"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "  ######"; space(1);
+    moveCursor(0, 0, 9, 0); cout << " ##    ##"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "##########"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "  #####"; space(1);
+    moveCursor(0, 0, 9, 0); cout << " #    #"; space(1);
+    moveCursor(0, 0, 9, 0); cout << " #    #"; space(1);
+    moveCursor(0, 0, 9, 0); cout << " #    #"; space(1);
+    moveCursor(0, 0, 9, 0); cout << " ######"; space(1);
 }
 
 void hideLemonadeStand() {
     goTo(0, 5);
-    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
-    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
-    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
-    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
-    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
-    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
-    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
-    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
-    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
-    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
-    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
-    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
-    moveCursor(0, 0, 7, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
+    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
 }
 
 void showPlayer() {
     goTo(0, 7);
-    moveCursor(0, 0, 2, 0); cout << "  ####--"; space(1);
-    moveCursor(0, 0, 2, 0); cout << " |  @|"; space(1);
-    moveCursor(0, 0, 2, 0); cout << " |   |"; space(1);
-    moveCursor(0, 0, 2, 0); cout << "  --- "; space(1);
-    moveCursor(0, 0, 2, 0); cout << " /| |\\"; space(1);
-    moveCursor(0, 0, 2, 0); cout << " || ||"; space(1);
-    moveCursor(0, 0, 2, 0); cout << " ||/ |"; space(1);
-    moveCursor(0, 0, 2, 0); cout << " |[] |"; space(1);
-    moveCursor(0, 0, 2, 0); cout << " \\___/"; space(1);
-    moveCursor(0, 0, 2, 0); cout << " |_||"; space(1);
-    moveCursor(0, 0, 2, 0); cout << " |__]]"; space(1);
+    moveCursor(0, 0, 3, 0); cout << "  ####--"; space(1);
+    moveCursor(0, 0, 3, 0); cout << " |  @|"; space(1);
+    moveCursor(0, 0, 3, 0); cout << " |   |"; space(1);
+    moveCursor(0, 0, 3, 0); cout << "  --- "; space(1);
+    moveCursor(0, 0, 3, 0); cout << " /| |\\"; space(1);
+    moveCursor(0, 0, 3, 0); cout << " || ||"; space(1);
+    moveCursor(0, 0, 3, 0); cout << " ||/ |"; space(1);
+    moveCursor(0, 0, 3, 0); cout << " |[] |"; space(1);
+    moveCursor(0, 0, 3, 0); cout << " \\___/"; space(1);
+    moveCursor(0, 0, 3, 0); cout << " |_||"; space(1);
+    moveCursor(0, 0, 3, 0); cout << " |__]]"; space(1);
 }
 
 void hidePlayer() {
     goTo(0, 7);
-    moveCursor(0, 0, 2, 0); cout << "        "; space(1);
-    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
-    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
-    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
-    moveCursor(0, 0, 2, 0); cout << "       "; space(1);
-    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
-    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
-    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
-    moveCursor(0, 0, 2, 0); cout << "       "; space(1);
-    moveCursor(0, 0, 2, 0); cout << "     "; space(1);
-    moveCursor(0, 0, 2, 0); cout << "      "; space(1);
-}
-
-void showStatsMenu() {
-    displayBlockFormat(51, 1, '#');
-    displayVLine(51, 20, 11, '#');
-    displayVLine(1, 20, 11, '#');
-    displayBlockFormat(51, 1, '#');
-    // displayBorder(9, '#');
-    // displayBlockFormat(52, 1, '#');
+    moveCursor(0, 0, 3, 0); cout << "        "; space(1);
+    moveCursor(0, 0, 3, 0); cout << "      "; space(1);
+    moveCursor(0, 0, 3, 0); cout << "      "; space(1);
+    moveCursor(0, 0, 3, 0); cout << "      "; space(1);
+    moveCursor(0, 0, 3, 0); cout << "       "; space(1);
+    moveCursor(0, 0, 3, 0); cout << "      "; space(1);
+    moveCursor(0, 0, 3, 0); cout << "      "; space(1);
+    moveCursor(0, 0, 3, 0); cout << "      "; space(1);
+    moveCursor(0, 0, 3, 0); cout << "       "; space(1);
+    moveCursor(0, 0, 3, 0); cout << "     "; space(1);
+    moveCursor(0, 0, 3, 0); cout << "      "; space(1);
 }
 
 void showBottomNavigationMenu() {
-    displayHLine(51, 18, 22, '#');
+    goTo(0, 18);
+    displayBlockFormat(57, 1, '#');
+    displayVLine(57, 18, 12, '#');
+    displayVLine(1, 18, 12, '#');
+    displayBlockFormat(57, 1, '#');
+}
+
+void showStatsMenu() {
+    displayHLine(57, 18, 16, '#');
+    displayVLine(57, 18, 12, '#');
     displayVLine(72, 18, 12, '#');
-    displayHLine(51, 29, 22, '#');
+    displayHLine(57, 29, 16, '#');
 }
 
 void goToGameArea() {
+    goTo(1, 1);
+    clearScreen();
+
     displayBlockFormat(72, 1, '#');
     displayBorder(1, '#');
     displayBlockFormat(72, 1, '#');
     displayBorder(15, '#');
 
+    // SHOW MENU & GRAPHICS
     showStatsMenu();
     showBottomNavigationMenu();
     showLemonadeStand();
     showPlayer();
+
+    // SHOW INFORMATION
+    displayInformation();
 }
 
 void displayScene1() {
