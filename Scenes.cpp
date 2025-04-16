@@ -3,6 +3,8 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
+
+#include "prep.h"
 #include "GUI.h"
 #include "Utility.h"
 using namespace std;
@@ -83,9 +85,8 @@ cout << R"(#####################################################################
 }
 
 void showLemonadeStand() {
-    goTo(0, 4);
+    goTo(0, 5);
     moveCursor(0, 0, 9, 0); cout << "  ######"; space(1);
-    moveCursor(0, 0, 9, 0); cout << " ##    ##"; space(1);
     moveCursor(0, 0, 9, 0); cout << "##########"; space(1);
     moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
     moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
@@ -101,8 +102,7 @@ void showLemonadeStand() {
 }
 
 void hideLemonadeStand() {
-    goTo(0, 5);
-    moveCursor(0, 0, 8, 0); cout << "          "; space(1);
+    goTo(0, 6);
     moveCursor(0, 0, 8, 0); cout << "          "; space(1);
     moveCursor(0, 0, 8, 0); cout << "          "; space(1);
     moveCursor(0, 0, 8, 0); cout << "          "; space(1);
@@ -162,26 +162,7 @@ void showStatsMenu() {
     displayHLine(57, 29, 16, '#');
 }
 
-void goToGameArea() {
-    goTo(1, 1);
-    clearScreen();
-
-    displayBlockFormat(72, 1, '#');
-    displayBorder(1, '#');
-    displayBlockFormat(72, 1, '#');
-    displayBorder(15, '#');
-
-    // SHOW MENU & GRAPHICS
-    showStatsMenu();
-    showBottomNavigationMenu();
-    showLemonadeStand();
-    showPlayer();
-
-    // SHOW INFORMATION
-    displayInformation();
-}
-
-void displayScene1() {
+void displayNewGameCutscene() {
     clearScreen();
     cout << R"(########################################################################
 #::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::#
@@ -354,7 +335,39 @@ cout << R"(#####################################################################
 #:=*=....:::---=*+++*+++=-:===--=++=------:.::==#- ......::::::::------#)" << '\n';
     displayText7();
     pressEnterToContinue();
+}
+
+void goToGameArea() {
+    goTo(1, 1);
+    clearScreen();
+
+    displayBlockFormat(72, 1, '#');
+    displayBorder(1, '#');
+    displayBlockFormat(72, 1, '#');
+    displayBorder(15, '#');
+
+    // SHOW MENU & GRAPHICS
+    showStatsMenu();
+    showBottomNavigationMenu();
+    showLemonadeStand();
+    showPlayer();
+
+    // SHOW INFORMATION
+    displayInformation();
+
+    cin.get();
+}
+
+void startGame() {
+    // Pre-conditions
     clearScreen();
     goTo(1, 1);
+
+    while (true) {
+    // Day Preparation
+    displayDayPrepMenu();
+
+    // Start Game
     goToGameArea();
+    }
 }

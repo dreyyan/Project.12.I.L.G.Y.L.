@@ -24,10 +24,13 @@ void displayBlockFormat(size_t width, size_t height, char symbol);
 // Displays a formatted block within the specified width and height using the specified symbol /w newline character
 void displayBlockSpacedFormat(size_t width, size_t height, char symbol);
 
+// Displays a border within the specified height using the specified symbol
 void displayBorder(size_t height, char symbol);
 
+// Displays a horizontal line using x and y coordinates within the specified length using the specified symbol
 void displayHLine(int x, int y, size_t length, char symbol);
 
+// Displays a vertical line using x and y coordinates within the specified length using the specified symbol
 void displayVLine(int x, int y, size_t length, char symbol);
 
 // Outputs a newline escape sequence 'n' times
@@ -84,6 +87,7 @@ void moveCursor(int up, int down, int right, int left);
 // Navigate the CLI using coordinate(x, y) values by ANSI escape codes
 void goTo(int y, int x);
 
+// Load the savefile(up to 3) using a specified number by accessing the specified filename
 SaveData loadSaveData(int saveFileNum, const string& filename);
 
 #endif

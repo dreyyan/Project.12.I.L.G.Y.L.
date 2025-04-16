@@ -3,12 +3,14 @@
 /*----------------------- HEADER FILES -----------------------*/
 #include "Portfolio.h"
 /*---------------------- GUI PROTOTYPES ----------------------*/
+// GLOBALS
 extern int saveFileNum;
 extern SaveData currentSaveFile;
+
 void displayHeader();
-void playCutscene1();
 void createNewGame();
 
+// LOAD/SAVE FILES
 void createOrLoad();
 void displaySaveFiles();
 

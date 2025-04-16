@@ -1,12 +1,13 @@
 /*----------------------- HEADER FILES -----------------------*/
 #include <conio.h> // _getch()
+#include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <fstream>
 #include <string>
+
 #include "GUI.h"
-#include "Utility.h"
 #include "Scenes.h"
+#include "Utility.h"
 using namespace std;
 /*--------------------- GUI DEFINITIONS ----------------------*/
 int saveFileNum = 0;
@@ -28,10 +29,6 @@ void displayHeader() {
 
     space(1);
     displaySpacedFormat(72, '#');
-}
-
-void playCutscene1() {
-    displayScene1();
 }
 
 void createNewGame() {
@@ -101,7 +98,8 @@ void createNewGame() {
         // Navigate to the next screen
         if (current == 0) continue;
         else {
-            playCutscene1();
+            displayNewGameCutscene();
+            startGame();
             break;
         }
         /*---------------------- END of NAVIGATION -----------------------*/
@@ -124,7 +122,7 @@ void createOrLoad() {
     if (day == 1) createNewGame();
     else {
         currentSaveFile = loadSaveData(saveFileNum, "saveFiles.json");
-        goToGameArea();
+        startGame();
     }
 }
 
@@ -214,7 +212,6 @@ void displayInformation() {
         return;
     }
 
-        
     json data;
     file >> data;
 
