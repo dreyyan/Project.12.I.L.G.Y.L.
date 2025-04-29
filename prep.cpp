@@ -169,11 +169,19 @@ void displayRecipeMenu() {
                 break;
             case 's':
                 saveRecipe(currentRecipe, "custom_recipe.dat");
+                moveCursor(0, 6, 0, 0);
                 centerText("Recipe Saved!");
+                delayS(1);
+                pressEnterToContinue();
+                displayRecipeMenu();
                 break;
             case 'l':
                 currentRecipe = loadRecipe("custom_recipe.dat");
-                displayRecipeMenu(); 
+                moveCursor(0, 6, 0, 0);
+                centerText("Recipe Loaded!");
+                delayS(1);
+                pressEnterToContinue();
+                displayRecipeMenu();
                 break;
             case 'b':
                 displayDayPrepMenu();
@@ -322,13 +330,13 @@ void displayRecipeStats(const Recipe& recipe) {
 
 void saveRecipe(Recipe& recipe, const char* recipeName) {
     // Would connect to file system in full implementation
-    cout << "Recipe saved as " << recipeName << "!" << endl;
+    // cout << "Recipe saved as " << recipeName << "!" << endl;
 }
 
 Recipe loadRecipe(const char* recipeName) {
     // Would load from file system in full implementation
     Recipe defaultRecipe = {2, 100, 3, 5.0, 1000};
-    cout << "Loaded recipe: " << recipeName << endl;
+    // cout << "Loaded recipe: " << recipeName << endl;
     return defaultRecipe;
 }
 
