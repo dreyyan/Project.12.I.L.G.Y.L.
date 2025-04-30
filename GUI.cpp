@@ -1,5 +1,6 @@
 /*----------------------- HEADER FILES -----------------------*/
 #include <conio.h> // _getch()
+#include <ctime>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -116,17 +117,20 @@ void createOrLoad() {
   
     json data;
     file >> data;
-    int day = data[saveFileNum]["player_data"]["day"];
 
-    // If day is 1, create new game, else, load game area
-    if (day == 1) createNewGame();
+    int day = data[saveFileNum]["player_data"]["day"];
+    string characterName = data[saveFileNum]["player_data"]["characterName"];
+    string standName = data[saveFileNum]["player_data"]["standName"];
+
+    if (day == 1 && characterName == "" && standName == "")
+        createNewGame();
     else {
         currentSaveFile = loadSaveData(saveFileNum, "saveFiles.json");
         startGame();
     }
 }
 
-void displaySaveFiles() {
+void displaySaveFiles() { // Invalid json read
     ifstream file("saveFiles.json");
     if (!file.is_open()) {
       cerr << "Could not open saveFiles.json\n";
@@ -235,12 +239,40 @@ void displayInformation() {
     moveCursor(0, 0, 60, 0); cout << setw(7) << "Ice: " << ice << '\n';
     moveCursor(0, 0, 60, 0); cout << setw(7) << "Cups: " << cups << '\n';
 }
-void displayContinueMenu() {
-    displayHeader();
-    space(2);
 
-    cout << "Continue";
-}
+    time_t parseTimestamp(const string& timestamp) {
+        tm t = {};
+        istringstream ss(timestamp);
+        ss >> get_time(&t, "%Y-%m-%d %H:%M");
+        return mktime(&t);  // Convert to time_t for comparison
+    }
+    
+void continueGame() {
+    ifstream file("saveFiles.json");
+    if (!file.is_open()) {
+    cerr << "Could not open saveFiles.json\n";
+    cin.get();
+    return;
+    }
+
+    json data;
+    file >> data;
+
+    int latestIndex = -1;
+    time_t latestTime = 0;
+
+    for (int i = 0; i < data.size(); ++i) {
+        string timestampStr = data[i]["player_data"]["saveTimestamp"];
+        time_t currentTime = parseTimestamp(timestampStr);
+
+        if (latestIndex == -1 || currentTime > latestTime) {
+            latestIndex = i;
+            latestTime = currentTime;
+        }
+    }
+    saveFileNum = latestIndex;
+    startGame();
+  }
 
 void displayStartMenu() {
     displaySpacedFormat(72, '#');
@@ -305,8 +337,7 @@ void displayMainMenu() {
                 cout << "<<";
             }
         }
-    
-        // 
+
         key = _getch();
         if (key == 72) { // If 'Up Arrow' key is pressed
             current = (current - 1 + optionCount) % optionCount;
@@ -319,7 +350,7 @@ void displayMainMenu() {
     }
 
     // Navigate to the next screen
-    if (current == 0) displayContinueMenu();
+    if (current == 0) continueGame();
     else if (current == 1) displayStartMenu();
     else displayExitMenu();
 }

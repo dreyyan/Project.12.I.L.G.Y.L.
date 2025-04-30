@@ -47,7 +47,6 @@ Recipe loadRecipe(const char* recipeName);
 
 // Inventory management
 void displaySupplyMenu();
-void purchaseSupplies(SaveData& saveData);
 void displaySupplyCosts();
 bool checkStockLevels(const SaveData& saveData, const Recipe& recipe, int expectedCups);
 

@@ -10,7 +10,7 @@
       "playtimeDuration": 0
     },
     "financial_statistics": {
-      "money": 50.0,
+      "money": 100.0,
       "revenue": 0.0,
       "expenses": 0.0,
       "debt": 0.0
@@ -31,7 +31,7 @@
       "highestDailyProfit": 0.0
     },
     "stocks": {
-      "lemon": 0,
+      "lemons": 0,
       "water": 0,
       "sugar": 0,
       "ice": 0,
@@ -70,7 +70,7 @@
       "highestDailyProfit": 190.0
     },
     "stocks": {
-      "lemon": 0,
+      "lemons": 0,
       "water": 0,
       "sugar": 0,
       "ice": 0,
@@ -109,7 +109,7 @@
       "highestDailyProfit": 60.0
     },
     "stocks": {
-      "lemon": 0,
+      "lemons": 0,
       "water": 0,
       "sugar": 0,
       "ice": 0,

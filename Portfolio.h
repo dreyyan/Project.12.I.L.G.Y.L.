@@ -51,7 +51,7 @@ struct GameStats {
 struct Stocks {
     int lemons;
     int water;                  // in mL
-    double sugar;               // in g
+    int sugar;                  // in g
     int ice;
     int cups;
 };

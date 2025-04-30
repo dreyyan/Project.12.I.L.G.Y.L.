@@ -16,7 +16,7 @@ void displaySaveFiles();
 
 void displayInformation();
 // MENU
-void displayContinueMenu();
+void continueGame();
 void displayStartMenu();
 void displayExitMenu();
 void displayMainMenu();
