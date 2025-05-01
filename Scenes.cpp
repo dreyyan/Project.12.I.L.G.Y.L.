@@ -1,5 +1,6 @@
 /*----------------------- HEADER FILES -----------------------*/
 #include <conio.h>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <string>
@@ -84,25 +85,35 @@ cout << R"(#####################################################################
 #####################                              #####################)";
 }
 
+void showClouds() {
+    goTo(0, 4);
+    cout << "     .--.           .--.     .--.           .--.     .--.     " << endl;
+}
+
+void hideClouds() {
+    goTo(0, 4);
+    cout << "                                                              " << endl;
+}
+
 void showLemonadeStand() {
-    goTo(0, 5);
-    moveCursor(0, 0, 9, 0); cout << "  ######"; space(1);
-    moveCursor(0, 0, 9, 0); cout << "##########"; space(1);
-    moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 9, 0); cout << "   #  #"; space(1);
-    moveCursor(0, 0, 9, 0); cout << "  #####"; space(1);
-    moveCursor(0, 0, 9, 0); cout << " #    #"; space(1);
-    moveCursor(0, 0, 9, 0); cout << " #    #"; space(1);
-    moveCursor(0, 0, 9, 0); cout << " #    #"; space(1);
+    goTo(0, 6);
+    moveCursor(0, 0, 9, 0); cout << " /******\\"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "/########\\"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "   [__]"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "   |  |"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "   |  |"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "   |  |"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "   |__|"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "   [##]"; space(1);
+    moveCursor(0, 0, 9, 0); cout << "  /////"; space(1);
+    moveCursor(0, 0, 9, 0); cout << " /////|"; space(1);
+    moveCursor(0, 0, 9, 0); cout << " |    |"; space(1);
+    moveCursor(0, 0, 9, 0); cout << " |    |"; space(1);
     moveCursor(0, 0, 9, 0); cout << " ######"; space(1);
 }
 
 void hideLemonadeStand() {
-    goTo(0, 6);
+    goTo(0, 7);
     moveCursor(0, 0, 8, 0); cout << "          "; space(1);
     moveCursor(0, 0, 8, 0); cout << "          "; space(1);
     moveCursor(0, 0, 8, 0); cout << "          "; space(1);
@@ -118,22 +129,22 @@ void hideLemonadeStand() {
 }
 
 void showPlayer() {
-    goTo(0, 7);
-    moveCursor(0, 0, 3, 0); cout << "  ####--"; space(1);
-    moveCursor(0, 0, 3, 0); cout << " |  @|"; space(1);
-    moveCursor(0, 0, 3, 0); cout << " |   |"; space(1);
-    moveCursor(0, 0, 3, 0); cout << "  --- "; space(1);
-    moveCursor(0, 0, 3, 0); cout << " /| |\\"; space(1);
-    moveCursor(0, 0, 3, 0); cout << " || ||"; space(1);
-    moveCursor(0, 0, 3, 0); cout << " ||/ |"; space(1);
-    moveCursor(0, 0, 3, 0); cout << " |[] |"; space(1);
-    moveCursor(0, 0, 3, 0); cout << " \\___/"; space(1);
-    moveCursor(0, 0, 3, 0); cout << " |_||"; space(1);
-    moveCursor(0, 0, 3, 0); cout << " |__]]"; space(1);
+    goTo(0, 8);
+    moveCursor(0, 0, 3, 0); cout << "  .,,,  "; space(1);
+    moveCursor(0, 0, 3, 0); cout << "  # 0|"; space(1);
+    moveCursor(0, 0, 3, 0); cout << "  #  |"; space(1);
+    moveCursor(0, 0, 3, 0); cout << "  .--. "; space(1);
+    moveCursor(0, 0, 3, 0); cout << "  /|||"; space(1);
+    moveCursor(0, 0, 3, 0); cout << "  ||||"; space(1);
+    moveCursor(0, 0, 3, 0); cout << "  ||/|"; space(1);
+    moveCursor(0, 0, 3, 0); cout << "  |[]|"; space(1);
+    moveCursor(0, 0, 3, 0); cout << "  \\_ /"; space(1);
+    moveCursor(0, 0, 3, 0); cout << "  |_||"; space(1);
+    moveCursor(0, 0, 3, 0); cout << "  |__]]"; space(1);
 }
 
 void hidePlayer() {
-    goTo(0, 7);
+    goTo(0, 8);
     moveCursor(0, 0, 3, 0); cout << "        "; space(1);
     moveCursor(0, 0, 3, 0); cout << "      "; space(1);
     moveCursor(0, 0, 3, 0); cout << "      "; space(1);
@@ -148,18 +159,17 @@ void hidePlayer() {
 }
 
 void showBottomNavigationMenu() {
-    goTo(0, 18);
+    goTo(0, 19);
     displayBlockFormat(57, 1, '#');
-    displayVLine(57, 18, 12, '#');
-    displayVLine(1, 18, 12, '#');
-    displayBlockFormat(57, 1, '#');
+    displayVLine(49, 19, 12, '#');
+    displayVLine(1, 19, 12, '#');
+    displayFormat(57, '#');
 }
 
 void showStatsMenu() {
-    displayHLine(57, 18, 16, '#');
-    displayVLine(57, 18, 12, '#');
-    displayVLine(72, 18, 12, '#');
-    displayHLine(57, 29, 16, '#');
+    displayHLine(57, 19, 16, '#');
+    displayVLine(72, 19, 12, '#');
+    displayHLine(57, 30, 16, '#');
 }
 
 void displayNewGameCutscene() {
@@ -337,6 +347,54 @@ cout << R"(#####################################################################
     pressEnterToContinue();
 }
 
+void displayPreGameTransition() {
+    // GET DATA
+    ifstream file("saveFiles.json");
+    if (!file.is_open()) {
+        cerr << "Could not open saveFiles.json\n";
+        return;
+    }
+
+    json data;
+    file >> data;
+
+    int day = data[saveFileNum]["player_data"]["day"].get<int>();
+
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    space(3);
+
+    if (day >= 10) {
+        centerText(" -= DAY " + to_string(day) + " =- ");
+    } else {
+        centerText(" -= DAY  " + to_string(day) + " =- ");
+    }
+
+    space(4);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    displayBlockFormat(72, 1, '#'); delayMs(20);
+    delayS(2);
+}
+
 void goToGameArea() {
     goTo(1, 1);
     clearScreen();
@@ -349,6 +407,7 @@ void goToGameArea() {
     // SHOW MENU & GRAPHICS
     showStatsMenu();
     showBottomNavigationMenu();
+    showClouds();
     showLemonadeStand();
     showPlayer();
 
@@ -364,10 +423,17 @@ void startGame() {
     goTo(1, 1);
 
     while (true) {
-    // Day Preparation
-    displayDayPrepMenu();
+        // GET DATA
+        ifstream file("saveFiles.json");
+        if (!file.is_open()) {
+            cerr << "Could not open saveFiles.json\n";
+            return;
+        }
+    
+        json data;
+        file >> data;
 
-    // Start Game
-    goToGameArea();
+        // Day Preparation
+        displayDayPrepMenu();
     }
 }

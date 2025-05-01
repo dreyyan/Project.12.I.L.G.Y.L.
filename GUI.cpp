@@ -219,25 +219,25 @@ void displayInformation() {
     json data;
     file >> data;
 
-    int lemon = data[saveFileNum]["stocks"]["lemon"];
+    int lemon = data[saveFileNum]["stocks"]["lemons"];
     int water = data[saveFileNum]["stocks"]["water"];
     int sugar = data[saveFileNum]["stocks"]["sugar"];
     int ice = data[saveFileNum]["stocks"]["ice"];
     int cups = data[saveFileNum]["stocks"]["cups"];
 
-    // Display Day
-    goTo(34, 2);
-    cout << "DAY " << data[saveFileNum]["player_data"]["day"];
+    // Display Day & Chapter
+    goTo(3, 2);
+    cout << " Day " << data[saveFileNum]["player_data"]["day"] << " || Chapter " << data[saveFileNum]["player_data"]["currentChapter"] << " #";
 
     // Display Stocks
-    goTo(0, 20);
-    moveCursor(0, 0, 62, 0); cout << "STOCKS" << '\n';
+    goTo(0, 21);
+    moveCursor(0, 0, 58, 0); cout << "STOCKS" << '\n';
     space(1);
-    moveCursor(0, 0, 60, 0); cout << setw(7) << "Lemon: " << lemon << '\n';
-    moveCursor(0, 0, 60, 0); cout << setw(7) << "Water: " << water << '\n';
-    moveCursor(0, 0, 60, 0); cout << setw(7) << "Sugar: " << sugar << '\n';
-    moveCursor(0, 0, 60, 0); cout << setw(7) << "Ice: " << ice << '\n';
-    moveCursor(0, 0, 60, 0); cout << setw(7) << "Cups: " << cups << '\n';
+    moveCursor(0, 0, 56, 0); cout << setw(7) << "Lemon: " << lemon << '\n';
+    moveCursor(0, 0, 56, 0); cout << setw(7) << "Water: " << water << "mL" << '\n';
+    moveCursor(0, 0, 56, 0); cout << setw(7) << "Sugar: " << sugar << "g" << '\n';
+    moveCursor(0, 0, 56, 0); cout << setw(7) << "Ice: " << ice << '\n';
+    moveCursor(0, 0, 56, 0); cout << setw(7) << "Cups: " << cups << '\n';
 }
 
     time_t parseTimestamp(const string& timestamp) {

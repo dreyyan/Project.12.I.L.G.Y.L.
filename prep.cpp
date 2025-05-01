@@ -669,7 +669,7 @@ void displayWeatherForecast(Weather& forecast) {
     
     displaySpacedFormat(72, '#');
     space(1);
-    centerText("[Press any key to continue...]");
+    centerText("[ Press any key to continue... ]");
     
     _getch();
     displayDayPrepMenu();
@@ -699,7 +699,7 @@ void setPrice(Recipe& recipe) {
     cout << "       PRODUCTION COSTS" << endl;
     cout << "      Cost per Pitcher: $" << fixed << setprecision(2) << costPerPitcher << endl;
     cout << "          Cost per Cup: $" << fixed << setprecision(2) << productionCostPerCup << endl;
-    cout << "      Cups per Pitcher: " << cupsPerPitcher << endl;
+    // cout << "      Cups per Pitcher: " << cupsPerPitcher << endl;
     space(1);
     
     // Display pricing strategy
@@ -732,7 +732,7 @@ void setPrice(Recipe& recipe) {
     space(1);
     displaySpacedFormat(72, '#');
     space(1);
-    centerText("[Press any key to continue...]");
+    centerText("[ Press any key to continue... ]");
     
     _getch();
     displayDayPrepMenu();
@@ -791,31 +791,39 @@ void displayDayPlan(const DayPlan& plan) {
     cout << "         Price per Cup: $" << fixed << setprecision(2) << plan.recipe.price << endl;
     space(1);
     
-    // Weather forecast
-    cout << "                WEATHER" << endl;
-    cout << "             Condition: " << plan.forecast.condition << endl;
-    cout << "           Temperature: " << plan.forecast.temperature << " *C" << endl;
-    space(1);
-    
     // Business projections
     cout << "       DAILY PROJECTION" << endl;
     cout << "    Expected Customers: " << static_cast<int>(plan.expectedCustomers) << endl;
     cout << "     Estimated Revenue: $" << fixed << setprecision(2) << (plan.recipe.price * plan.expectedCustomers) << endl;
     cout << "      Estimated Profit: $" << fixed << setprecision(2) << plan.profitEstimate << endl;
-    space(1);
+    space(2);
     
-    displaySpacedFormat(72, '#');
-    space(1);
+    // Current stocks
+    goTo(36, 7); cout << "                 STOCKS" << endl;
+    goTo(36, 8); cout << "                Lemons: " << currentSaveFile.stocks.lemons << " pcs. " << endl;
+    goTo(36, 9); cout << "                 Sugar: " << currentSaveFile.stocks.sugar << " g" << endl;
+    goTo(36, 10); cout << "                 Water: " << currentSaveFile.stocks.water << " mL" << endl;
+    goTo(36, 11); cout << "                   Ice: " << currentSaveFile.stocks.ice << " cube/s" << endl;
+    goTo(36, 12); cout << "                  Cups: " << currentSaveFile.stocks.cups << " pcs." << endl;
+
+    // Weather forecast
+    goTo(36, 14); cout << "                WEATHER" << endl;
+    goTo(36, 15); cout << "             Condition: " << plan.forecast.condition << endl;
+    goTo(36, 16); cout << "           Temperature: " << plan.forecast.temperature << " *C" << endl;
 
     // Stock check
     bool sufficientStock = checkStockLevels(currentSaveFile, plan.recipe, static_cast<int>(plan.expectedCustomers));
     
+    space(2);
+    displaySpacedFormat(72, '#');
+    space(1);
+
     cout << "  EVALUATION: " << (sufficientStock ? "READY - Ready for the day!" : "INSUFFICIENT - Revise your strategies...") << endl;
     space(1);
     
     displaySpacedFormat(72, '#');
     space(1);
-    centerText("Press any key to return to menu");
+    centerText("[ Press any key to continue... ]");
     
     _getch();
     displayDayPrepMenu();
@@ -846,8 +854,8 @@ void finalizeDayPrep(SaveData& saveData, DayPlan& plan) {
     space(1);
     
     centerText("READY TO START THE DAY?");
-    space(1);
-    displaySpacedFormat(72, '-');
+    space(2);
+    displaySpacedFormat(72, '#');
     space(1);
     
     // Final checks and warnings
@@ -856,48 +864,64 @@ void finalizeDayPrep(SaveData& saveData, DayPlan& plan) {
     if (!sufficientStock) {
         cout << "  WARNING: You don't have enough supplies for your projected sales!" << endl;
         space(1);
-        cout << "  Options:" << endl;
-        cout << "    1. Return to purchase more supplies" << endl;
-        cout << "    2. Continue with limited stock (may result in lost sales)" << endl;
+        cout << "  OPTIONS:" << endl;
+        cout << "    1. [ RETURN ] to purchase more supplies" << endl;
+        cout << "    2.  [ START ] with current limited stock (may lead to lost sales)" << endl;
         space(1);
         
-        displaySpacedFormat(72, '-');
+        displaySpacedFormat(72, '#');
         space(1);
-        centerText("Select option: ");
+        centerText("-= SELECT =-");
         
-        char choice = _getch();
-        if (choice == '1') {
-            displaySupplyMenu();
-            return;
+        goTo(1, 28);
+        centerText("[ RETURN ]                [ START ]");
+
+        // Cursor navigation logic
+        const int optionCount = 2;
+        int x[optionCount] = { 19, 45 };
+        int y[optionCount] = { 28, 28 };
+        int current = 0;
+        char key;
+    
+        while (true) {
+            // Draw all cursors
+            for (int i = 0; i < optionCount; ++i) {
+                // Draw ">>" at left
+                goTo(x[i] - 3, y[i]);
+                cout << (i == current ? ">>" : "  ");
+        
+                // Erase previous "<<" at right if not the current
+                if (i != current) {
+                    if (i == 0) moveCursor(0, 0, 13, 0);
+                    else if (i == 1) moveCursor(0, 0, 12, 0);
+                    cout << "  ";
+                }
+        
+                // Draw "<<" at right for current option
+                if (i == current) {
+                    if (current == 0) moveCursor(0, 0, 13, 0);
+                    else if (current == 1) moveCursor(0, 0, 12, 0);
+                    cout << "<<";
+                }
+            }
+
+            key = _getch();
+            if (key == 75) { // If 'Left Arrow' key is pressed
+                current = (current - 1 + optionCount) % optionCount;
+            } else if (key == 77) { // If 'Right Arrow' key is pressed
+                current = (current + 1) % optionCount;
+            } else if (key == 13) { // If 'Enter' key is pressed
+                clearScreen();
+                break;
+            }
         }
-    }
-    
-    // Display final confirmation
-    cout << "  Today's Plan:" << endl;
-    cout << "    Recipe: " << plan.recipe.lemons << " lemons, " << plan.recipe.sugar << "g sugar, " 
-         << plan.recipe.waterRatio << "mL water, " << plan.recipe.ice << " ice/cup" << endl;
-    cout << "    Price: $" << fixed << setprecision(2) << plan.recipe.price << " per cup" << endl;
-    cout << "    Weather: " << plan.forecast.condition << ", " << plan.forecast.temperature << "°C" << endl;
-    cout << "    Expected Customers: " << static_cast<int>(plan.expectedCustomers) << endl;
-    cout << "    Projected Profit: $" << fixed << setprecision(2) << plan.profitEstimate << endl;
-    space(1);
-    
-    displaySpacedFormat(72, '-');
-    space(1);
-    centerText("Start the Day? (Y/N)");
-    
-    char confirm = tolower(_getch());
-    if (confirm == 'y') {
-        // Here you would implement the day simulation
-        // This would involve consuming resources, generating customers
-        // and updating the player's financial stats
-        
-        centerText("Starting the day...");
-        delayMs(1000); // Simulate processing
-        
-        // This would be where call a function to actually run the day's simulation
-        goToGameArea();
-    } else {
-        displayDayPrepMenu();
+
+
+        if (current == 0) {
+            displayDayPrepMenu();
+        } else if (current == 1) {
+            displayPreGameTransition();
+            goToGameArea();
+        }
     }
 }

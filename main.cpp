@@ -15,5 +15,6 @@ int main() {
     // createNewGame();
     // displayNewGameCutscene();
     startGame();
+    // goToGameArea();
     return 0;
 }
