@@ -1,12 +1,6 @@
 #ifndef DAY_PREPARATION_H
 #define DAY_PREPARATION_H
-/*----------------------- HEADER FILES -----------------------*/
-#include <string>
-
 #include "Portfolio.h"
-#include "GUI.h"
-#include "Scenes.h"
-using namespace std;
 /*------------------- STRUCT DEFINITIONS -------------------*/
 struct Recipe {
     int lemons;         // Number of lemons per pitcher
@@ -30,6 +24,7 @@ struct DayPlan {
     double profitEstimate;
 };
 /*------------------- FUNCTION PROTOTYPES -------------------*/
+void pressEnterToContinue();
 // Main day preparation menu
 void displayDayPrepMenu();
 
@@ -37,13 +32,6 @@ void displayDayPrepMenu();
 void updateMessage();
 void errorMessage();
 void clearState();
-
-// Recipe management
-void displayRecipeMenu();
-void adjustRecipe(Recipe& currentRecipe);
-void displayRecipeStats(const Recipe& recipe);
-void saveRecipe(Recipe& recipe, const char* recipeName); 
-Recipe loadRecipe(const char* recipeName);
 
 // Inventory management
 void displaySupplyMenu();

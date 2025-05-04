@@ -10,11 +10,11 @@ int main() {
     // SETUP
     hideCursor();
     // DEBUG
-    // displayMainMenu();
+    displayMainMenu();
     // displayStartMenu();
     // createNewGame();
     // displayNewGameCutscene();
-    startGame();
+    // startGame();
     // goToGameArea();
     return 0;
 }

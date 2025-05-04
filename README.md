@@ -15,7 +15,7 @@
 
 ## [ DEVELOPER'S NOTES ]  
 // 1. Compilation
-// g++ -o test main.cpp Utility.cpp GUI.cpp prep.cpp Scenes.cpp
+// g++ -o test main.cpp Utility.cpp GUI.cpp prep.cpp Scenes.cpp Station.cpp
 
 // 2. Run executable(.exe) in external console
 // Note: Edit path to your project

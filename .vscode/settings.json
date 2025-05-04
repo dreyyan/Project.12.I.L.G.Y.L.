@@ -115,6 +115,19 @@
     "semaphore": "cpp",
     "sstream": "cpp",
     "stop_token": "cpp",
-    "thread": "cpp"
+    "thread": "cpp",
+    "any": "cpp",
+    "codecvt": "cpp",
+    "condition_variable": "cpp",
+    "cstdarg": "cpp",
+    "forward_list": "cpp",
+    "map": "cpp",
+    "source_location": "cpp",
+    "fstream": "cpp",
+    "mutex": "cpp",
+    "ranges": "cpp",
+    "shared_mutex": "cpp",
+    "typeindex": "cpp",
+    "valarray": "cpp"
   }
 }

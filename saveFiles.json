@@ -6,29 +6,13 @@
       "level": 1,
       "day": 1,
       "currentChapter": 1,
-      "saveTimestamp": "2025-04-09 15:30",
+      "saveTimestamp": "2025-04-15 15:30",
       "playtimeDuration": 0
     },
     "financial_statistics": {
-      "money": 100.0,
+      "money": 50.0,
       "revenue": 0.0,
-      "expenses": 0.0,
-      "debt": 0.0
-    },
-    "personal_statistics": {
-      "happiness": 0.0,
-      "stress": 0.0,
-      "motivation": 0.0
-    },
-    "business_statistics": {
-      "employees": 0,
-      "popularity": 0,
-      "recipesOwned": 1
-    },
-    "game_statistics": {
-      "productsSold": 0,
-      "totalProfit": 0.0,
-      "highestDailyProfit": 0.0
+      "expenses": 0.0
     },
     "stocks": {
       "lemons": 0,
@@ -45,36 +29,20 @@
       "level": 5,
       "day": 7,
       "currentChapter": 1,
-      "saveTimestamp": "2025-04-15 11:10",
+      "saveTimestamp": "2025-04-09 11:10",
       "playtimeDuration": 295
     },
     "financial_statistics": {
       "money": 470.0,
       "revenue": 1300.0,
-      "expenses": 830.0,
-      "debt": 50.0
-    },
-    "personal_statistics": {
-      "happiness": 80.0,
-      "stress": 30.0,
-      "motivation": 90.0
-    },
-    "business_statistics": {
-      "employees": 3,
-      "popularity": 75,
-      "recipesOwned": 5
-    },
-    "game_statistics": {
-      "productsSold": 520,
-      "totalProfit": 470.0,
-      "highestDailyProfit": 190.0
+      "expenses": 830.0
     },
     "stocks": {
-      "lemons": 0,
-      "water": 0,
-      "sugar": 0,
-      "ice": 0,
-      "cups": 0
+      "lemons": 10,
+      "water": 5000,
+      "sugar": 50,
+      "ice": 50,
+      "cups": 5
     }
   },
   {
@@ -90,30 +58,14 @@
     "financial_statistics": {
       "money": 80.0,
       "revenue": 300.0,
-      "expenses": 220.0,
-      "debt": 30.0
-    },
-    "personal_statistics": {
-      "happiness": 60.0,
-      "stress": 55.0,
-      "motivation": 65.0
-    },
-    "business_statistics": {
-      "employees": 1,
-      "popularity": 40,
-      "recipesOwned": 1
-    },
-    "game_statistics": {
-      "productsSold": 140,
-      "totalProfit": 80.0,
-      "highestDailyProfit": 60.0
+      "expenses": 220.0
     },
     "stocks": {
-      "lemons": 0,
-      "water": 0,
-      "sugar": 0,
-      "ice": 0,
-      "cups": 0
+      "lemons": 10,
+      "water": 5000,
+      "sugar": 50,
+      "ice": 50,
+      "cups": 5
     }
   }
 ]

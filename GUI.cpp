@@ -9,10 +9,34 @@
 #include "GUI.h"
 #include "Scenes.h"
 #include "Utility.h"
+#include "Station.h"
 using namespace std;
 /*--------------------- GUI DEFINITIONS ----------------------*/
 int saveFileNum = 0;
 SaveData currentSaveFile;
+
+void debugCurrentSaveFile() {
+    cout << "=== DEBUG: Current Save File ===\n";
+    cout << "Character Name: " << currentSaveFile.player_data.characterName << "\n";
+    cout << "Stand Name: " << currentSaveFile.player_data.standName << "\n";
+    cout << "Level: " << currentSaveFile.player_data.level << "\n";
+    cout << "Day: " << currentSaveFile.player_data.day << "\n";
+    cout << "Chapter: " << currentSaveFile.player_data.currentChapter << "\n";
+    cout << "Save Time: " << currentSaveFile.player_data.saveTimestamp << "\n";
+    cout << "Playtime: " << currentSaveFile.player_data.playtimeDuration << " minutes\n\n";
+  
+    cout << "Money: $" << currentSaveFile.financial_statistics.money << "\n";
+    cout << "Revenue: $" << currentSaveFile.financial_statistics.revenue << "\n";
+    cout << "Expenses: $" << currentSaveFile.financial_statistics.expenses << "\n\n";
+  
+    cout << "Stock:\n";
+    cout << "  Lemons: " << currentSaveFile.stocks.lemons << "\n";
+    cout << "  Water: " << currentSaveFile.stocks.water << " ml\n";
+    cout << "  Sugar: " << currentSaveFile.stocks.sugar << " g\n";
+    cout << "  Ice: " << currentSaveFile.stocks.ice << "\n";
+    cout << "  Cups: " << currentSaveFile.stocks.cups << "\n";
+    cin.get();
+}
 
 void displayHeader() {
     space(1);
@@ -219,15 +243,15 @@ void displayInformation() {
     json data;
     file >> data;
 
-    int lemon = data[saveFileNum]["stocks"]["lemons"];
-    int water = data[saveFileNum]["stocks"]["water"];
-    int sugar = data[saveFileNum]["stocks"]["sugar"];
-    int ice = data[saveFileNum]["stocks"]["ice"];
-    int cups = data[saveFileNum]["stocks"]["cups"];
+    int lemon = currentSaveFile.stocks.lemons;
+    int water = currentSaveFile.stocks.water;
+    int sugar = currentSaveFile.stocks.sugar;
+    int ice = currentSaveFile.stocks.cups;
+    int cups = currentSaveFile.stocks.ice;
 
     // Display Day & Chapter
     goTo(3, 2);
-    cout << " Day " << data[saveFileNum]["player_data"]["day"] << " || Chapter " << data[saveFileNum]["player_data"]["currentChapter"] << " #";
+    cout << " Day " << currentSaveFile.player_data.day << " || Chapter " << currentSaveFile.player_data.currentChapter << " #";
 
     // Display Stocks
     goTo(0, 21);
@@ -240,12 +264,32 @@ void displayInformation() {
     moveCursor(0, 0, 56, 0); cout << setw(7) << "Cups: " << cups << '\n';
 }
 
-    time_t parseTimestamp(const string& timestamp) {
-        tm t = {};
-        istringstream ss(timestamp);
-        ss >> get_time(&t, "%Y-%m-%d %H:%M");
-        return mktime(&t);  // Convert to time_t for comparison
+string formatTime(int hour) {
+    int displayHour = hour % 12;
+    if (displayHour == 0) displayHour = 12;
+    string period = (hour < 12) ? "A.M." : "P.M.";
+    return (hour < 10 ? "0" : "") + to_string(displayHour) + ":00 " + period;
+}
+
+void displayTime(int currentHour) {
+    goTo(62, 2);
+    cout << formatTime(currentHour) << endl;
+}
+
+void updateTime(int &currentHour) {
+    if (currentHour < 20) { // up to 8:00 P.M.
+        currentHour++;
     }
+    goTo(62, 2);
+    cout << formatTime(currentHour) << endl;
+}
+
+time_t parseTimestamp(const string& timestamp) {
+    tm t = {};
+    istringstream ss(timestamp);
+    ss >> get_time(&t, "%Y-%m-%d %H:%M");
+    return mktime(&t);  // Convert to time_t for comparison
+}
     
 void continueGame() {
     ifstream file("saveFiles.json");
@@ -271,6 +315,7 @@ void continueGame() {
         }
     }
     saveFileNum = latestIndex;
+    currentSaveFile = loadSaveData(saveFileNum, "saveFiles.json");
     startGame();
   }
 

@@ -201,30 +201,18 @@ SaveData loadSaveData(int saveFileNum, const std::string& filename) {
       savefile.player_data.characterName     = j.at("player_data").at("characterName");
       savefile.player_data.standName         = j.at("player_data").at("standName");
       savefile.player_data.level             = j.at("player_data").at("level");
+      savefile.player_data.day               = j.at("player_data").at("day");
       savefile.player_data.currentChapter    = j.at("player_data").at("currentChapter");
   
       savefile.financial_statistics.money    = j.at("financial_statistics").at("money");
       savefile.financial_statistics.revenue  = j.at("financial_statistics").at("revenue");
       savefile.financial_statistics.expenses = j.at("financial_statistics").at("expenses");
-      savefile.financial_statistics.debt     = j.at("financial_statistics").at("debt");
-  
-      savefile.personal_statistics.happiness   = j.at("personal_statistics").at("happiness");
-      savefile.personal_statistics.stress      = j.at("personal_statistics").at("stress");
-      savefile.personal_statistics.motivation  = j.at("personal_statistics").at("motivation");
-  
-      savefile.business_statistics.employees     = j.at("business_statistics").at("employees");
-      savefile.business_statistics.popularity    = j.at("business_statistics").at("popularity");
-      savefile.business_statistics.recipesOwned  = j.at("business_statistics").at("recipesOwned");
   
       savefile.stocks.lemons = j.at("stocks").at("lemons");
       savefile.stocks.water  = j.at("stocks").at("water");
       savefile.stocks.sugar  = j.at("stocks").at("sugar");
       savefile.stocks.ice    = j.at("stocks").at("ice");
       savefile.stocks.cups   = j.at("stocks").at("cups");
-  
-      savefile.game_statistics.productsSold      = j.at("game_statistics").at("productsSold");
-      savefile.game_statistics.totalProfit       = j.at("game_statistics").at("totalProfit");
-      savefile.game_statistics.highestDailyProfit = j.at("game_statistics").at("highestDailyProfit");
     } catch (json::out_of_range& e) {
       throw std::runtime_error("Missing or invalid fields in save data: " + std::string(e.what()));
     }
