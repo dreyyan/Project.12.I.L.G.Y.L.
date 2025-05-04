@@ -52,6 +52,8 @@ void displayDayPlan(const DayPlan& plan);
 void saveDayPlan(const DayPlan& plan);
 DayPlan generateDefaultPlan();
 
+DayPlan generateDefaultPlan(const Weather& forecast);
+
 // Start the day!
 void finalizeDayPrep(SaveData& saveData, DayPlan& plan);
 
