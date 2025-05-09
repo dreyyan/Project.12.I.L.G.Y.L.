@@ -363,6 +363,9 @@ void displaySupplyMenu() {
                     currentSaveFile.stocks.cups += (cupsToAdd * cupsIncrement);
                     currentSaveFile.financial_statistics.money -= totalCost;
                     currentSaveFile.financial_statistics.expenses += totalCost;
+                    // Update statistics
+                    currentSaveFile.financial_statistics.expenses += totalCost;
+                    
                     goTo(1, 29);
                     centerText("Purchase complete!");
                     pressEnterToContinue();
@@ -504,7 +507,17 @@ void setPrice() {
     cin >> currentSaveFile.plan.price;
     hideCursor();
     
+    // Set profit estimate
+    currentSaveFile.plan.profitEstimate = currentSaveFile.plan.price - (
+        ((LEMON_COST / 12) * 1.5) +
+        ((SUGAR_COST / 1000) * 25) +
+        ((WATER_COST / 3785)) * 350 +
+        ((ICE_COST / 100)) * 2 +
+        (CUP_COST / 4)
+    );
+
     cout << "    New Price Set: $" << fixed << setprecision(2) << currentSaveFile.plan.price << endl;
+    cout << " Estimated Profit: $" << fixed << setprecision(2) << currentSaveFile.plan.profitEstimate << endl;
     
     space(1);
     displaySpacedFormat(72, '#');
@@ -577,8 +590,9 @@ void displayDayPlan() {
     cout << "      Estimated Profit: $" << fixed << setprecision(2) << currentSaveFile.plan.profitEstimate << endl;
     space(2);
 
-    cout << "               PRICING" << endl;
-    cout << "                Price: $" << currentSaveFile.plan.price << endl;
+    cout << "                PRICING" << endl;
+    cout << "                 Price: $" << currentSaveFile.plan.price << endl;
+    cout << "      Estimated Profit: $" << fixed << setprecision(2) << currentSaveFile.plan.profitEstimate << endl;
     
     // Current stocks
     goTo(36, 7); cout << "                 STOCKS" << endl;

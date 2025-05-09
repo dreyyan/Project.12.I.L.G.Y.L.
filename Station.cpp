@@ -8,6 +8,7 @@
 #include <random>
 #include <chrono>
 #include <thread>
+#include <windows.h>    // For Windows console functions (COORD, HANDLE, etc.)
 
 #include "prep.h"
 #include "Station.h"
@@ -17,8 +18,115 @@
 #include "Utility.h"
 using namespace std;
 
+// Implementation of the skill check function
+int performSkillCheck(int difficulty) {
+    // Save current cursor position to restore later
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    COORD originalPos = csbi.dwCursorPosition;
+    
+    const int BAR_WIDTH = 30;
+    int SUCCESS_START, SUCCESS_END;
+
+    // Adjust difficulty by changing the success zone size
+    switch (difficulty) {
+        case 1: // Easy
+            SUCCESS_START = 8;
+            SUCCESS_END = 22;
+            break;
+        case 2: // Medium
+            SUCCESS_START = 10;
+            SUCCESS_END = 20;
+            break;
+        case 3: // Hard
+            SUCCESS_START = 12;
+            SUCCESS_END = 18;
+            break;
+        default:
+            SUCCESS_START = 10;
+            SUCCESS_END = 20;
+    }
+
+    int pos = 0;
+    int direction = 1;
+    bool running = true;
+
+    // Coordinates for the top-left corner of the bar
+    const short startX = 19;
+    const short startY = 13;
+
+    // Function to draw the bar and arrow
+    auto drawBar = [=](int pos) {
+        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+        // Top border
+        SetConsoleCursorPosition(hConsole, {startX, startY});
+        cout << "+";
+        for (int i = 0; i < BAR_WIDTH; i++) cout << "-";
+        cout << "+";
+
+        // Success zone bar
+        SetConsoleCursorPosition(hConsole, {startX, (short)(startY + 1)});
+        cout << "|";
+        for (int i = 0; i < BAR_WIDTH; i++) {
+            if (i >= SUCCESS_START && i <= SUCCESS_END) cout << "|";
+            else cout << " ";
+        }
+        cout << "|";
+
+        // Bottom border
+        SetConsoleCursorPosition(hConsole, {startX, (short)(startY + 2)});
+        cout << "+";
+        for (int i = 0; i < BAR_WIDTH; i++) cout << "-";
+        cout << "+";
+
+        // Arrow line (overwrite old one)
+        SetConsoleCursorPosition(hConsole, {startX, (short)(startY + 3)});
+        for (int i = 0; i < BAR_WIDTH + 2; i++) cout << " ";
+        SetConsoleCursorPosition(hConsole, {(short)(startX + 1 + pos), (short)(startY + 3)});
+        cout << "^";
+    };
+
+    COORD skillCheckPos = {startX, startY};
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), skillCheckPos);
+
+    while (running) {
+        drawBar(pos);
+
+        if (_kbhit()) {
+            char ch = _getch();
+            if (ch == ' ') {
+                running = false;
+                break;
+            }
+        }
+
+        pos += direction;
+        if (pos >= BAR_WIDTH - 1 || pos <= 0) direction *= -1;
+
+        // Change speed: faster inside success zone
+        if (pos >= SUCCESS_START && pos <= SUCCESS_END)
+            Sleep(1);
+        else
+            Sleep(5);
+    }
+
+    // Calculate the distance from the success zone
+    int distanceFromSuccessZone = 0;
+    if (pos < SUCCESS_START)
+        distanceFromSuccessZone = SUCCESS_START - pos;
+    else if (pos > SUCCESS_END)
+        distanceFromSuccessZone = pos - SUCCESS_END;
+
+    int successPercentage = 100 - ((distanceFromSuccessZone * 100) / (BAR_WIDTH / 2));
+    if (successPercentage < 0) successPercentage = 0;
+    if (successPercentage > 100) successPercentage = 100;
+
+    return successPercentage;
+}
+
 void daySummary() {
-    // UPDATES
+    // Update statistics
     currentSaveFile.player_data.day += 1;
 
     clearScreen();
@@ -26,6 +134,21 @@ void daySummary() {
     displayBlockFormat(72, 1, '#'); space(1);
     centerText("DAY SUMMARY"); space(2);
     displayBlockFormat(72, 1, '#'); space(2);
+
+    cout << "FINANCIAL STATISTICS" << endl;
+    cout << "              Money: $" << fixed << setprecision(2) << currentSaveFile.financial_statistics.money << endl;
+    cout << "            Revenue: $" << fixed << setprecision(2) << currentSaveFile.financial_statistics.revenue << endl;
+    cout << "           Expenses: $" << fixed << setprecision(2) << currentSaveFile.financial_statistics.expenses << endl;
+    cout << "              Price: $" << fixed << setprecision(2) << currentSaveFile.plan.price; space(2);
+
+    cout << "    STOCKS REMAINING" << endl;
+    cout << "             Lemons: " << fixed << setprecision(2) << currentSaveFile.stocks.lemons << endl;
+    cout << "              Water: " << fixed << setprecision(2) << currentSaveFile.stocks.water << endl;
+    cout << "              Sugar: " << fixed << setprecision(2) << currentSaveFile.stocks.sugar << endl;
+    cout << "                Ice: " << fixed << setprecision(2) << currentSaveFile.stocks.ice << endl;
+    cout << "               Cups: " << fixed << setprecision(2) << currentSaveFile.stocks.cups; space(2);
+
+    centerText("Today was a long day...");
 
     goTo(1, 28);
     centerText("Press 'Enter' to continue..."); space(2);
@@ -59,10 +182,15 @@ void customerEvaluation(Customer& customer) {
     displayBlockFormat(72, 1, '#'); space(2);
 
     percentage = (customer.preparationSatisfaction + customer.mixingSatisfaction + customer.servingSatisfaction) / 3.0;
-    moveCursor(0, 0, 10, 0); cout << "[ TOTAL ]: " << percentage << '%'; space(2);
 
-    // Needs Fix: 
-    currentSaveFile.financial_statistics.money += currentSaveFile.plan.price * (percentage / 100.0);
+    // Calculate money earned
+    double moneyEarned = currentSaveFile.plan.price * (percentage / 100.0);
+    // Update Statistics
+    currentSaveFile.financial_statistics.money += moneyEarned;
+    currentSaveFile.financial_statistics.revenue += moneyEarned;
+
+    moveCursor(0, 0, 10, 0); cout << " [ TOTAL SCORE ]: " << percentage << '%'; space(1);
+    moveCursor(0, 0, 10, 0); cout << "[ TOTAL PROFIT ]: $" << moneyEarned;
 
     goTo(1, 28);
     centerText("Press 'Enter' to continue..."); space(2);
@@ -84,19 +212,24 @@ void servingStation(Customer& customer) {
 
     centerText("-= SERVE-IT! =-");
     space(1);
-    centerText("Press 'Enter' to finish order"); space(2);
-    char key1;
-    do {
-        key1 = _getch();
-    } while (key1 != 13);
-;
-    // PLACEHOLDER(Remove after debug)
-    int minigame4Score = 100;
+
+    random_device rd;
+    mt19937 gen(rd());
+
+    // Define the range (1 to 3)
+    uniform_int_distribution<> dis(1, 3);
+
+    centerText("Press [SPACE] to stop the indicator inside the success zone!"); space(2);
+
+    // MINIGAME #4: Serve-It!
+    int successPercentage = performSkillCheck(dis(gen));
+
+    int minigame4Score = successPercentage;
 
     // Save score
     customer.servingSatisfaction = minigame4Score;
 
-    centerText("Order finished!"); delayS(2); space(2);
+    // centerText("Order finished!"); delayS(2); space(2);
     customerEvaluation(customer);
 }
 
@@ -194,7 +327,7 @@ void preparationStation(Customer& customer) {
     if (customer.sugarLevel == "0%") sugarNeeded = 0;
     else if (customer.sugarLevel == "25%") sugarNeeded = 10;
     else if (customer.sugarLevel == "50%") sugarNeeded = 20;
-    else if (customer.sugarLevel == "75%") sugarNeeded = 3;
+    else if (customer.sugarLevel == "75%") sugarNeeded = 30;
     else if (customer.sugarLevel == "100%") sugarNeeded = 40;
 
     int iceNeeded = 0;
@@ -260,7 +393,7 @@ void preparationStation(Customer& customer) {
     for (int i = 0; i < customer.slices; i++) {
         char targetKey = 'A' + rand() % 26; // Random letter from A to Z
     
-        int delaySeconds = 1 + rand() % 5;
+        int delaySeconds = 1 + rand() % 2;
         this_thread::sleep_for(chrono::seconds(delaySeconds));
     
         centerText("PRESS " + string(1, targetKey) + " NOW!"); space(1);

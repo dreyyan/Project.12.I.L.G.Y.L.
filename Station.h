@@ -16,6 +16,7 @@ struct Customer {
     int mixingSatisfaction;
     int servingSatisfaction;
 };
+int performSkillCheck(int difficulty = 1);
 // EVALUATION
 void daySummary();
 void customerEvaluation(Customer& customer);

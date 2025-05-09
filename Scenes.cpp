@@ -730,6 +730,7 @@ void goToGameArea() {
         do {
             key1 = _getch();
             if (key1 == 13) {
+                // servingStation(customer);
                 preparationStation(customer);
             }
         } while (key1 != 13);
@@ -777,8 +778,8 @@ void goToGameArea() {
         // 7. Update time
         updateTime(currentHour);
 
-        // If served 10 customers, finish the day
-        if (customerCounter == 2) {
+        // If served 6 customers, finish the day
+        if (customerCounter == 7) {
             dayFinished = true;
         }
     }

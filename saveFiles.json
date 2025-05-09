@@ -13,7 +13,7 @@
       "money": 0.0,
       "revenue": 0.0,
       "expenses": 0.0
-    },
+    },  
     "stocks": {
       "lemons": 100,
       "water": 10000,
@@ -23,7 +23,7 @@
     },
     "plan": {
       "price": 1.00,
-      "expectedCustomers": 0,
+      "expectedCustomers": 6,
       "profitEstimate": 0,
       "condition": "Cloudy",
       "temperature": 30.0

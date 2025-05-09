@@ -39,6 +39,8 @@ void showBottomNavigationMenu();
 void displayNewGameCutscene();
 // GAME FLOW
 void displayPreGameTransition();
+void showCustomer();
+void customerGenerator();
 void goToGameArea();
 void startGame();
 #endif
