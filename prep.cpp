@@ -53,7 +53,8 @@ void displayDayPrepMenu() {
     displaySpacedFormat(72, '#');
     goTo(1, 1);
 
-    DayPlan plan = generateDefaultPlan();
+    static Weather dailyForecast = generateWeatherForecast();
+    DayPlan plan = generateDefaultPlan(dailyForecast);
     
     /*--------------------- START OF NAVIGATION ----------------------*/
     const int optionCount = 5;
@@ -87,8 +88,7 @@ void displayDayPrepMenu() {
             break;
         }
         case 1: {
-            Weather forecast = generateWeatherForecast();
-            displayWeatherForecast(forecast);
+            displayWeatherForecast(dailyForecast);
             break;
         }
         case 2: {
@@ -386,25 +386,44 @@ Weather generateWeatherForecast() {
     // Simple random weather generation
     Weather forecast;
     
-    const std::string conditions[] = {"Sunny", "Partly Cloudy", "Cloudy", "Rainy", "Stormy"};
+    const std::string conditions[] = {"Sunny", "Partly Cloudy", "Fair", "Cloudy", "Stormy"};
+    
+    // Define temperature ranges for each condition
+    const int tempMin[] = {28, 25, 22, 18, 15}; // Min temps for each condition
+    const int tempMax[] = {40, 35, 32, 28, 25}; // Max temps for each condition
+    
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<> condDist(0, 4);
-    uniform_int_distribution<> tempDist(15, 40);
     
     int condIdx = condDist(gen);
     forecast.condition = conditions[condIdx];
+    
+    // Generate temperature based on the condition
+    uniform_int_distribution<> tempDist(tempMin[condIdx], tempMax[condIdx]);
     forecast.temperature = tempDist(gen);
     
     // Set sales multiplier based on conditions
     double multipliers[] = {1.5, 1.2, 1.0, 0.7, 0.4};
     forecast.salesMultiplier = multipliers[condIdx];
     
-    // Adjust for temperature
-    if (forecast.temperature > 30) {
-        forecast.salesMultiplier += 0.3;
-    } else if (forecast.temperature < 20) {
-        forecast.salesMultiplier -= 0.2;
+    // Adjust for temperature - within the condition's range
+    // For sunny days, hotter is better
+    if (forecast.condition == "Sunny" || forecast.condition == "Partly Cloudy") {
+        // Adjust multiplier based on relative position in the temperature range
+        double tempPercentile = (double)(forecast.temperature - tempMin[condIdx]) / 
+                               (tempMax[condIdx] - tempMin[condIdx]);
+        
+        // Add up to 0.2 bonus for hotter temperatures
+        forecast.salesMultiplier += tempPercentile * 0.2;
+    }
+    // For stormy/cloudy days, warmer weather helps mitigate the negative impact
+    else if (forecast.condition == "Cloudy" || forecast.condition == "Stormy") {
+        double tempPercentile = (double)(forecast.temperature - tempMin[condIdx]) / 
+                               (tempMax[condIdx] - tempMin[condIdx]);
+        
+        // Add up to 0.15 bonus for warmer temperatures
+        forecast.salesMultiplier += tempPercentile * 0.15;
     }
     
     return forecast;
@@ -525,11 +544,10 @@ void setPrice(Recipe& recipe) {
     displayDayPrepMenu();
 }
 
-DayPlan generateDefaultPlan() {
+DayPlan generateDefaultPlan(const Weather& forecast) {
     DayPlan plan;
 
-    // Weather forecast (assumed to be a function returning a forecast object)
-    plan.forecast = generateWeatherForecast();
+    plan.forecast = forecast;
 
     // Default marketing and expectations
     plan.marketingBudget = 0.0;
@@ -563,6 +581,13 @@ DayPlan generateDefaultPlan() {
     plan.profitEstimate = revenue - costs;
 
     return plan;
+}
+
+DayPlan generateDefaultPlan() {
+
+    Weather forecast = generateWeatherForecast();
+
+    return generateDefaultPlan(forecast);
 }
 
 void displayDayPlan(const DayPlan& plan) {
