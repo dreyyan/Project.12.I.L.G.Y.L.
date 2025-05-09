@@ -137,7 +137,7 @@ void displaySupplyMenu() {
     displaySpacedFormat(72, '#');
     space(1);
     
-    // Display current stock and money
+    // Display current stock
     cout << "              $" << fixed << setprecision(2) << currentSaveFile.financial_statistics.money << endl;
     space(1);
     displaySpacedFormat(72, '=');
@@ -503,6 +503,9 @@ void setPrice(Recipe& recipe) {
     showCursor();
     cin >> recipe.price;
     hideCursor();
+
+    // Needs Fix:
+    // Update price set in a file
     
     // Display profit margins
     space(1);

@@ -658,7 +658,10 @@ void goToGameArea() {
     showLemonadeStand();
     showPlayer();
     displayInformation();
+
+    // OTHERS
     displayTime(currentHour);
+    updateMoney();
 
     srand(time(0));
     // CUSTOMER CHARACTERIZATION
@@ -766,15 +769,16 @@ void goToGameArea() {
         // SHOW INFORMATION
         displayTime(currentHour);
         displayInformation();
+        updateMoney();
 
         // 6. Wait 20 seconds before next customer
-        this_thread::sleep_for(chrono::seconds(20));
+        this_thread::sleep_for(chrono::seconds(10));
 
         // 7. Update time
         updateTime(currentHour);
 
         // If served 10 customers, finish the day
-        if (customerCounter == 11) {
+        if (customerCounter == 2) {
             dayFinished = true;
         }
     }

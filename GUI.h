@@ -18,6 +18,7 @@ void displaySaveFiles();
 
 void displayInformation();
 string formatTime(int hour);
+void updateMoney();
 void displayTime(int currentHour);
 void updateTime(int &currentHour);
 // MENU

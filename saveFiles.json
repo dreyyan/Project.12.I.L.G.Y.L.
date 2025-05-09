@@ -10,16 +10,16 @@
       "playtimeDuration": 0
     },
     "financial_statistics": {
-      "money": 50.0,
+      "money": 0.0,
       "revenue": 0.0,
       "expenses": 0.0
     },
     "stocks": {
-      "lemons": 0,
-      "water": 0,
-      "sugar": 0,
-      "ice": 0,
-      "cups": 0
+      "lemons": 100,
+      "water": 10000,
+      "sugar": 100,
+      "ice": 100,
+      "cups": 100
     }
   },
   {

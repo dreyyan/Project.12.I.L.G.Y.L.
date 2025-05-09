@@ -14,6 +14,7 @@ struct Customer {
     string iceAmount;
     int preparationSatisfaction;
     int mixingSatisfaction;
+    int servingSatisfaction;
 };
 // EVALUATION
 void daySummary();

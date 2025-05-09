@@ -271,6 +271,11 @@ string formatTime(int hour) {
     return (hour < 10 ? "0" : "") + to_string(displayHour) + ":00 " + period;
 }
 
+void updateMoney() {
+    goTo(54, 2);
+    cout << "$ " << currentSaveFile.financial_statistics.money;
+}
+
 void displayTime(int currentHour) {
     goTo(62, 2);
     cout << formatTime(currentHour) << endl;

@@ -17,6 +17,9 @@
 using namespace std;
 
 void daySummary() {
+    // UPDATES
+    currentSaveFile.player_data.day += 1;
+
     clearScreen();
     goTo(1, 1);
     displayBlockFormat(72, 1, '#'); space(1);
@@ -32,6 +35,8 @@ void daySummary() {
 }
 
 void customerEvaluation(Customer& customer) {
+    double percentage;
+
     clearScreen();
     goTo(1, 1);
     displayBlockFormat(72, 1, '#'); space(1);
@@ -47,11 +52,19 @@ void customerEvaluation(Customer& customer) {
     moveCursor(0, 0, 10, 0); cout << "Ice: " << customer.iceAmount; space(2);
 
     moveCursor(0, 0, 10, 0); cout << "Preparation Satisfaction: " << customer.preparationSatisfaction << "%"; space(1);
-    moveCursor(0, 0, 10, 0); cout << "Mixing Satisfaction: " << customer.mixingSatisfaction << "%"; space(3);
+    moveCursor(0, 0, 10, 0); cout << "Mixing Satisfaction: " << customer.mixingSatisfaction << "%"; space(1);
+    moveCursor(0, 0, 10, 0); cout << "Serving Satisfaction: " << customer.servingSatisfaction << "%"; space(3);
 
     displayBlockFormat(72, 1, '#'); space(2);
 
-    moveCursor(0, 0, 10, 0); cout << "[ TOTAL ]: " << (customer.preparationSatisfaction + customer.mixingSatisfaction) / 2 << '%'; space(2);
+    // PLACEHOLDER(Remove after debug)
+    customer.servingSatisfaction = 100;
+
+    percentage = (customer.preparationSatisfaction + customer.mixingSatisfaction + customer.servingSatisfaction) / 3 / 100;
+    moveCursor(0, 0, 10, 0); cout << "[ TOTAL ]: " << percentage / 3 << '%'; space(2);
+
+    // Needs Fix: 
+    // currentSaveFile.financial_statistics.money += (price nga ginset sa day prep) * percentage;
 
     goTo(1, 28);
     centerText("Press 'Enter' to continue..."); space(2);
@@ -78,6 +91,12 @@ void servingStation(Customer& customer) {
     do {
         key1 = _getch();
     } while (key1 != 13);
+
+    int score4 = 0;
+    int minigame4Score = 0;
+
+    // Save score
+    customer.servingSatisfaction = minigame4Score;
 
     centerText("Order finished!"); delayS(2); space(2);
     customerEvaluation(customer);
