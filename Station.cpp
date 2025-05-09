@@ -9,6 +9,7 @@
 #include <chrono>
 #include <thread>
 
+#include "prep.h"
 #include "Station.h"
 #include "Portfolio.h"
 #include "GUI.h"
@@ -57,14 +58,11 @@ void customerEvaluation(Customer& customer) {
 
     displayBlockFormat(72, 1, '#'); space(2);
 
-    // PLACEHOLDER(Remove after debug)
-    customer.servingSatisfaction = 100;
-
-    percentage = (customer.preparationSatisfaction + customer.mixingSatisfaction + customer.servingSatisfaction) / 3 / 100;
-    moveCursor(0, 0, 10, 0); cout << "[ TOTAL ]: " << percentage / 3 << '%'; space(2);
+    percentage = (customer.preparationSatisfaction + customer.mixingSatisfaction + customer.servingSatisfaction) / 3.0;
+    moveCursor(0, 0, 10, 0); cout << "[ TOTAL ]: " << percentage << '%'; space(2);
 
     // Needs Fix: 
-    // currentSaveFile.financial_statistics.money += (price nga ginset sa day prep) * percentage;
+    currentSaveFile.financial_statistics.money += currentSaveFile.plan.price * (percentage / 100.0);
 
     goTo(1, 28);
     centerText("Press 'Enter' to continue..."); space(2);
@@ -91,9 +89,9 @@ void servingStation(Customer& customer) {
     do {
         key1 = _getch();
     } while (key1 != 13);
-
-    int score4 = 0;
-    int minigame4Score = 0;
+;
+    // PLACEHOLDER(Remove after debug)
+    int minigame4Score = 100;
 
     // Save score
     customer.servingSatisfaction = minigame4Score;

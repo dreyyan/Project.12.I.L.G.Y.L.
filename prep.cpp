@@ -54,7 +54,6 @@ void displayDayPrepMenu() {
     goTo(1, 1);
 
     static Weather dailyForecast = generateWeatherForecast();
-    DayPlan plan = generateDefaultPlan(dailyForecast);
     
     /*--------------------- START OF NAVIGATION ----------------------*/
     const int optionCount = 5;
@@ -92,15 +91,15 @@ void displayDayPrepMenu() {
             break;
         }
         case 2: {
-            setPrice(plan.recipe);
+            setPrice();
             break;
         }
         case 3: {
-            displayDayPlan(plan);
+            displayDayPlan();
             break;
         }
         case 4: {
-            finalizeDayPrep(currentSaveFile, plan);
+            finalizeDayPrep();
             break;
         }
     }
@@ -478,7 +477,7 @@ void displayWeatherForecast(Weather& forecast) {
     displayDayPrepMenu();
 }
 
-void setPrice(Recipe& recipe) {
+void setPrice() {
     clearScreen();
     displaySpacedFormat(72, '#');
     space(1);
@@ -486,54 +485,26 @@ void setPrice(Recipe& recipe) {
     space(2);
     displaySpacedFormat(72, '#');
     space(1);
-    
-    // Calculate production cost
-    double lemonCost = recipe.lemons * LEMON_COST;
-    double sugarCost = recipe.sugar * SUGAR_COST;
-    double waterCost = recipe.waterRatio * WATER_COST;
-    double iceCost = recipe.ice * ICE_COST;
-    double cupCost = CUP_COST;
-    
-    double costPerPitcher = lemonCost + sugarCost + waterCost;
-    int cupsPerPitcher = recipe.waterRatio / 250; // Assuming 250mL per cup
-    double productionCostPerCup = (costPerPitcher / cupsPerPitcher) + iceCost + cupCost;
-    
-    // Display costs
-    cout << "       PRODUCTION COSTS" << endl;
-    cout << "      Cost per Pitcher: $" << fixed << setprecision(2) << costPerPitcher << endl;
-    cout << "          Cost per Cup: $" << fixed << setprecision(2) << productionCostPerCup << endl;
-    // cout << "      Cups per Pitcher: " << cupsPerPitcher << endl;
-    space(1);
-    
+
     // Display pricing strategy
     cout << "       PRICING STRATEGY" << endl;
-    cout << "      Break-even Price: $" << fixed << setprecision(2) << productionCostPerCup << endl;
-    cout << "      Low Margin (10%): $" << fixed << setprecision(2) << productionCostPerCup * 1.1 << endl;
-    cout << "   Medium Margin (50%): $" << fixed << setprecision(2) << productionCostPerCup * 1.5 << endl;
-    cout << "    High Margin (100%): $" << fixed << setprecision(2) << productionCostPerCup * 2.0 << endl;
+    cout << "      Break-even Price: $" << fixed << setprecision(2) << currentSaveFile.plan.price << endl;
+    cout << "      Low Margin (10%): $" << fixed << setprecision(2) << currentSaveFile.plan.price * 1.1 << endl;
+    cout << "   Medium Margin (50%): $" << fixed << setprecision(2) << currentSaveFile.plan.price * 1.5 << endl;
+    cout << "    High Margin (100%): $" << fixed << setprecision(2) << currentSaveFile.plan.price * 2.0 << endl;
     space(1);
     
     displaySpacedFormat(72, '=');
     space(1);
     
-    cout << "    Current Price: $" << fixed << setprecision(2) << recipe.price << endl;
+    cout << "    Current Price: $" << fixed << setprecision(2) << currentSaveFile.plan.price << endl;
     cout << "  Enter New Price: $";
     
     showCursor();
-    cin >> recipe.price;
+    cin >> currentSaveFile.plan.price;
     hideCursor();
-
-    // Needs Fix:
-    // Update price set in a file
     
-    // Display profit margins
-    space(1);
-    double profitPerCup = recipe.price - productionCostPerCup;
-    double margin = (profitPerCup / productionCostPerCup) * 100;
-    
-    cout << "    New Price Set: $" << fixed << setprecision(2) << recipe.price << endl;
-    cout << "   Profit per Cup: $" << fixed << setprecision(2) << profitPerCup << endl;
-    cout << "    Profit Margin: " << fixed << setprecision(1) << margin << "%" << endl;
+    cout << "    New Price Set: $" << fixed << setprecision(2) << currentSaveFile.plan.price << endl;
     
     space(1);
     displaySpacedFormat(72, '#');
@@ -572,11 +543,11 @@ DayPlan generateDefaultPlan(const Weather& forecast) {
     double productionCostPerCup = (totalCostForIngredients / totalCupsNeeded) + cupCost;
 
     // Profit estimate per cup
-    double profitPerCup = plan.recipe.price - productionCostPerCup;
+    double profitPerCup = currentSaveFile.plan.price - productionCostPerCup;
     double margin = (profitPerCup / productionCostPerCup) * 100;
 
     // Estimate the revenue and profit
-    double revenue = plan.recipe.price * plan.expectedCustomers;
+    double revenue = currentSaveFile.plan.price * plan.expectedCustomers;
     double costs = productionCostPerCup * plan.expectedCustomers + plan.marketingBudget;
     plan.profitEstimate = revenue - costs;
 
@@ -590,7 +561,7 @@ DayPlan generateDefaultPlan() {
     return generateDefaultPlan(forecast);
 }
 
-void displayDayPlan(const DayPlan& plan) {
+void displayDayPlan() {
     clearScreen();
     displaySpacedFormat(72, '#');
     space(1);
@@ -601,10 +572,13 @@ void displayDayPlan(const DayPlan& plan) {
     
     // Business projections
     cout << "       DAILY PROJECTION" << endl;
-    cout << "    Expected Customers: " << static_cast<int>(plan.expectedCustomers) << endl;
-    cout << "     Estimated Revenue: $" << fixed << setprecision(2) << (plan.recipe.price * plan.expectedCustomers) << endl;
-    cout << "      Estimated Profit: $" << fixed << setprecision(2) << plan.profitEstimate << endl;
+    cout << "    Expected Customers: " << currentSaveFile.plan.expectedCustomers << endl;
+    cout << "     Estimated Revenue: $" << fixed << setprecision(2) << (currentSaveFile.plan.price * currentSaveFile.plan.expectedCustomers) << endl;
+    cout << "      Estimated Profit: $" << fixed << setprecision(2) << currentSaveFile.plan.profitEstimate << endl;
     space(2);
+
+    cout << "               PRICING" << endl;
+    cout << "                Price: $" << currentSaveFile.plan.price << endl;
     
     // Current stocks
     goTo(36, 7); cout << "                 STOCKS" << endl;
@@ -616,11 +590,11 @@ void displayDayPlan(const DayPlan& plan) {
 
     // Weather forecast
     goTo(36, 14); cout << "                WEATHER" << endl;
-    goTo(36, 15); cout << "             Condition: " << plan.forecast.condition << endl;
-    goTo(36, 16); cout << "           Temperature: " << plan.forecast.temperature << " *C" << endl;
+    goTo(36, 15); cout << "             Condition: " << currentSaveFile.plan.condition << endl;
+    goTo(36, 16); cout << "           Temperature: " << currentSaveFile.plan.temperature << " *C" << endl;
 
     // Stock check
-    bool sufficientStock = checkStockLevels(currentSaveFile, plan.recipe, static_cast<int>(plan.expectedCustomers));
+    bool sufficientStock = checkStockLevels();
     
     space(2);
     displaySpacedFormat(72, '#');
@@ -637,7 +611,7 @@ void displayDayPlan(const DayPlan& plan) {
     displayDayPrepMenu();
 }
 
-bool checkStockLevels(const SaveData& saveData, const Recipe& recipe, int expectedCups) {
+bool checkStockLevels() {
     // Total requirements for 10 customers
     int totalWaterNeeded = 500 * 10;
     int totalLemonSlicesNeeded = 3 * 10;
@@ -646,14 +620,14 @@ bool checkStockLevels(const SaveData& saveData, const Recipe& recipe, int expect
     int totalSugarNeeded = 40 * 10;
 
     // Check if current stock is sufficient for the total needs
-    return (saveData.stocks.lemons >= totalLemonSlicesNeeded &&
-            saveData.stocks.sugar >= totalSugarNeeded &&
-            saveData.stocks.water >= totalWaterNeeded &&
-            saveData.stocks.ice >= totalIceNeeded &&
-            saveData.stocks.cups >= totalCupsNeeded);
+    return (currentSaveFile.stocks.lemons >= totalLemonSlicesNeeded &&
+            currentSaveFile.stocks.sugar >= totalSugarNeeded &&
+            currentSaveFile.stocks.water >= totalWaterNeeded &&
+            currentSaveFile.stocks.ice >= totalIceNeeded &&
+            currentSaveFile.stocks.cups >= totalCupsNeeded);
 }
 
-void finalizeDayPrep(SaveData& saveData, DayPlan& plan) {
+void finalizeDayPrep() {
     clearScreen();
     displayHeader();
     space(1);
@@ -662,7 +636,7 @@ void finalizeDayPrep(SaveData& saveData, DayPlan& plan) {
     space(2);
     
     // Final checks and warnings
-    bool sufficientStock = checkStockLevels(saveData, plan.recipe, static_cast<int>(plan.expectedCustomers));
+    bool sufficientStock = checkStockLevels();
     
     if (!sufficientStock) { // 1. NOT ENOUGH STOCKS
         cout << "  WARNING: You don't have enough supplies for your projected sales!" << endl;

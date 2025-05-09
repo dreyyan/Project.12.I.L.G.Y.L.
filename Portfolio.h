@@ -32,12 +32,28 @@ struct Stocks {
     int cups;
 };
 
+struct Plan {
+    double price;
+    int lemonsPerPitcher;
+    int sugarPerPitcher;
+    int waterPerPitcher;
+    int icePerPitcher;
+
+    int expectedCustomers;
+    int profitEstimate;
+
+    string condition;
+    int temperature;
+
+};
+
 // MASTERSTRUCT: SaveData
 // Object to store all information
 struct SaveData {
     PlayerData player_data;
     FinancialStats financial_statistics;
     Stocks stocks;
+    Plan plan;
 };
 
 #endif

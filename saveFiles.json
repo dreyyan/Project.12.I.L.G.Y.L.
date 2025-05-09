@@ -20,6 +20,13 @@
       "sugar": 100,
       "ice": 100,
       "cups": 100
+    },
+    "plan": {
+      "price": 1.00,
+      "expectedCustomers": 0,
+      "profitEstimate": 0,
+      "condition": "Cloudy",
+      "temperature": 30.0
     }
   },
   {
@@ -43,6 +50,13 @@
       "sugar": 50,
       "ice": 50,
       "cups": 5
+    },
+    "plan": {
+      "price": 1.00,
+      "expectedCustomers": 0,
+      "profitEstimate": 0,
+      "condition": "Cloudy",
+      "temperature": 30.0
     }
   },
   {
@@ -66,6 +80,13 @@
       "sugar": 50,
       "ice": 50,
       "cups": 5
+    },
+    "plan": {
+      "price": 1.00,
+      "expectedCustomers": 0,
+      "profitEstimate": 0,
+      "condition": "Cloudy",
+      "temperature": 30.0
     }
   }
 ]

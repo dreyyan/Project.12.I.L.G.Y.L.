@@ -272,7 +272,7 @@ string formatTime(int hour) {
 }
 
 void updateMoney() {
-    goTo(54, 2);
+    goTo(40, 2);
     cout << "$ " << currentSaveFile.financial_statistics.money;
 }
 

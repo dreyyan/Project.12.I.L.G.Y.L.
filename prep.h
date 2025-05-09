@@ -36,7 +36,7 @@ void clearState();
 // Inventory management
 void displaySupplyMenu();
 void displaySupplyCosts();
-bool checkStockLevels(const SaveData& saveData, const Recipe& recipe, int expectedCups);
+bool checkStockLevels();
 
 // Weather forecast
 void displayWeatherForecast(Weather& forecast);
@@ -44,17 +44,16 @@ Weather generateWeatherForecast();
 void updateWeatherEffects(Weather& forecast);
 
 // Price setting
-void setPrice(Recipe& recipe);
+void setPrice();
 double calculateSuggestedPrice(const Recipe& recipe, const Weather& forecast);
 
 // Planning overview
-void displayDayPlan(const DayPlan& plan);
-void saveDayPlan(const DayPlan& plan);
+void displayDayPlan();
+void saveDayPlan();
 DayPlan generateDefaultPlan();
-
 DayPlan generateDefaultPlan(const Weather& forecast);
 
 // Start the day!
-void finalizeDayPrep(SaveData& saveData, DayPlan& plan);
+void finalizeDayPrep();
 
 #endif // DAY_PREPARATION_H

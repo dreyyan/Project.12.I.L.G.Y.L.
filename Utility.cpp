@@ -213,6 +213,12 @@ SaveData loadSaveData(int saveFileNum, const std::string& filename) {
       savefile.stocks.sugar  = j.at("stocks").at("sugar");
       savefile.stocks.ice    = j.at("stocks").at("ice");
       savefile.stocks.cups   = j.at("stocks").at("cups");
+
+      savefile.plan.price   = j.at("plan").at("price");
+      savefile.plan.expectedCustomers   = j.at("plan").at("expectedCustomers");
+      savefile.plan.profitEstimate   = j.at("plan").at("profitEstimate");
+      savefile.plan.condition   = j.at("plan").at("condition");
+      savefile.plan.temperature   = j.at("plan").at("temperature");
     } catch (json::out_of_range& e) {
       throw std::runtime_error("Missing or invalid fields in save data: " + std::string(e.what()));
     }
