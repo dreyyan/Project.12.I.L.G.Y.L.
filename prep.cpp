@@ -54,6 +54,9 @@ void displayDayPrepMenu() {
     goTo(1, 1);
 
     static Weather dailyForecast = generateWeatherForecast();
+
+    currentSaveFile.plan.condition = dailyForecast.condition;
+    currentSaveFile.plan.temperature = dailyForecast.temperature;
     
     /*--------------------- START OF NAVIGATION ----------------------*/
     const int optionCount = 5;
@@ -471,6 +474,9 @@ void displayWeatherForecast(Weather& forecast) {
     
     cout << "    Recommendation: " << recommendation << endl;
     space(1);
+
+    currentSaveFile.plan.condition = forecast.condition;
+    currentSaveFile.plan.temperature = forecast.temperature;
     
     displaySpacedFormat(72, '#');
     space(1);
@@ -571,6 +577,9 @@ DayPlan generateDefaultPlan() {
 
     Weather forecast = generateWeatherForecast();
 
+    currentSaveFile.plan.condition = forecast.condition;
+    currentSaveFile.plan.temperature = forecast.temperature;
+
     return generateDefaultPlan(forecast);
 }
 
@@ -582,12 +591,51 @@ void displayDayPlan() {
     space(2);
     displaySpacedFormat(72, '#');
     space(1);
+
+    // Calculate expected customers based on weather conditions
+    // Base customer count
+    int baseCustomers = 10;
+    
+    // Apply weather multiplier - use the generated forecast's sales multiplier
+    double weatherMultiplier = 1.0;
+    
+    // Get the sales multiplier from the current weather forecast
+    if (currentSaveFile.plan.condition == "Sunny") {
+        weatherMultiplier = 1.5;
+    } else if (currentSaveFile.plan.condition == "Partly Cloudy") {
+        weatherMultiplier = 1.2;
+    } else if (currentSaveFile.plan.condition == "Fair") {
+        weatherMultiplier = 1.0;
+    } else if (currentSaveFile.plan.condition == "Cloudy") {
+        weatherMultiplier = 0.7;
+    } else if (currentSaveFile.plan.condition == "Stormy") {
+        weatherMultiplier = 0.4;
+    }
+
+    // Further adjust based on temperature
+    if (currentSaveFile.plan.temperature > 30) {
+        weatherMultiplier += 0.2; // Hot weather increases demand
+    } else if (currentSaveFile.plan.temperature < 20) {
+        weatherMultiplier -= 0.1; // Cold weather decreases demand
+    }
+    
+    // Calculate final customer count
+    currentSaveFile.plan.expectedCustomers = static_cast<int>(baseCustomers * weatherMultiplier);
+    
+    // ENsure maxiumu is 15
+    if (currentSaveFile.plan.expectedCustomers > 15) {
+        currentSaveFile.plan.expectedCustomers = 15;
+    }
+    
+    // Calculate revenue and profit
+    double estimatedRevenue = currentSaveFile.plan.price * currentSaveFile.plan.expectedCustomers;
+    double estimatedProfit = currentSaveFile.plan.profitEstimate * currentSaveFile.plan.expectedCustomers;
     
     // Business projections
     cout << "       DAILY PROJECTION" << endl;
     cout << "    Expected Customers: " << currentSaveFile.plan.expectedCustomers << endl;
-    cout << "     Estimated Revenue: $" << fixed << setprecision(2) << (currentSaveFile.plan.price * currentSaveFile.plan.expectedCustomers) << endl;
-    cout << "      Estimated Profit: $" << fixed << setprecision(2) << currentSaveFile.plan.profitEstimate << endl;
+    cout << "     Estimated Revenue: $" << fixed << setprecision(2) << estimatedRevenue<< endl;
+    cout << "      Estimated Profit: $" << fixed << setprecision(2) << estimatedProfit << endl;
     space(2);
 
     cout << "                PRICING" << endl;

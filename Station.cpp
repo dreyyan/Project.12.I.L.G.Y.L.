@@ -155,6 +155,7 @@ void daySummary() {
     char key1;
     do {
         key1 = _getch();
+        startGame();  
     } while (key1 != 13);
 }
 

@@ -669,7 +669,7 @@ void goToGameArea() {
     vector<string> iceAmount = {"None", "Less Ice", "Regular", "Extra Ice"};
     vector<string> cupSizes = {"Small", "Medium", "Large"};
     vector<int> lemonSlices = {1, 2, 3};
-    static int customerCounter = 1;
+    int customerCounter = 1;
 
     // Wait for 5 seconds before showing the first customer
     delayS(5);
@@ -779,7 +779,7 @@ void goToGameArea() {
         updateTime(currentHour);
 
         // If served 6 customers, finish the day
-        if (customerCounter == 7) {
+        if (customerCounter > currentSaveFile.plan.expectedCustomers) {
             dayFinished = true;
         }
     }
