@@ -785,10 +785,10 @@ void goToGameArea() {
     }
 
     // Prompt user to press 'Enter' to end the day
-    goTo(14, 21);
+    goTo(15, 24);
     cout << "It's closing time...";
 
-    goTo(12, 22);
+    goTo(13, 25);
     cout << "Press 'Enter' to end day";
     char key2;
     do {

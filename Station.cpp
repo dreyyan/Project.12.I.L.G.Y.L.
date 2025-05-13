@@ -135,18 +135,18 @@ void daySummary() {
     centerText("DAY SUMMARY"); space(2);
     displayBlockFormat(72, 1, '#'); space(2);
 
-    cout << "FINANCIAL STATISTICS" << endl;
-    cout << "              Money: $" << fixed << setprecision(2) << currentSaveFile.financial_statistics.money << endl;
-    cout << "            Revenue: $" << fixed << setprecision(2) << currentSaveFile.financial_statistics.revenue << endl;
-    cout << "           Expenses: $" << fixed << setprecision(2) << currentSaveFile.financial_statistics.expenses << endl;
-    cout << "              Price: $" << fixed << setprecision(2) << currentSaveFile.plan.price; space(2);
+    centerText("FINANCIAL STATISTICS");
+    cout << "                              Money: $" << fixed << setprecision(2) << currentSaveFile.financial_statistics.money << endl;
+    cout << "                            Revenue: $" << fixed << setprecision(2) << currentSaveFile.financial_statistics.revenue << endl;
+    cout << "                           Expenses: $" << fixed << setprecision(2) << currentSaveFile.financial_statistics.expenses << endl;
+    cout << "                              Price: $" << fixed << setprecision(2) << currentSaveFile.plan.price; space(2);
 
-    cout << "    STOCKS REMAINING" << endl;
-    cout << "             Lemons: " << fixed << setprecision(2) << currentSaveFile.stocks.lemons << endl;
-    cout << "              Water: " << fixed << setprecision(2) << currentSaveFile.stocks.water << endl;
-    cout << "              Sugar: " << fixed << setprecision(2) << currentSaveFile.stocks.sugar << endl;
-    cout << "                Ice: " << fixed << setprecision(2) << currentSaveFile.stocks.ice << endl;
-    cout << "               Cups: " << fixed << setprecision(2) << currentSaveFile.stocks.cups; space(2);
+    centerText("STOCKS REMAINING");
+    cout << "                             Lemons: " << fixed << setprecision(2) << currentSaveFile.stocks.lemons << endl;
+    cout << "                              Water: " << fixed << setprecision(2) << currentSaveFile.stocks.water << endl;
+    cout << "                              Sugar: " << fixed << setprecision(2) << currentSaveFile.stocks.sugar << endl;
+    cout << "                                Ice: " << fixed << setprecision(2) << currentSaveFile.stocks.ice << endl;
+    cout << "                               Cups: " << fixed << setprecision(2) << currentSaveFile.stocks.cups; space(2);
 
     centerText("Today was a long day...");
 
