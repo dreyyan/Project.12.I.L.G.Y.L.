@@ -13,13 +13,16 @@
 #include "Scenes.h"
 #include "Portfolio.h"
 using namespace std;
-    
+
+// Constants for supply costs - used for pricing calculations and purchasing
 const double LEMON_COST = 5;  // per pack(12 pcs.)
 const double SUGAR_COST = 1.25;  // per sugar bag(1kg)
 const double WATER_COST = 1; // per gallon(3785ml)
 const double ICE_COST = 2; // per pack(100 cubes)
 const double CUP_COST = 4;   // per pack(100 cups)
 
+// Displays the day preparation menu and handles navigation
+// This is the main entry point for the day preparation phase
 void displayDayPrepMenu() {
     clearScreen();
     displaySpacedFormat(72, '#');
@@ -53,8 +56,10 @@ void displayDayPrepMenu() {
     displaySpacedFormat(72, '#');
     goTo(1, 1);
 
+    // Generate a new weather forecast for the day
     static Weather dailyForecast = generateWeatherForecast();
 
+    // Store forecast information in the current save file for later use
     currentSaveFile.plan.condition = dailyForecast.condition;
     currentSaveFile.plan.temperature = dailyForecast.temperature;
     
@@ -65,8 +70,9 @@ void displayDayPrepMenu() {
     int current = 0;
     char key;
     
+    // Menu navigation loop
     while (true) {
-        // Draw '>' cursor
+        // Draw '>' cursor for the currently selected option
         for (int i = 0; i < optionCount; ++i) {
             // Draw ">" at left
             goTo(x[i], y[i]);
@@ -109,18 +115,21 @@ void displayDayPrepMenu() {
     /*---------------------- END OF NAVIGATION -----------------------*/
 }
 
-/*------------------- UTILITY -------------------*/
+/*------------------- UTILITY FUNCTIONS -------------------*/
+// Displays a success message when a setting is updated
 void updateMessage(string message) {
     space(2);
     centerText(" + " + message + " updated successfully!");
     space(1);
 }
 
+// Displays an error message and clears the input buffer
 void errorMessage(string message) {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     centerText("ERROR: " + message);
 }
 
+// Handles input errors by clearing the state and showing an error message
 void clearState() {
     space(1);
     errorMessage("Please enter a valid number");
@@ -130,6 +139,8 @@ void clearState() {
     goTo(1, 23);
 }
 
+// Displays the supply purchase menu and handles transactions
+// Allows the player to buy new supplies for their lemonade stand
 void displaySupplyMenu() {
     clearScreen();
     displaySpacedFormat(72, '#');
@@ -169,8 +180,11 @@ void displaySupplyMenu() {
     displaySpacedFormat(72, '#');
     space(1);
 
+    // Initialize quantities and costs
     int lemonsToAdd = 0, sugarToAdd = 0, waterToAdd = 0, iceToAdd = 0, cupsToAdd = 0;
+    // Set increment amounts for each purchase (matches package sizes)
     int lemonsIncrement = 12, sugarIncrement = 1000, waterIncrement = 3785, iceIncrement = 100, cupsIncrement = 100;
+    // Set quantity multipliers (for future use if bulk purchasing is implemented)
     int lemonsQuantity = 1, sugarQuantity = 1, waterQuantity = 1, iceQuantity = 1, cupsQuantity = 1;
     double totalCost = 0.0;
 
@@ -192,6 +206,7 @@ void displaySupplyMenu() {
     goTo(50, 25);
     cout << cupsToAdd;
 
+    // Display total units to be added
     goTo(66, 21);
     cout << '0';
     goTo(66, 22);
@@ -205,7 +220,7 @@ void displaySupplyMenu() {
 
     char choice;
 
-    // Cursor navigation logic
+    // Cursor navigation logic for supply selection
     const int optionCount = 5;
     int x[optionCount] = { 53, 53, 53, 53, 53 };
     int y[optionCount] = { 21, 22, 23, 24, 25 };
@@ -213,6 +228,7 @@ void displaySupplyMenu() {
     int currentOption = 0;
     char key;
   
+    // Supply purchase menu interaction loop
     while (true) {
         // Draw all cursors
         for (int i = 0; i < optionCount; ++i) {
@@ -243,10 +259,10 @@ void displaySupplyMenu() {
         if (key == 72) { // 'Up Arrow' key
             current = (current - 1 + optionCount) % optionCount;
             currentOption = current;
-        } else if (key == 80) { // 'Down Arrow' key
+        } else if (key == 80) { // 'Down Arrow' key 
             current = (current + 1) % optionCount;
             currentOption = current;
-        } else if (key == 75) { // 'Left Arrow' key
+        } else if (key == 75) { // 'Left Arrow' key - decrease quantity
             switch (currentOption) {
                 case 0: {
                     if (lemonsToAdd > 0) {
@@ -290,7 +306,7 @@ void displaySupplyMenu() {
                     } break;
                 }
             }
-        } else if (key == 77) { // 'Right Arrow' key
+        } else if (key == 77) { // 'Right Arrow' key - increase quantity
             switch (currentOption) {
                 case 0: {
                     if (lemonsToAdd >= 0 && lemonsToAdd < 10) {
@@ -335,9 +351,10 @@ void displaySupplyMenu() {
                 }
             }
         } else {
-            // Separate block for regular keys like 'p' and 'b'
+            // Handle other key inputs (like 'p' for purchase and 'b' for back)
             char key1 = tolower(key);
-            if (key1 == 'p') { // 'p' key
+            if (key1 == 'p') { // 'p' key - execute purchase
+                // Error handling: check if any items are selected
                 if (totalCost == 0) {
                     goTo(0, 29);
                     cout << "                                  ";
@@ -346,7 +363,9 @@ void displaySupplyMenu() {
                     pressEnterToContinue();
                     displaySupplyMenu();
                     return;
-                } else if (totalCost > currentSaveFile.financial_statistics.money) {
+                } 
+                // Error handling: check if player has enough money
+                else if (totalCost > currentSaveFile.financial_statistics.money) {
                     cout << "Total Cost: $" << totalCost << '\n';
                     cout << "Money: $" << currentSaveFile.financial_statistics.money << '\n';
                     cin.get();
@@ -358,7 +377,7 @@ void displaySupplyMenu() {
                     displaySupplyMenu();
                     return;
                 } else {
-                    // Update stocks and money
+                    // Process the purchase: update stocks and financial records
                     currentSaveFile.stocks.lemons += (lemonsToAdd * lemonsIncrement);
                     currentSaveFile.stocks.sugar += (sugarToAdd * sugarIncrement);
                     currentSaveFile.stocks.water += (waterToAdd * waterIncrement);
@@ -366,7 +385,7 @@ void displaySupplyMenu() {
                     currentSaveFile.stocks.cups += (cupsToAdd * cupsIncrement);
                     currentSaveFile.financial_statistics.money -= totalCost;
                     currentSaveFile.financial_statistics.expenses += totalCost;
-                    // Update statistics
+                    // Update expenses for financial tracking
                     currentSaveFile.financial_statistics.expenses += totalCost;
                     
                     goTo(1, 29);
@@ -374,11 +393,12 @@ void displaySupplyMenu() {
                     pressEnterToContinue();
                     displaySupplyMenu();
                 }
-            } else if (key1 == 'b') { // 'b' key
+            } else if (key1 == 'b') { // 'b' key - return to previous menu
                 displayDayPrepMenu();
             }
         }
 
+        // Update the displayed total cost
         goTo(59, 7);
         cout << "      ";
     
@@ -387,6 +407,8 @@ void displaySupplyMenu() {
     }
 }
 
+// Generates a random weather forecast for the day
+// Weather affects customer demand and is a core gameplay mechanics
 Weather generateWeatherForecast() {
     // Simple random weather generation
     Weather forecast;
@@ -397,25 +419,27 @@ Weather generateWeatherForecast() {
     const int tempMin[] = {28, 25, 22, 18, 15}; // Min temps for each condition
     const int tempMax[] = {40, 35, 32, 28, 25}; // Max temps for each condition
     
+    // Setup random number generation
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<> condDist(0, 4);
     
+    // Select a random weather condition
     int condIdx = condDist(gen);
     forecast.condition = conditions[condIdx];
     
-    // Generate temperature based on the condition
+    /// Generate temperature based on the condition (within appropriate range)
     uniform_int_distribution<> tempDist(tempMin[condIdx], tempMax[condIdx]);
     forecast.temperature = tempDist(gen);
     
-    // Set sales multiplier based on conditions
+    // Set base sales multiplier based on conditions
     double multipliers[] = {1.5, 1.2, 1.0, 0.7, 0.4};
     forecast.salesMultiplier = multipliers[condIdx];
     
-    // Adjust for temperature - within the condition's range
-    // For sunny days, hotter is better
+    // Fine-tune the sales multiplier based on temperature within the condition's range
+    // For sunny days, hotter is better for lemonade sales
     if (forecast.condition == "Sunny" || forecast.condition == "Partly Cloudy") {
-        // Adjust multiplier based on relative position in the temperature range
+        // Calculate where in the temperature range this falls (0.0-1.0)
         double tempPercentile = (double)(forecast.temperature - tempMin[condIdx]) / 
                                (tempMax[condIdx] - tempMin[condIdx]);
         
@@ -434,6 +458,7 @@ Weather generateWeatherForecast() {
     return forecast;
 }
 
+// Displays the weather forecast and its potential business impact
 void displayWeatherForecast(Weather& forecast) {
     clearScreen();
     displaySpacedFormat(72, '#');
@@ -448,9 +473,10 @@ void displayWeatherForecast(Weather& forecast) {
     cout << "       Temperature: " << forecast.temperature << " *C" << endl;
     space(1);
     
-    // Business impact
+    // Displays business impact information
     cout << "  BUSINESS INSIGHTS" << endl;
     
+    // Visual representation of expected customer traffic based on sales multiplier
     cout << "  Customer Traffic: ";
     int BarValue = (forecast.salesMultiplier * 10) / 2;
     cout << '[';
@@ -463,6 +489,7 @@ void displayWeatherForecast(Weather& forecast) {
     cout << ']';
     cout << endl;
     
+    // Generate business recommendations based on forecast
     string recommendation;
     if (forecast.salesMultiplier > 1.2) {
         recommendation = "On demand! Stock up and prepare for a busy day.";
@@ -475,6 +502,7 @@ void displayWeatherForecast(Weather& forecast) {
     cout << "    Recommendation: " << recommendation << endl;
     space(1);
 
+    // Store forecast data in the save file for later use
     currentSaveFile.plan.condition = forecast.condition;
     currentSaveFile.plan.temperature = forecast.temperature;
     
@@ -486,6 +514,8 @@ void displayWeatherForecast(Weather& forecast) {
     displayDayPrepMenu();
 }
 
+// Allows the player to set the price for lemonade
+// Shows break-even point and different profit margin options
 void setPrice() {
     clearScreen();
     displaySpacedFormat(72, '#');
@@ -495,7 +525,7 @@ void setPrice() {
     displaySpacedFormat(72, '#');
     space(1);
 
-    // Display pricing strategy
+    // Display pricing strategy suggestions with different margins
     cout << "       PRICING STRATEGY" << endl;
     cout << "      Break-even Price: $" << fixed << setprecision(2) << currentSaveFile.plan.price << endl;
     cout << "      Low Margin (10%): $" << fixed << setprecision(2) << currentSaveFile.plan.price * 1.1 << endl;
@@ -509,17 +539,19 @@ void setPrice() {
     cout << "    Current Price: $" << fixed << setprecision(2) << currentSaveFile.plan.price << endl;
     cout << "  Enter New Price: $";
     
+    // Get price input from user
     showCursor();
     cin >> currentSaveFile.plan.price;
     hideCursor();
     
-    // Set profit estimate
+    // Calculate profit estimate based on ingredients cost per cup
+    // Formula considers the cost of each ingredient needed for one cup of lemonade
     currentSaveFile.plan.profitEstimate = currentSaveFile.plan.price - (
-        ((LEMON_COST / 12) * 1.5) +
-        ((SUGAR_COST / 1000) * 25) +
-        ((WATER_COST / 3785)) * 350 +
-        ((ICE_COST / 100)) * 2 +
-        (CUP_COST / 4)
+        ((LEMON_COST / 12) * 1.5) +    // Cost for 1.5 lemons per cup
+        ((SUGAR_COST / 1000) * 25) +   // Cost for 25g of sugar per cup
+        ((WATER_COST / 3785)) * 350 +  // Cost for 350ml of water per cup
+        ((ICE_COST / 100)) * 2 +       // Cost for 2 ice cubes per cup
+        (CUP_COST / 4)                // Cost of the cup itself (divided by 4 for singles)
     );
 
     cout << "    New Price Set: $" << fixed << setprecision(2) << currentSaveFile.plan.price << endl;
@@ -534,30 +566,32 @@ void setPrice() {
     displayDayPrepMenu();
 }
 
+// Creates a default day plan based on provided weather forecast
 DayPlan generateDefaultPlan(const Weather& forecast) {
     DayPlan plan;
 
     plan.forecast = forecast;
 
-    // Default marketing and expectations
+    // Default marketing and expectations based on weather multiplier
     plan.marketingBudget = 0.0;
     plan.expectedCustomers = 10 * plan.forecast.salesMultiplier;
 
-    // Calculating total ingredients needed for 10 customers
+    // Calculating total ingredients needed for base number of customers (10)
+    // These values establish the recipe for each cup of lemonade
     int totalWaterNeeded = 500 * 10;  // 500 mL per customer, for 10 customers
     int totalLemonSlicesNeeded = 3 * 10;  // 3 lemon slices per customer, for 10 customers
     int totalIceNeeded = 3 * 10;  // 3 ice cubes per customer, for 10 customers
     int totalCupsNeeded = 10;  // 1 cup per customer, for 10 customers
     int totalSugarNeeded = 40 * 10;  // 40g of sugar per customer, for 10 customers
 
-    // Calculating the costs for ingredients based on the amounts required for 10 customers
+    // Calculate costs for ingredients based on the base customer expectation    
     double lemonCost = totalLemonSlicesNeeded * LEMON_COST;
     double sugarCost = totalSugarNeeded * SUGAR_COST;
     double waterCost = totalWaterNeeded * WATER_COST;
     double iceCost = totalIceNeeded * ICE_COST;
     double cupCost = totalCupsNeeded * CUP_COST;
 
-    // Calculating the production cost per cup
+    // Calculate production cost per cup for profitability analysis
     double totalCostForIngredients = lemonCost + sugarCost + waterCost + iceCost;
     double productionCostPerCup = (totalCostForIngredients / totalCupsNeeded) + cupCost;
 
@@ -573,16 +607,22 @@ DayPlan generateDefaultPlan(const Weather& forecast) {
     return plan;
 }
 
+// Generates a default day plan with weather-based initialization
 DayPlan generateDefaultPlan() {
 
+    // Generate random weather for the day
     Weather forecast = generateWeatherForecast();
 
+    // Store weather data in the current save file
     currentSaveFile.plan.condition = forecast.condition;
     currentSaveFile.plan.temperature = forecast.temperature;
 
+    // Generate a day plan based on the forecast
     return generateDefaultPlan(forecast);
 }
 
+// Displays the day plan screen with all relevant business metrics and inventory
+// Shows expected customers, revenue, profit projections, and inventory levels
 void displayDayPlan() {
     clearScreen();
     displaySpacedFormat(72, '#');
@@ -593,26 +633,27 @@ void displayDayPlan() {
     space(1);
 
     // Calculate expected customers based on weather conditions
-    // Base customer count
+    // Base customer count - default number of customers regardless of conditions
     int baseCustomers = 10;
     
-    // Apply weather multiplier - use the generated forecast's sales multiplier
+    // Initialize weather multiplier - will be adjusted based on conditions
     double weatherMultiplier = 1.0;
     
-    // Get the sales multiplier from the current weather forecast
+    // Apply condition-specific multipliers to customer traffic
+    // Better weather = more customers, worse weather = fewer customers
     if (currentSaveFile.plan.condition == "Sunny") {
         weatherMultiplier = 1.5;
     } else if (currentSaveFile.plan.condition == "Partly Cloudy") {
         weatherMultiplier = 1.2;
     } else if (currentSaveFile.plan.condition == "Fair") {
-        weatherMultiplier = 1.0;
+        weatherMultiplier = 1.0;  // Neutral baseline
     } else if (currentSaveFile.plan.condition == "Cloudy") {
         weatherMultiplier = 0.7;
     } else if (currentSaveFile.plan.condition == "Stormy") {
-        weatherMultiplier = 0.4;
+        weatherMultiplier = 0.4;  // Worst case scenario
     }
-
-    // Further adjust based on temperature
+    // Further adjust multiplier based on temperature
+    // Hot weather increases demand for lemonade
     if (currentSaveFile.plan.temperature > 30) {
         weatherMultiplier += 0.2; // Hot weather increases demand
     } else if (currentSaveFile.plan.temperature < 20) {
@@ -622,7 +663,7 @@ void displayDayPlan() {
     // Calculate final customer count
     currentSaveFile.plan.expectedCustomers = static_cast<int>(baseCustomers * weatherMultiplier);
     
-    // ENsure maxiumu is 15
+    // Ensure maxiumum is 15 customers
     if (currentSaveFile.plan.expectedCustomers > 15) {
         currentSaveFile.plan.expectedCustomers = 15;
     }
@@ -631,7 +672,7 @@ void displayDayPlan() {
     double estimatedRevenue = currentSaveFile.plan.price * currentSaveFile.plan.expectedCustomers;
     double estimatedProfit = currentSaveFile.plan.profitEstimate * currentSaveFile.plan.expectedCustomers;
     
-    // Business projections
+    // Display business projections
     cout << "       DAILY PROJECTION" << endl;
     cout << "    Expected Customers: " << currentSaveFile.plan.expectedCustomers << endl;
     cout << "     Estimated Revenue: $" << fixed << setprecision(2) << estimatedRevenue<< endl;
@@ -642,7 +683,7 @@ void displayDayPlan() {
     cout << "                 Price: $" << currentSaveFile.plan.price << endl;
     cout << "      Estimated Profit: $" << fixed << setprecision(2) << currentSaveFile.plan.profitEstimate << endl;
     
-    // Current stocks
+    // Display current stocks
     goTo(36, 7); cout << "                 STOCKS" << endl;
     goTo(36, 8); cout << "                Lemons: " << currentSaveFile.stocks.lemons << " pcs. " << endl;
     goTo(36, 9); cout << "                 Sugar: " << currentSaveFile.stocks.sugar << " g" << endl;
@@ -650,7 +691,7 @@ void displayDayPlan() {
     goTo(36, 11); cout << "                   Ice: " << currentSaveFile.stocks.ice << " cube/s" << endl;
     goTo(36, 12); cout << "                  Cups: " << currentSaveFile.stocks.cups << " pcs." << endl;
 
-    // Weather forecast
+    // Display weather forecast
     goTo(36, 14); cout << "                WEATHER" << endl;
     goTo(36, 15); cout << "             Condition: " << currentSaveFile.plan.condition << endl;
     goTo(36, 16); cout << "           Temperature: " << currentSaveFile.plan.temperature << " *C" << endl;
@@ -662,6 +703,7 @@ void displayDayPlan() {
     displaySpacedFormat(72, '#');
     space(1);
 
+    // Display evaluation result based on stock check
     cout << "  EVALUATION: " << (sufficientStock ? "READY - Ready for the day!" : "INSUFFICIENT - Revise your strategies...") << endl;
     space(1);
     
@@ -673,15 +715,16 @@ void displayDayPlan() {
     displayDayPrepMenu();
 }
 
+// Checks if current inventory is sufficient for expected sales
 bool checkStockLevels() {
-    // Total requirements for 10 customers
+    /// Calculate total requirements based on recipe needs for 10 customers
     int totalWaterNeeded = 500 * 10;
     int totalLemonSlicesNeeded = 3 * 10;
     int totalIceNeeded = 3 * 10;
     int totalCupsNeeded = 10;
     int totalSugarNeeded = 40 * 10;
 
-    // Check if current stock is sufficient for the total needs
+    // Compare current stock with total needs for the minimum viable business day
     return (currentSaveFile.stocks.lemons >= totalLemonSlicesNeeded &&
             currentSaveFile.stocks.sugar >= totalSugarNeeded &&
             currentSaveFile.stocks.water >= totalWaterNeeded &&
@@ -689,6 +732,8 @@ bool checkStockLevels() {
             currentSaveFile.stocks.cups >= totalCupsNeeded);
 }
 
+// Final confirmation screen before starting the sales day
+// Gives warnings if inventory is insufficient and provides options to continue or return
 void finalizeDayPrep() {
     clearScreen();
     displayHeader();
@@ -697,10 +742,10 @@ void finalizeDayPrep() {
     centerText("READY TO START THE DAY?");
     space(2);
     
-    // Final checks and warnings
+    // Check if player has enough stock for projected sales
     bool sufficientStock = checkStockLevels();
     
-    if (!sufficientStock) { // 1. NOT ENOUGH STOCKS
+    if (!sufficientStock) { // Case 1: NOT ENOUGH STOCKS - Show warning
         cout << "  WARNING: You don't have enough supplies for your projected sales!" << endl;
         space(1);
         cout << "  OPTIONS:" << endl;
@@ -715,21 +760,22 @@ void finalizeDayPrep() {
         goTo(1, 28);
         centerText("[ RETURN ]                [ START ]");
 
-        // Cursor navigation logic
+        // Cursor navigation logic for selection menu
         const int optionCount = 2;
         int x[optionCount] = { 19, 45 };
         int y[optionCount] = { 28, 28 };
         int current = 0;
         char key;
     
+        // Menu selection loop - handles keyboard navigation
         while (true) {
-            // Draw all cursors
+            // Draw all cursors and option indicators
             for (int i = 0; i < optionCount; ++i) {
-                // Draw ">>" at left
+                // Draw ">>" at left of current option
                 goTo(x[i] - 3, y[i]);
                 cout << (i == current ? ">>" : "  ");
         
-                // Erase previous "<<" at right if not the current
+                // Erase previous "<<" at right if not the current option
                 if (i != current) {
                     if (i == 0) moveCursor(0, 0, 13, 0);
                     else if (i == 1) moveCursor(0, 0, 12, 0);
@@ -744,6 +790,7 @@ void finalizeDayPrep() {
                 }
             }
 
+            // Process keyboard input for menu navigation
             key = _getch();
             if (key == 75) { // If 'Left Arrow' key is pressed
                 current = (current - 1 + optionCount) % optionCount;
@@ -755,27 +802,29 @@ void finalizeDayPrep() {
             }
         }
 
+        // Handle player's chice
         if (current == 0) {
-            displayDayPrepMenu();
+            displayDayPrepMenu(); // Return to preparation menu
         } else if (current == 1) {
             // displayPreGameTransition();
-            goToGameArea();
+            goToGameArea(); // Proceed to game play despite warnings
         }
-    } else { // 2: ENOUGH STOCKS
+    } else { // Case 2: ENOUGH STOCKS - Regular proceed options
         centerText("-= SELECT =-");
         
         goTo(1, 28);
         centerText("[ RETURN ]                [ START ]");
 
-        // Cursor navigation logic
+        // Same menu navigation logic as above
         const int optionCount = 2;
         int x[optionCount] = { 19, 45 };
         int y[optionCount] = { 28, 28 };
         int current = 0;
         char key;
     
+        // Selection loop for keyboard indicators
         while (true) {
-            // Draw all cursors
+            // Draw all cursors and selection indicators
             for (int i = 0; i < optionCount; ++i) {
                 // Draw ">>" at left
                 goTo(x[i] - 3, y[i]);
@@ -796,6 +845,7 @@ void finalizeDayPrep() {
                 }
             }
 
+            // Process keyboard input
             key = _getch();
             if (key == 75) { // If 'Left Arrow' key is pressed
                 current = (current - 1 + optionCount) % optionCount;
@@ -808,10 +858,10 @@ void finalizeDayPrep() {
         }
 
         if (current == 0) {
-            displayDayPrepMenu();
+            displayDayPrepMenu(); // Return to preparation menu
         } else if (current == 1) {
             // displayPreGameTransition();
-            goToGameArea();
+            goToGameArea(); // Proceed to game play
         }
     }
 }

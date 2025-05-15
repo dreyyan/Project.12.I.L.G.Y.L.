@@ -1,24 +1,24 @@
 /*----------------------- HEADER FILES -----------------------*/
-#include <conio.h> // _getch()
-#include <iomanip>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <random>
-#include <chrono>
-#include <thread>
+#include <conio.h>      // _getch()
+#include <iomanip> 
+#include <iostream> 
+#include <fstream> 
+#include <string> 
+#include <vector>       // For dynamic arrays
+#include <random>       // For random number generation
+#include <chrono>       // For timing functions
+#include <thread>       // For sleep and thread management
 #include <windows.h>    // For Windows console functions (COORD, HANDLE, etc.)
 
-#include "prep.h"
-#include "Station.h"
-#include "Portfolio.h"
-#include "GUI.h"
-#include "Scenes.h"
-#include "Utility.h"
+#include "prep.h" 
+#include "Station.h" 
+#include "Portfolio.h" 
+#include "GUI.h" 
+#include "Scenes.h" 
+#include "Utility.h" 
 using namespace std;
 
-// Implementation of the skill check function
+// Performs a skill check minigame where player must time a spacebar press
 int performSkillCheck(int difficulty) {
     // Save current cursor position to restore later
     CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -30,32 +30,32 @@ int performSkillCheck(int difficulty) {
 
     // Adjust difficulty by changing the success zone size
     switch (difficulty) {
-        case 1: // Easy
+        case 1: // Easy - larger success zone
             SUCCESS_START = 8;
             SUCCESS_END = 22;
             break;
-        case 2: // Medium
+        case 2: // Medium - medium success zone
             SUCCESS_START = 10;
             SUCCESS_END = 20;
             break;
-        case 3: // Hard
+        case 3: // Hard - smaller success zone
             SUCCESS_START = 12;
             SUCCESS_END = 18;
             break;
-        default:
+        default: // Default to medium if invalid difficulty provided
             SUCCESS_START = 10;
             SUCCESS_END = 20;
     }
-
-    int pos = 0;
-    int direction = 1;
+    
+    int pos = 0; // Starting position of the marker
+    int direction = 1; // Direction of marker movement (1=right, -1=left)
     bool running = true;
 
     // Coordinates for the top-left corner of the bar
     const short startX = 19;
     const short startY = 13;
 
-    // Function to draw the bar and arrow
+    // Function to draw the skill check bar and moving arrow
     auto drawBar = [=](int pos) {
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -65,11 +65,11 @@ int performSkillCheck(int difficulty) {
         for (int i = 0; i < BAR_WIDTH; i++) cout << "-";
         cout << "+";
 
-        // Success zone bar
+        // Success zone bar - vertical bars represent the success zone
         SetConsoleCursorPosition(hConsole, {startX, (short)(startY + 1)});
         cout << "|";
         for (int i = 0; i < BAR_WIDTH; i++) {
-            if (i >= SUCCESS_START && i <= SUCCESS_END) cout << "|";
+            if (i >= SUCCESS_START && i <= SUCCESS_END) cout << "|"; // success zone
             else cout << " ";
         }
         cout << "|";
@@ -84,15 +84,17 @@ int performSkillCheck(int difficulty) {
         SetConsoleCursorPosition(hConsole, {startX, (short)(startY + 3)});
         for (int i = 0; i < BAR_WIDTH + 2; i++) cout << " ";
         SetConsoleCursorPosition(hConsole, {(short)(startX + 1 + pos), (short)(startY + 3)});
-        cout << "^";
+        cout << "^"; // Draw the arrow at current position
     };
 
     COORD skillCheckPos = {startX, startY};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), skillCheckPos);
 
+     // Main skill check loop
     while (running) {
         drawBar(pos);
 
+        // Check for spacebar press
         if (_kbhit()) {
             char ch = _getch();
             if (ch == ' ') {
@@ -101,17 +103,18 @@ int performSkillCheck(int difficulty) {
             }
         }
 
+        // Move the position and bounce at the edges
         pos += direction;
         if (pos >= BAR_WIDTH - 1 || pos <= 0) direction *= -1;
 
-        // Change speed: faster inside success zone
+        // Change speed: faster inside success zone for increased difficulty
         if (pos >= SUCCESS_START && pos <= SUCCESS_END)
             Sleep(1);
         else
             Sleep(5);
     }
 
-    // Calculate the distance from the success zone
+    // Calculate the success percentage based on distance from success zone
     int distanceFromSuccessZone = 0;
     if (pos < SUCCESS_START)
         distanceFromSuccessZone = SUCCESS_START - pos;
@@ -125,22 +128,26 @@ int performSkillCheck(int difficulty) {
     return successPercentage;
 }
 
+// Shows the end-of-day summary and updates game statistics
 void daySummary() {
-    // Update statistics
+    // Update statistics - increment day count
     currentSaveFile.player_data.day += 1;
 
+    // Display day summary screen
     clearScreen();
     goTo(1, 1);
     displayBlockFormat(72, 1, '#'); space(1);
     centerText("DAY SUMMARY"); space(2);
     displayBlockFormat(72, 1, '#'); space(2);
 
+    // Display financial information
     centerText("FINANCIAL STATISTICS");
     cout << "                              Money: $" << fixed << setprecision(2) << currentSaveFile.financial_statistics.money << endl;
     cout << "                            Revenue: $" << fixed << setprecision(2) << currentSaveFile.financial_statistics.revenue << endl;
     cout << "                           Expenses: $" << fixed << setprecision(2) << currentSaveFile.financial_statistics.expenses << endl;
     cout << "                              Price: $" << fixed << setprecision(2) << currentSaveFile.plan.price; space(2);
 
+    // Display remaining inventory
     centerText("STOCKS REMAINING");
     cout << "                             Lemons: " << fixed << setprecision(2) << currentSaveFile.stocks.lemons << endl;
     cout << "                              Water: " << fixed << setprecision(2) << currentSaveFile.stocks.water << endl;
@@ -150,49 +157,59 @@ void daySummary() {
 
     centerText("Today was a long day...");
 
+    // Wait for user to continue
     goTo(1, 28);
     centerText("Press 'Enter' to continue..."); space(2);
     char key1;
     do {
         key1 = _getch();
-        startGame();  
+        startGame();  // Start next day
     } while (key1 != 13);
 }
 
+// Shows customer order evaluation and calculate profits
 void customerEvaluation(Customer& customer) {
     double percentage;
 
+    // Display evaluation screen
     clearScreen();
     goTo(1, 1);
     displayBlockFormat(72, 1, '#'); space(1);
     centerText("EVALUATION"); space(2);
     displayBlockFormat(72, 1, '#'); space(2);
 
+    // Show customer information
     moveCursor(0, 0, 10, 0); cout << "Customer Number: " << customer.customerNumber; space(1);
     moveCursor(0, 0, 10, 0); cout << "Name: " << customer.name; space(2);
 
+    // Show order details
     moveCursor(0, 0, 10, 0); cout << "Cup Size: " << customer.cupSize; space(1);
     moveCursor(0, 0, 10, 0); cout << "Lemon Slices: " << customer.slices; space(1);
     moveCursor(0, 0, 10, 0); cout << "Sugar Level: " << customer.sugarLevel; space(1);
     moveCursor(0, 0, 10, 0); cout << "Ice: " << customer.iceAmount; space(2);
 
+    // Show satisfaction metrics
     moveCursor(0, 0, 10, 0); cout << "Preparation Satisfaction: " << customer.preparationSatisfaction << "%"; space(1);
     moveCursor(0, 0, 10, 0); cout << "Mixing Satisfaction: " << customer.mixingSatisfaction << "%"; space(1);
     moveCursor(0, 0, 10, 0); cout << "Serving Satisfaction: " << customer.servingSatisfaction << "%"; space(3);
 
     displayBlockFormat(72, 1, '#'); space(2);
 
+    // Calculate average satisfaction percentage
     percentage = (customer.preparationSatisfaction + customer.mixingSatisfaction + customer.servingSatisfaction) / 3.0;
 
-    // Calculate money earned
+    // Calculate money earned based on satisfaction
     double moneyEarned = currentSaveFile.plan.price * (percentage / 100.0);
-    // Update Statistics
+    
+    // Update financial statistics
     currentSaveFile.financial_statistics.money += moneyEarned;
     currentSaveFile.financial_statistics.revenue += moneyEarned;
 
+    // Display final results
     moveCursor(0, 0, 10, 0); cout << " [ TOTAL SCORE ]: " << percentage << '%'; space(1);
     moveCursor(0, 0, 10, 0); cout << "[ TOTAL PROFIT ]: $" << moneyEarned;
 
+    // Wait for user to continue
     goTo(1, 28);
     centerText("Press 'Enter' to continue..."); space(2);
     char key1;
@@ -201,7 +218,9 @@ void customerEvaluation(Customer& customer) {
     } while (key1 != 13);
 }
 
+// Final staton for serving lemonade
 void servingStation(Customer& customer) {
+    // Dsiaplay serving station screen
     clearScreen();
     displayBlockFormat(72, 1, '#'); space(1);
     centerText("      PREPARATION                MIXING               [SERVING]        ");
@@ -214,27 +233,30 @@ void servingStation(Customer& customer) {
     centerText("-= SERVE-IT! =-");
     space(1);
 
+    // Initialize random number generator
     random_device rd;
     mt19937 gen(rd());
 
-    // Define the range (1 to 3)
+    // Define the difficulty range (1 to 3)
     uniform_int_distribution<> dis(1, 3);
 
     centerText("Press [SPACE] to stop the indicator inside the success zone!"); space(2);
 
-    // MINIGAME #4: Serve-It!
+    // MINIGAME #4: Serve-It! - Timing-based minigame
     int successPercentage = performSkillCheck(dis(gen));
 
     int minigame4Score = successPercentage;
 
-    // Save score
+    // Save score to customer object
     customer.servingSatisfaction = minigame4Score;
 
-    // centerText("Order finished!"); delayS(2); space(2);
+    // Proceed to customer evaluation
     customerEvaluation(customer);
 }
 
+// Mixing station for making the lemonade
 void mixingStation(Customer& customer) {
+    // Display mixing station screen
     clearScreen();
     displayBlockFormat(72, 1, '#'); space(1);
     centerText("      PREPARATION               [MIXING]                SERVING        ");
@@ -244,7 +266,7 @@ void mixingStation(Customer& customer) {
     space(2);
     displayBlockFormat(72, 1, '#'); space(1);
 
-    // MINIGAME 3: MIX MIX MIX!
+    // MINIGAME 3: MIX MIX MIX! - Reaction time minigame
     centerText("-= MIX MIX MIX! =-");
     space(1);
     centerText("Press 'Enter' to mix!"); space(2);
@@ -253,6 +275,7 @@ void mixingStation(Customer& customer) {
         key1 = _getch();
     } while (key1 != 13);
 
+    // Initialize random seed
     srand(static_cast<unsigned>(time(0)));  // Random seed based on time
     int score3 = 0;
     int minigame3Score = 0;
@@ -269,11 +292,11 @@ void mixingStation(Customer& customer) {
     // Randomize key sequence for WASD
     char keys[] = {'W', 'A', 'S', 'D'};
     
-    // Loop through each message and ask the player to press a random key
+    // Loop through each mixing step
     for (int i = 0; i < 5; ++i) {
         char targetKey = keys[rand() % 4]; // Randomly select W, A, S, or D
 
-        // Display message
+        // Display message (current mixing step)
         centerText(messages[i]);
         space(1);
         
@@ -285,7 +308,7 @@ void mixingStation(Customer& customer) {
         char input = toupper(_getch()); // Capture user input
         auto end = chrono::steady_clock::now();
         
-        // Check if the key pressed matches the target key
+        // Score based on correctness and reaction time
         if (input == targetKey) {
             double reactionTime = chrono::duration<double>(end - start).count();
             if (reactionTime <= 1.0) {
@@ -299,13 +322,14 @@ void mixingStation(Customer& customer) {
             centerText("Oops! Wrong key. +0%"); space(1);
         }
 
+        // Add step score to total minigame score
         minigame3Score += score3;
 
         // Short pause before next round
         this_thread::sleep_for(chrono::seconds(1));
     }
 
-    // Save score
+    // Save mixing satisfaction score to customer object
     customer.mixingSatisfaction = minigame3Score;
 
     // Proceed to the next station
@@ -319,11 +343,12 @@ void mixingStation(Customer& customer) {
         }
     } while (key2 != 13);
 }
-
+// Preparation station for preparing lemonade ingredients
 void preparationStation(Customer& customer) {
     bool canServeCustomer = true;
 
-    // 1. Convert needed stocks
+    // 1. Convert customer preferences to required stock amounts
+    // Calculate sugar needed based on sugar level preference
     int sugarNeeded = 0;
     if (customer.sugarLevel == "0%") sugarNeeded = 0;
     else if (customer.sugarLevel == "25%") sugarNeeded = 10;
@@ -331,24 +356,27 @@ void preparationStation(Customer& customer) {
     else if (customer.sugarLevel == "75%") sugarNeeded = 30;
     else if (customer.sugarLevel == "100%") sugarNeeded = 40;
 
+    // Calculate ice needed based on ice amount preference
     int iceNeeded = 0;
     if (customer.iceAmount == "None") iceNeeded = 0;
     else if (customer.iceAmount == "Less Ice") iceNeeded = 1;
     else if (customer.iceAmount == "Regular") iceNeeded = 2;
     else if (customer.iceAmount == "Extra Ice") iceNeeded = 3;
 
+    // Calculate water needed based on cup size
     int waterNeeded = 0;
     if (customer.cupSize == "Small") waterNeeded = 200;
     else if (customer.cupSize == "Medium") waterNeeded = 350;
     else if (customer.cupSize == "Large") waterNeeded = 500;
 
-    // 2. Check if stocks are enough
+    // 2. Check if sufficient stocks are available
     if (currentSaveFile.stocks.lemons < customer.slices) canServeCustomer = false;
     if (currentSaveFile.stocks.water < waterNeeded) canServeCustomer = false;
     if (currentSaveFile.stocks.sugar < sugarNeeded) canServeCustomer = false;
     if (currentSaveFile.stocks.cups < 1) canServeCustomer = false;
     if (currentSaveFile.stocks.ice < iceNeeded) canServeCustomer = false;
 
+    // Handle insufficient stocks scenario
     if (!canServeCustomer) {
         goTo(1, 1);
         displayBlockFormat(72, 30, ' ');
@@ -365,14 +393,14 @@ void preparationStation(Customer& customer) {
         return;
     }
 
-    // 3. Update stocks
+    // 3. Update stocks or deduct used ingredients from inventory
     currentSaveFile.stocks.lemons -= customer.slices;
     currentSaveFile.stocks.water -= waterNeeded;
     currentSaveFile.stocks.sugar -= sugarNeeded;
     currentSaveFile.stocks.cups -= 1;
     currentSaveFile.stocks.ice -= iceNeeded;
 
-    // MINIGAME 1: CATCH THE LEMON
+    // MINIGAME 1: CATCH THE LEMON - Reaction time game
     clearScreen();
     displayBlockFormat(72, 1, '#'); space(1);
     centerText("      [PREPARATION]              MIXING                 SERVING        ");
@@ -391,19 +419,24 @@ void preparationStation(Customer& customer) {
 
     srand(time(0));
 
+    // Process each lemon slice in order
     for (int i = 0; i < customer.slices; i++) {
         char targetKey = 'A' + rand() % 26; // Random letter from A to Z
     
+        // Random delay to make timing challenging
         int delaySeconds = 1 + rand() % 2;
         this_thread::sleep_for(chrono::seconds(delaySeconds));
     
+        // Show key to press
         centerText("PRESS " + string(1, targetKey) + " NOW!"); space(1);
         auto start = chrono::steady_clock::now();
     
+        // Get user input and calculate reaction time
         char input = toupper(_getch());
         auto end = chrono::steady_clock::now();
         double reactionTime = chrono::duration<double>(end - start).count();
     
+        // Score based on correctness and speed
         if (input == targetKey) {
             if (reactionTime <= 1.0) {
                 centerText("Perfect! 100%"); space(2);
@@ -421,6 +454,7 @@ void preparationStation(Customer& customer) {
         minigame1Score += score1;
     }
 
+    // Calculate average score across all lemon slices
     minigame1Score /= customer.slices;
 
     // Proceed to the next minigame
@@ -431,7 +465,7 @@ void preparationStation(Customer& customer) {
         key1 = _getch();
     } while (key1 != 13);
 
-    // CLEAR
+    // CLEAR previous minigame display
     goTo(1, 29);
     displayBlockFormat(72, 1, ' ');
 
@@ -439,7 +473,7 @@ void preparationStation(Customer& customer) {
     displayBlockFormat(72, 18, ' ');
     goTo(1, 11);
     
-    // MINIGAME 2: SUGAR RUSH!
+    // MINIGAME 2: SUGAR RUSH! - Choice matching game
     centerText("-= SUGAR -=- RUSH! =-");
     space(1);
     centerText("Select the customer's preferred sugar level:"); space(2);
@@ -448,11 +482,13 @@ void preparationStation(Customer& customer) {
     int score2 = 0;
     int minigame2Score = 0;
 
+    // Define sugar level options
     vector<string> sugarLevels = {"0%", "25%", "50%", "75%", "100%"};
 
     char input = _getch();  // wait for key press
     int index = input - '1';  // convert char '1'-'5' to index 0-4
 
+    // Score based on how close selection is to correct sugar level
     if (index >= 0 && index < sugarLevels.size()) {
         string chosenLevel = sugarLevels[index];
         space(1);
@@ -476,7 +512,7 @@ void preparationStation(Customer& customer) {
 
     minigame2Score += score2;
     
-    // Save scores
+    // Save preparation satisfaction score (average of both minigames)
     customer.preparationSatisfaction = (minigame1Score + minigame2Score) / 2;
 
     // Proceed to the next station
@@ -495,13 +531,15 @@ void preparationStation(Customer& customer) {
     } while (key2 != 13);
 }
 
+// Generates a random customer name
 string generateRandomName() {
     vector<string> names = {"Alex", "Chris", "Taylor", "Jordan", "Jamie", "Morgan", "Casey", "Riley", "Sam", "Charlie"};
     return names[rand() % names.size()];
 }
 
+// Saves customer order details to a file
 void saveCustomerData(const Customer& customer) {
-    ofstream outFile("orders.txt", ios::app);
+    ofstream outFile("orders.txt", ios::app); // Open fila in append mode
     if (outFile.is_open()) {
         outFile << "Customer #" << customer.customerNumber << ": " << customer.name << "\n";
         outFile << "     Slices: " << customer.slices << "\n";
@@ -516,6 +554,7 @@ void saveCustomerData(const Customer& customer) {
     }
 }
 
+// Displays customer order notification on screen
 void displayOrderNotification(const Customer& customer) {
     goTo(14, 21);
     cout << "A CUSTOMER HAS ARRIVED!";

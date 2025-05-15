@@ -13,8 +13,9 @@
 using namespace std;
 /*--------------------- GUI DEFINITIONS ----------------------*/
 int saveFileNum = 0;
-SaveData currentSaveFile;
+SaveData currentSaveFile; // holds current saved data
 
+// Displays all current values of the loaded save file for debbuging 
 void debugCurrentSaveFile() {
     cout << "=== DEBUG: Current Save File ===\n";
     cout << "Character Name: " << currentSaveFile.player_data.characterName << "\n";
@@ -38,6 +39,7 @@ void debugCurrentSaveFile() {
     cin.get();
 }
 
+// Game's header
 void displayHeader() {
     space(1);
     displaySpacedFormat(72, '#');
@@ -56,6 +58,7 @@ void displayHeader() {
     displaySpacedFormat(72, '#');
 }
 
+// Creation of a new game file with character and stand name
 void createNewGame() {
     // Loops infinitely until user saves changes
     while (true) {
@@ -131,6 +134,7 @@ void createNewGame() {
     }
 }
 
+// Loads save data or starts new game based on the save file or when the last part the player exited
 void createOrLoad() {
     // Get data from json file
     ifstream file("saveFiles.json");
@@ -154,6 +158,7 @@ void createOrLoad() {
     }
 }
 
+// Shows all existing save files 
 void displaySaveFiles() { // Invalid json read
     ifstream file("saveFiles.json");
     if (!file.is_open()) {
@@ -170,6 +175,7 @@ void displaySaveFiles() { // Invalid json read
       centerText("SAVE #" + to_string(i + 1));
       space(1);
   
+  	 // Show eaxh save' summary 
       string name = data[i]["player_data"]["characterName"];
       string stand = data[i]["player_data"]["standName"];
       int lvl = data[i]["player_data"]["level"];
@@ -232,6 +238,7 @@ void displaySaveFiles() { // Invalid json read
     /*---------------------- END of NAVIGATION -----------------------*/
 }
 
+// Displays stock and status information 
 void displayInformation() {
     // Get data from json file
     ifstream file("saveFiles.json");
@@ -264,6 +271,7 @@ void displayInformation() {
     moveCursor(0, 0, 56, 0); cout << setw(7) << "Cups: " << cups << '\n';
 }
 
+// Converts 24-hour format to 12-hour with AM/PM 
 string formatTime(int hour) {
     int displayHour = hour % 12;
     if (displayHour == 0) displayHour = 12;
@@ -271,16 +279,19 @@ string formatTime(int hour) {
     return (hour < 10 ? "0" : "") + to_string(displayHour) + ":00 " + period;
 }
 
+// Upates money displays 
 void updateMoney() {
     goTo(40, 2);
     cout << "$ " << currentSaveFile.financial_statistics.money;
 }
 
+// Displays current time in game time
 void displayTime(int currentHour) {
     goTo(62, 2);
     cout << formatTime(currentHour) << endl;
 }
 
+// Increments and updates time
 void updateTime(int &currentHour) {
     if (currentHour < 20) { // up to 8:00 P.M.
         currentHour++;
@@ -296,6 +307,7 @@ time_t parseTimestamp(const string& timestamp) {
     return mktime(&t);  // Convert to time_t for comparison
 }
     
+// Loads the most recent save file 
 void continueGame() {
     ifstream file("saveFiles.json");
     if (!file.is_open()) {
@@ -324,6 +336,7 @@ void continueGame() {
     startGame();
   }
 
+// Displays the save file selection menu
 void displayStartMenu() {
     displaySpacedFormat(72, '#');
     centerText("S  E  L  E  C  T    S  A  V  E");
@@ -337,6 +350,7 @@ void displayExitMenu() {
     exit(0);
 }
 
+// Main menu for the game 
 void displayMainMenu() {
     displayHeader();
     space(2);

@@ -16,11 +16,13 @@ using namespace std;
 /*-------------------- SCENES DEFINITIONS ---------------------*/
 queue<Customer> customerQueue;
 
+// Waits for the user to press Enter to continue
 void pressEnterToContinue() {
     goTo(23, 30);
     cout << "Press 'Enter' to Continue...";
     char key;
 
+    // Loop until Enter key is pressed
     while (true) {
         key = _getch();
         if (key == 13) { // If 'Enter' key is pressed
@@ -29,6 +31,7 @@ void pressEnterToContinue() {
     }
 }
 
+// Displays the welcome screen
 void displayText1() {
 cout << R"(########################################################################
 #::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::#
@@ -37,6 +40,7 @@ cout << R"(#####################################################################
 #####################                              #####################)";
 }
 
+// Display a second message indicating good fortune
 void displayText2() {
     goTo(1, 26);
 cout << R"(########################################################################
@@ -46,6 +50,7 @@ cout << R"(#####################################################################
 #####################                              #####################)";
 }
 
+// Displays a suspenseful message
 void displayText3() {
     goTo(1, 26);
 cout << R"(########################################################################
@@ -55,6 +60,7 @@ cout << R"(#####################################################################
 #####################                              #####################)";
 }
 
+// Reveals the prize which is a lemon
 void displayText4() {
     goTo(1, 26);
 cout << R"(########################################################################
@@ -64,6 +70,7 @@ cout << R"(#####################################################################
 #####################                              #####################)";
 }
 
+// Displays a shock or confused reaction of the customer
 void displayText5() {
     goTo(1, 26);
 cout << R"(########################################################################
@@ -73,6 +80,7 @@ cout << R"(#####################################################################
 #####################                              #####################)";
 }
 
+// Continues the character's disbelief in receiving a lemon
 void displayText6() {
     goTo(1, 26);
 cout << R"(########################################################################
@@ -82,6 +90,7 @@ cout << R"(#####################################################################
 #####################                              #####################)";
 }
 
+// Shows a moment of silent pause or contemplation
 void displayText7() {
     goTo(1, 26);
 cout << R"(########################################################################
@@ -91,18 +100,22 @@ cout << R"(#####################################################################
 #####################                              #####################)";
 }
 
+// Displays ASCII clouds near the top of the screen
 void showClouds() {
     goTo(0, 4);
     cout << "     .--.           .--.     .--.           .--.     .--.     " << endl;
 }
 
+// Clears the cloud graphics
 void hideClouds() {
     goTo(0, 4);
     cout << "                                                              " << endl;
 }
 
+// Displays an ASCII art lemonade stand
 void showLemonadeStand() {
     goTo(0, 6);
+    // Print each line of the lemonade stand using cursor movement
     moveCursor(0, 0, 9, 0); cout << " /******\\"; space(1);
     moveCursor(0, 0, 9, 0); cout << "/########\\"; space(1);
     moveCursor(0, 0, 9, 0); cout << "   [__]"; space(1);
@@ -118,6 +131,7 @@ void showLemonadeStand() {
     moveCursor(0, 0, 9, 0); cout << " ######"; space(1);
 }
 
+// Hides the lemonade stand 
 void hideLemonadeStand() {
     goTo(0, 7);
     moveCursor(0, 0, 8, 0); cout << "          "; space(1);
@@ -134,8 +148,10 @@ void hideLemonadeStand() {
     moveCursor(0, 0, 8, 0); cout << "          "; space(1);
 }
 
+// Displays the player character in ASCII art
 void showPlayer() {
     goTo(0, 8);
+    // Render the player character line by line
     moveCursor(0, 0, 3, 0); cout << "  .,,,  "; space(1);
     moveCursor(0, 0, 3, 0); cout << "  # 0|"; space(1);
     moveCursor(0, 0, 3, 0); cout << "  #  |"; space(1);
@@ -149,6 +165,7 @@ void showPlayer() {
     moveCursor(0, 0, 3, 0); cout << "  |__]]"; space(1);
 }
 
+// Hides the player character from the screen
 void hidePlayer() {
     goTo(0, 8);
     moveCursor(0, 0, 3, 0); cout << "        "; space(1);
@@ -164,6 +181,7 @@ void hidePlayer() {
     moveCursor(0, 0, 3, 0); cout << "      "; space(1);
 }
 
+// Shows customer 1 at column 18
 void showCustomer1() {
     goTo(0, 8);
     moveCursor(0, 0, 18, 0); cout << ",,,.  "; space(1);
@@ -179,6 +197,7 @@ void showCustomer1() {
     moveCursor(0, 0, 18, 0); cout << "[[__|  "; space(1);
 }
 
+// Shows customer 2 at column 25
 void showCustomer2() {
     goTo(0, 8);
     moveCursor(0, 0, 25, 0); cout << ",,,.  "; space(1);
@@ -194,6 +213,7 @@ void showCustomer2() {
     moveCursor(0, 0, 25, 0); cout << "[[__|  "; space(1);
 }
 
+// Shows customer 3 at column 32
 void showCustomer3() {
     goTo(0, 8);
     moveCursor(0, 0, 32, 0); cout << ",,,.  "; space(1);
@@ -209,6 +229,7 @@ void showCustomer3() {
     moveCursor(0, 0, 32, 0); cout << "[[__|  "; space(1);
 }
 
+// Show scustomer 4 at column 39
 void showCustomer4() {
     goTo(0, 8);
     moveCursor(0, 0, 39, 0); cout << ",,,.  "; space(1);
@@ -224,6 +245,7 @@ void showCustomer4() {
     moveCursor(0, 0, 39, 0); cout << "[[__|  "; space(1);
 }
 
+// Shows customer 5 at column 46
 void showCustomer5() {
     goTo(0, 8);
     moveCursor(0, 0, 46, 0); cout << ",,,.  "; space(1);
@@ -239,6 +261,7 @@ void showCustomer5() {
     moveCursor(0, 0, 46, 0); cout << "[[__|  "; space(1);
 }
 
+// Shows customer 6 at column 53
 void showCustomer6() {
     goTo(0, 8);
     moveCursor(0, 0, 53, 0); cout << ",,,.  "; space(1);
@@ -254,6 +277,7 @@ void showCustomer6() {
     moveCursor(0, 0, 53, 0); cout << "[[__|  "; space(1);
 }
 
+// Shows customer 7 at column 60
 void showCustomer7() {
     goTo(0, 8);
     moveCursor(0, 0, 60, 0); cout << ",,,.  "; space(1);
@@ -269,6 +293,7 @@ void showCustomer7() {
     moveCursor(0, 0, 60, 0); cout << "[[__|  "; space(1);
 }
 
+// Shows customer 8 at column 67
 void showCustomer8() {
     goTo(0, 8);
     moveCursor(0, 0, 67, 0); cout << ",,,.  "; space(1);
@@ -284,6 +309,7 @@ void showCustomer8() {
     moveCursor(0, 0, 67, 0); cout << "[[__|  "; space(1);
 }
 
+// Hides customer 1 at column 18
 void hideCustomer1() {
     goTo(0, 8);
     moveCursor(0, 0, 18, 0); cout << "      "; space(1);
@@ -299,6 +325,7 @@ void hideCustomer1() {
     moveCursor(0, 0, 18, 0); cout << "       "; space(1);
 }
 
+// Hides customer 2 at column 25
 void hideCustomer2() {
     goTo(0, 8);
     moveCursor(0, 0, 25, 0); cout << "      "; space(1);
@@ -314,6 +341,7 @@ void hideCustomer2() {
     moveCursor(0, 0, 25, 0); cout << "       "; space(1);
 }
 
+// Hides customer 3 at column 32
 void hideCustomer3() {
     goTo(0, 8);
     moveCursor(0, 0, 32, 0); cout << "      "; space(1);
@@ -329,6 +357,7 @@ void hideCustomer3() {
     moveCursor(0, 0, 32, 0); cout << "       "; space(1);
 }
 
+// Hides customer 4 at column 39
 void hideCustomer4() {
     goTo(0, 8);
     moveCursor(0, 0, 39, 0); cout << "      "; space(1);
@@ -344,6 +373,7 @@ void hideCustomer4() {
     moveCursor(0, 0, 39, 0); cout << "       "; space(1);
 }
 
+// Hides customer 5 at column 46
 void hideCustomer5() {
     goTo(0, 8);
     moveCursor(0, 0, 46, 0); cout << "      "; space(1);
@@ -359,6 +389,7 @@ void hideCustomer5() {
     moveCursor(0, 0, 46, 0); cout << "       "; space(1);
 }
 
+// Hides customer 6 at column 53
 void hideCustomer6() {
     goTo(0, 8);
     moveCursor(0, 0, 53, 0); cout << "      "; space(1);
@@ -374,6 +405,7 @@ void hideCustomer6() {
     moveCursor(0, 0, 53, 0); cout << "       "; space(1);
 }
 
+// Hides customer 7 at column 60
 void hideCustomer7() {
     goTo(0, 8);
     moveCursor(0, 0, 60, 0); cout << "      "; space(1);
@@ -389,6 +421,7 @@ void hideCustomer7() {
     moveCursor(0, 0, 60, 0); cout << "       "; space(1);
 }
 
+// Hides customer 8 at column 67
 void hideCustomer8() {
     goTo(0, 8);
     moveCursor(0, 0, 67, 0); cout << "      "; space(1);
@@ -404,6 +437,7 @@ void hideCustomer8() {
     moveCursor(0, 0, 67, 0); cout << "       "; space(1);
 }
 
+// Draws the bottom navigation
 void showBottomNavigationMenu() {
     goTo(0, 19);
     displayBlockFormat(57, 1, '#');
@@ -412,6 +446,7 @@ void showBottomNavigationMenu() {
     displayFormat(57, '#');
 }
 
+// Draws the stats panel
 void showStatsMenu() {
     displayHLine(57, 19, 16, '#');
     displayVLine(72, 19, 12, '#');
@@ -419,7 +454,7 @@ void showStatsMenu() {
 }
 
 void displayNewGameCutscene() {
-    clearScreen();
+    clearScreen(); // Clears the screen before starting the cutscene
     cout << R"(########################################################################
 #::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::#
 #:::::::::::::::::::::::::::::::=#%@@@@#-::::::::::::::::::::::::::::::#
@@ -445,14 +480,15 @@ void displayNewGameCutscene() {
 #:::::::::--:-:-*#-::::::::+%%%%%+*###*#%%%%*:::::::::*#-:::---::::::::#
 #::::::::::::::::::::::::::+%%%%#+*###*#%%%%*::::::::::::::::::::::::::#
 #::::::::::::::::::::::::::+%%%%%@%##%@%%%%%*::::::::::::::::::::::::::#)" << endl;
-    displayText1();
-    pressEnterToContinue();
+    displayText1(); // Displays the first part of the story text
+    pressEnterToContinue(); // wait for user input before proceeding
     displayText2();
     pressEnterToContinue();
     displayText3();
     pressEnterToContinue();
     clearScreen();
     goTo(1, 1);
+    // Second ASCII art scene
 cout << R"(########################################################################
 #:::::::::::::::::::::::::::::::::::::... ......:::::::::::::::::::::::#
 #::::::::::::::::::::::.....::::::...  .#%#*++........:::::::::::::::::#
@@ -478,10 +514,11 @@ cout << R"(#####################################################################
 #=+=====-=-==+%#+@@@@@@@@@@@@%*=-=@#==-:*%= ..:::::::::::::::::::::::::#
 #--===-++=+==+#+*%#=-=:+=-=@%#*+==.*@*---+-..::::::::::::::::::::::::::#
 # ...  .   :. ....      .   *-:.   :=   .::::::::::::::::::::::::::::::#)" << '\n'; 
-    displayText4();
+    displayText4(); // New screen, new story text
     pressEnterToContinue();
     clearScreen();
     goTo(1, 1);
+    // Third ASCII art scene
 cout << R"(########################################################################
 #::---+======++++*********###*##***##*****#######%########%#%#####%%%%*#
 #:::::-:---==++++=+*++**********#########***#######################%%%*#
@@ -536,10 +573,11 @@ cout << R"(#####################################################################
 #:::::::::::::::::::::: -===++===---::... :::::::::::::::::::::::::::::#
 #:::::::::::::::::::::: -===++===---::... :::::::::::::::::::::::::::::#
 #::::::::::::::::::::::: ===++===---::.. ::::::::::::::::::::::::::::::#)" << '\n'; 
-    displayText6();
+    displayText6(); // Pre-climax of the story
     pressEnterToContinue();
     clearScreen();
     goTo(1, 1);
+    // Fifth ASCII art scene
 cout << R"(########################################################################
 #=======++========-+*++-::-#@@-::-=+*+============+=======++=====+++===#
 #=====++=========-#*==-=@@@@.#@@@=-==+*===========+==========+=====++==#
@@ -589,8 +627,8 @@ cout << R"(#####################################################################
 #*#+==++++===+==+--+-:-##:.-++*#*+++++++-+++=.+=+#@#++***+#*+#%%%%%%%@-#
 #=#=+++++++++++===*%=.@@-:.==:##= .-==---==+*+*=+%+:*++===----::......-#
 #:=*=....:::---=*+++*+++=-:===--=++=------:.::==#- ......::::::::------#)" << '\n';
-    displayText7();
-    pressEnterToContinue();
+    displayText7(); // Final part of the cutscene narration
+    pressEnterToContinue(); // End of cutscene
 }
 
 void displayPreGameTransition() {
@@ -617,15 +655,16 @@ void displayPreGameTransition() {
     displayBlockFormat(72, 1, '#'); delayMs(20);
     displayBlockFormat(72, 1, '#'); delayMs(20);
     displayBlockFormat(72, 1, '#'); delayMs(20);
-    space(3);
+    space(3); // Add spacing before center text
 
+    // Displays current game day 
     if (day >= 10) {
         centerText(" -= DAY " + to_string(day) + " =- ");
     } else {
         centerText(" -= DAY  " + to_string(day) + " =- ");
     }
 
-    space(4);
+    space(4); // Add spacing before bottom border
     displayBlockFormat(72, 1, '#'); delayMs(20);
     displayBlockFormat(72, 1, '#'); delayMs(20);
     displayBlockFormat(72, 1, '#'); delayMs(20);
@@ -637,8 +676,8 @@ void displayPreGameTransition() {
     displayBlockFormat(72, 1, '#'); delayMs(20);
     displayBlockFormat(72, 1, '#'); delayMs(20);
     displayBlockFormat(72, 1, '#'); delayMs(20);
-    displayFormat(72, '#');
-    delayS(2);
+    displayFormat(72, '#'); // Final static border
+    delayS(2); // Pause before moving to game area
 }
 
 void goToGameArea() {
@@ -652,7 +691,7 @@ void goToGameArea() {
     displayBorder(1, '#');
     displayBlockFormat(72, 1, '#');
     displayBorder(15, '#');
-    showStatsMenu();
+    showStatsMenu(); 
     showBottomNavigationMenu();
     showClouds();
     showLemonadeStand();
@@ -674,6 +713,7 @@ void goToGameArea() {
     // Wait for 5 seconds before showing the first customer
     delayS(5);
 
+    // Game day loop
     while (!dayFinished) {
         // 1. Generate a customer
         Customer customer;
@@ -682,6 +722,7 @@ void goToGameArea() {
         customer.name = name;
         customer.cupSize = cupSizes[rand() % cupSizes.size()];
         customer.water = 0;
+        // Set water amount based on cup size
         if (customer.cupSize == "Small") customer.water = 200;
         else if (customer.cupSize == "Medium") customer.water = 350;
         else customer.water = 500;
@@ -735,6 +776,7 @@ void goToGameArea() {
             }
         } while (key1 != 13);
 
+        // After order, remove customer queue and hide them
         Customer current = customerQueue.front();
         customerQueue.pop();
         
@@ -752,6 +794,7 @@ void goToGameArea() {
             case 7: hideCustomer7(); break;
         }
 
+        // Refresh UI and info
         goTo(1, 1);
         clearScreen();
     
@@ -772,7 +815,7 @@ void goToGameArea() {
         displayInformation();
         updateMoney();
 
-        // 6. Wait 20 seconds before next customer
+        // 6. Wait 10 seconds before next customer
         this_thread::sleep_for(chrono::seconds(10));
 
         // 7. Update time
@@ -794,7 +837,7 @@ void goToGameArea() {
     do {
         key2 = _getch();
         if (key2 == 13) {
-            daySummary();
+            daySummary(); // Shows summary
         }
     } while (key2 != 13);
 }
@@ -802,7 +845,7 @@ void goToGameArea() {
 void startGame() {
     // Pre-conditions
     clearScreen();
-    goTo(1, 1);
+    goTo(1, 1); // Reset screen positions
 
     // GET DATA
     ifstream file("saveFiles.json");
