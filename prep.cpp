@@ -80,11 +80,13 @@ void displayDayPrepMenu() {
         }
         
         key = _getch();
+        playSFX("navigateOption.wav", 30);
         if (key == 72) { // If 'Up Arrow' key is pressed
             current = (current - 1 + optionCount) % optionCount;
         } else if (key == 80) { // If 'Down Arrow' key is pressed
             current = (current + 1) % optionCount;
         } else if (key == 13) { // If 'Enter' key is pressed
+            playSFX("selectOption.wav", 30);
             break;
         }
     }
@@ -257,9 +259,11 @@ void displaySupplyMenu() {
         key = _getch();
 
         if (key == 72) { // 'Up Arrow' key
+            playSFX("navigateOption.wav", 30);
             current = (current - 1 + optionCount) % optionCount;
             currentOption = current;
         } else if (key == 80) { // 'Down Arrow' key 
+            playSFX("navigateOption.wav", 30);
             current = (current + 1) % optionCount;
             currentOption = current;
         } else if (key == 75) { // 'Left Arrow' key - decrease quantity
@@ -356,6 +360,7 @@ void displaySupplyMenu() {
             if (key1 == 'p') { // 'p' key - execute purchase
                 // Error handling: check if any items are selected
                 if (totalCost == 0) {
+                    playSFX("SFXError.mp3", 100);
                     goTo(0, 29);
                     cout << "                                  ";
                     goTo(0, 29);
@@ -366,6 +371,7 @@ void displaySupplyMenu() {
                 } 
                 // Error handling: check if player has enough money
                 else if (totalCost > currentSaveFile.financial_statistics.money) {
+                    playSFX("SFXError.mp3", 100);
                     cout << "Total Cost: $" << totalCost << '\n';
                     cout << "Money: $" << currentSaveFile.financial_statistics.money << '\n';
                     cin.get();
@@ -377,6 +383,7 @@ void displaySupplyMenu() {
                     displaySupplyMenu();
                     return;
                 } else {
+                    playSFX("SFXPurchase.mp3", 70);
                     // Process the purchase: update stocks and financial records
                     currentSaveFile.stocks.lemons += (lemonsToAdd * lemonsIncrement);
                     currentSaveFile.stocks.sugar += (sugarToAdd * sugarIncrement);
@@ -394,6 +401,7 @@ void displaySupplyMenu() {
                     displaySupplyMenu();
                 }
             } else if (key1 == 'b') { // 'b' key - return to previous menu
+                playSFX("selectOption.wav", 30);
                 displayDayPrepMenu();
             }
         }
@@ -511,6 +519,7 @@ void displayWeatherForecast(Weather& forecast) {
     centerText("[ Press any key to continue... ]");
     
     _getch();
+    playSFX("selectOption.wav", 30);
     displayDayPrepMenu();
 }
 
@@ -563,6 +572,7 @@ void setPrice() {
     centerText("[ Press any key to continue... ]");
     
     _getch();
+    playSFX("selectOption.wav", 30);
     displayDayPrepMenu();
 }
 
@@ -712,6 +722,7 @@ void displayDayPlan() {
     centerText("[ Press any key to continue... ]");
     
     _getch();
+    playSFX("selectOption.wav", 30);
     displayDayPrepMenu();
 }
 
@@ -792,11 +803,13 @@ void finalizeDayPrep() {
 
             // Process keyboard input for menu navigation
             key = _getch();
+            playSFX("navigateOption.wav", 30);
             if (key == 75) { // If 'Left Arrow' key is pressed
                 current = (current - 1 + optionCount) % optionCount;
             } else if (key == 77) { // If 'Right Arrow' key is pressed
                 current = (current + 1) % optionCount;
             } else if (key == 13) { // If 'Enter' key is pressed
+                playSFX("selectOption.wav", 30);
                 clearScreen();
                 break;
             }
@@ -846,12 +859,14 @@ void finalizeDayPrep() {
             }
 
             // Process keyboard input
+            playSFX("navigateOption.wav", 30);
             key = _getch();
             if (key == 75) { // If 'Left Arrow' key is pressed
                 current = (current - 1 + optionCount) % optionCount;
             } else if (key == 77) { // If 'Right Arrow' key is pressed
                 current = (current + 1) % optionCount;
             } else if (key == 13) { // If 'Enter' key is pressed
+                playSFX("selectOption.wav", 30);
                 clearScreen();
                 break;
             }

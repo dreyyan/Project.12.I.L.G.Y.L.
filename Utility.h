@@ -3,11 +3,15 @@
 /*----------------------- HEADER FILES -----------------------*/
 #include <cstddef>
 #include <string>
+#include <SFML/Audio.hpp>
 // .json
 #include "json.hpp"
 #include "Portfolio.h"
 using json = nlohmann::json;
 using namespace std;
+
+extern sf::Music music;
+extern sf::Music SFX;
 /*-------------------- UTILITY PROTOTYPES --------------------*/
 // Displays a formatted line within the specified length using the specified symbol
 void displayFormat(size_t length, char symbol);
@@ -90,4 +94,9 @@ void goTo(int y, int x);
 // Load the savefile(up to 3) using a specified number by accessing the specified filename
 SaveData loadSaveData(int saveFileNum, const string& filename);
 
+// Play a background music using the specified filename with a specified volume
+void playBackgroundMusic(std::string musicFileName, int volume);
+
+// Play a SFX using the specified filename with a specified volume
+void playSFX(std::string musicFileName, int volume);
 #endif

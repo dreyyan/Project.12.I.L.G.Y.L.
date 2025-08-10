@@ -586,3 +586,33 @@ Customer #12: Sam
 Sugar Level: 25%
  Ice Amount: Less Ice
 ##############################
+Customer #1: Morgan
+     Slices: 2
+   Cup Size: Small
+Sugar Level: 75%
+ Ice Amount: None
+##############################
+Customer #1: Alex
+     Slices: 2
+   Cup Size: Medium
+Sugar Level: 0%
+ Ice Amount: Extra Ice
+##############################
+Customer #1: Jamie
+     Slices: 1
+   Cup Size: Medium
+Sugar Level: 25%
+ Ice Amount: Less Ice
+##############################
+Customer #1: Sam
+     Slices: 3
+   Cup Size: Medium
+Sugar Level: 75%
+ Ice Amount: Extra Ice
+##############################
+Customer #1: Chris
+     Slices: 3
+   Cup Size: Large
+Sugar Level: 100%
+ Ice Amount: Extra Ice
+##############################

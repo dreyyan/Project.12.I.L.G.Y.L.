@@ -1,8 +1,8 @@
 [
   {
     "player_data": {
-      "characterName": "Allanah",
-      "standName": "Allanah's Lemonan",
+      "characterName": "Mr. Citrus",
+      "standName": "The Citrus Show",
       "level": 1,
       "day": 1,
       "currentChapter": 1,
@@ -10,7 +10,7 @@
       "playtimeDuration": 0
     },
     "financial_statistics": {
-      "money": 0.0,
+      "money": 50.0,
       "revenue": 0.0,
       "expenses": 0.0
     },  
@@ -31,8 +31,8 @@
   },
   {
     "player_data": {
-      "characterName": "Dominique",
-      "standName": "Dominique's Lemonada",
+      "characterName": "John",
+      "standName": "The Lemonanza",
       "level": 5,
       "day": 7,
       "currentChapter": 1,
@@ -61,8 +61,8 @@
   },
   {
     "player_data": {
-      "characterName": "Shalyn",
-      "standName": "Shalyn's Lemons",
+      "characterName": "Dave",
+      "standName": "Lemon Lawn",
       "level": 10,
       "day": 24,
       "currentChapter": 2,

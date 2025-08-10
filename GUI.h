@@ -1,6 +1,7 @@
 #ifndef GUI_H
 #define GUI_H
 /*----------------------- HEADER FILES -----------------------*/
+#include <SFML/Audio.hpp>
 #include "Portfolio.h"
 #include "Station.h"
 /*---------------------- GUI PROTOTYPES ----------------------*/

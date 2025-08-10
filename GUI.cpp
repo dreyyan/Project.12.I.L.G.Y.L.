@@ -352,6 +352,7 @@ void displayExitMenu() {
 
 // Main menu for the game 
 void displayMainMenu() {
+    playBackgroundMusic("backgroundMusic.mp3", 70);
     displayHeader();
     space(2);
 
@@ -403,11 +404,13 @@ void displayMainMenu() {
         }
 
         key = _getch();
+        playSFX("navigateOption.wav", 30);
         if (key == 72) { // If 'Up Arrow' key is pressed
             current = (current - 1 + optionCount) % optionCount;
         } else if (key == 80) { // If 'Down Arrow' key is pressed
             current = (current + 1) % optionCount;
         } else if (key == 13) { // If 'Enter' key is pressed
+            playSFX("selectOption.wav", 30);
             clearScreen();
             break;
         }

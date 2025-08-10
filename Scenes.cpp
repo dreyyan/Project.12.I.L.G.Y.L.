@@ -26,6 +26,7 @@ void pressEnterToContinue() {
     while (true) {
         key = _getch();
         if (key == 13) { // If 'Enter' key is pressed
+            playSFX("selectOption.wav", 30);
             break;
         }
     }
@@ -681,6 +682,8 @@ void displayPreGameTransition() {
 }
 
 void goToGameArea() {
+    music.stop();
+    playBackgroundMusic("gameMusic.mp3", 70);
     bool dayFinished = false;
     int currentHour = 8;
 
@@ -771,6 +774,7 @@ void goToGameArea() {
         do {
             key1 = _getch();
             if (key1 == 13) {
+                playSFX("selectOption.wav", 30);
                 // servingStation(customer);
                 preparationStation(customer);
             }
@@ -837,6 +841,7 @@ void goToGameArea() {
     do {
         key2 = _getch();
         if (key2 == 13) {
+            music.stop();
             daySummary(); // Shows summary
         }
     } while (key2 != 13);

@@ -10,6 +10,9 @@
 
 #include "Utility.h"
 using namespace std;
+
+sf::Music music;
+sf::Music SFX;
 /*------------------- UTILITY DEFINITIONS --------------------*/
 // Displays a repeated symbol line with a short delay
 void displayFormat(size_t length, char symbol) {
@@ -108,6 +111,7 @@ void lineDelayAnimation(string stringInput, int ms) {
 void pressEnter(string process) {
     characterDelayAnimation("Press 'Enter' to " + process + "...", 25);
     cin.get();
+    playSFX("selectOption.wav", 30);
 }
 
 void trim(string& stringInput) {
@@ -249,3 +253,25 @@ SaveData loadSaveData(int saveFileNum, const std::string& filename) {
     return savefile;
   }
   
+  void playBackgroundMusic(std::string musicFileName, int volume) {
+    // Load music from a file (must remain on disk while playing)
+    if (!music.openFromFile("assets/" + musicFileName)) {
+        std::cerr << "Error loading music file!" << std::endl;
+        return;
+    }
+
+    music.setVolume(volume); // Set volume
+    music.setLoop(true); // Optional: loop the music
+    music.play();
+}
+
+void playSFX(std::string musicFileName, int volume) {
+    // Load music from a file (must remain on disk while playing)
+    if (!SFX.openFromFile("assets/" + musicFileName)) {
+        std::cerr << "Error loading music file!" << std::endl;
+        return;
+    }
+
+    SFX.setVolume(volume); // Set volume
+    SFX.play();
+}

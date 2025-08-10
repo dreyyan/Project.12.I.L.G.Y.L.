@@ -1,6 +1,7 @@
 #ifndef SCENES_H
 #define SCENES_H
 /*----------------------- HEADER FILES -----------------------*/
+#include <SFML/Audio.hpp>
 /*--------------------- SCENES PROTOTYPES ---------------------*/
 void pressEnterToContinue();
 
