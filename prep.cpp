@@ -24,6 +24,7 @@ const double CUP_COST = 4;   // per pack(100 cups)
 // Displays the day preparation menu and handles navigation
 // This is the main entry point for the day preparation phase
 void displayDayPrepMenu() {
+    playBackgroundMusic("prepMusic.mp3", 60);
     clearScreen();
     displaySpacedFormat(72, '#');
     space(1);
@@ -80,13 +81,13 @@ void displayDayPrepMenu() {
         }
         
         key = _getch();
-        playSFX("navigateOption.wav", 30);
+        playSFX("navigateOption.wav", 60);
         if (key == 72) { // If 'Up Arrow' key is pressed
             current = (current - 1 + optionCount) % optionCount;
         } else if (key == 80) { // If 'Down Arrow' key is pressed
             current = (current + 1) % optionCount;
         } else if (key == 13) { // If 'Enter' key is pressed
-            playSFX("selectOption.wav", 30);
+            playSFX("selectOption.wav", 60);
             break;
         }
     }
@@ -259,11 +260,11 @@ void displaySupplyMenu() {
         key = _getch();
 
         if (key == 72) { // 'Up Arrow' key
-            playSFX("navigateOption.wav", 30);
+            playSFX("navigateOption.wav", 60);
             current = (current - 1 + optionCount) % optionCount;
             currentOption = current;
         } else if (key == 80) { // 'Down Arrow' key 
-            playSFX("navigateOption.wav", 30);
+            playSFX("navigateOption.wav", 60);
             current = (current + 1) % optionCount;
             currentOption = current;
         } else if (key == 75) { // 'Left Arrow' key - decrease quantity
@@ -401,7 +402,7 @@ void displaySupplyMenu() {
                     displaySupplyMenu();
                 }
             } else if (key1 == 'b') { // 'b' key - return to previous menu
-                playSFX("selectOption.wav", 30);
+                playSFX("selectOption.wav", 60);
                 displayDayPrepMenu();
             }
         }
@@ -519,7 +520,7 @@ void displayWeatherForecast(Weather& forecast) {
     centerText("[ Press any key to continue... ]");
     
     _getch();
-    playSFX("selectOption.wav", 30);
+    playSFX("selectOption.wav", 60);
     displayDayPrepMenu();
 }
 
@@ -572,7 +573,7 @@ void setPrice() {
     centerText("[ Press any key to continue... ]");
     
     _getch();
-    playSFX("selectOption.wav", 30);
+    playSFX("selectOption.wav", 60);
     displayDayPrepMenu();
 }
 
@@ -722,7 +723,7 @@ void displayDayPlan() {
     centerText("[ Press any key to continue... ]");
     
     _getch();
-    playSFX("selectOption.wav", 30);
+    playSFX("selectOption.wav", 60);
     displayDayPrepMenu();
 }
 
@@ -803,13 +804,13 @@ void finalizeDayPrep() {
 
             // Process keyboard input for menu navigation
             key = _getch();
-            playSFX("navigateOption.wav", 30);
+            playSFX("navigateOption.wav", 60);
             if (key == 75) { // If 'Left Arrow' key is pressed
                 current = (current - 1 + optionCount) % optionCount;
             } else if (key == 77) { // If 'Right Arrow' key is pressed
                 current = (current + 1) % optionCount;
             } else if (key == 13) { // If 'Enter' key is pressed
-                playSFX("selectOption.wav", 30);
+                playSFX("selectOption.wav", 60);
                 clearScreen();
                 break;
             }
@@ -859,14 +860,14 @@ void finalizeDayPrep() {
             }
 
             // Process keyboard input
-            playSFX("navigateOption.wav", 30);
+            playSFX("navigateOption.wav", 60);
             key = _getch();
             if (key == 75) { // If 'Left Arrow' key is pressed
                 current = (current - 1 + optionCount) % optionCount;
             } else if (key == 77) { // If 'Right Arrow' key is pressed
                 current = (current + 1) % optionCount;
             } else if (key == 13) { // If 'Enter' key is pressed
-                playSFX("selectOption.wav", 30);
+                playSFX("selectOption.wav", 60);
                 clearScreen();
                 break;
             }

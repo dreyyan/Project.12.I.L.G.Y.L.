@@ -70,12 +70,15 @@ void createNewGame() {
         showCursor();
         getline(cin, currentSaveFile.player_data.characterName);
         space(2);
+
+        playSFX("selectOption.wav", 60);
     
         displaySpacedFormat(72, '=');
         space(2);
         cout << "    Enter Name of Lemonade Stand: ";
         getline(cin, currentSaveFile.player_data.standName);
         space(2);
+        playSFX("selectOption.wav", 60);
         hideCursor();
     
         displaySpacedFormat(72, '=');
@@ -115,10 +118,14 @@ void createNewGame() {
         
             key = _getch();
             if (key == 75) { // If 'Left Arrow' key is pressed
+                
+                playSFX("navigateOption.wav", 60);
                 current = (current - 1 + optionCount) % optionCount;
             } else if (key == 77) { // If 'Right Arrow' key is pressed
+                playSFX("navigateOption.wav", 60);
                 current = (current + 1) % optionCount;
             } else if (key == 13) { // If 'Enter' key is pressed
+                playSFX("selectOption.wav", 60);
                 break;
             }
         }
@@ -224,10 +231,13 @@ void displaySaveFiles() { // Invalid json read
     
         key = _getch();
         if (key == 72) { // If 'Up Arrow' key is pressed
+            playSFX("navigateOption.wav", 30);
             current = (current - 1 + optionCount) % optionCount;
         } else if (key == 80) { // If 'Down Arrow' key is pressed
+            playSFX("navigateOption.wav", 30);
             current = (current + 1) % optionCount;
         } else if (key == 13) { // If 'Enter' key is pressed
+            playSFX("selectOption.wav", 30);
             break;
         }
     }

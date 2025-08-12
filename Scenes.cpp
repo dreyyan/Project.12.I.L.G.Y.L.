@@ -683,7 +683,7 @@ void displayPreGameTransition() {
 
 void goToGameArea() {
     music.stop();
-    playBackgroundMusic("gameMusic.mp3", 70);
+    playBackgroundMusic("gameMusic.mp3", 50);
     bool dayFinished = false;
     int currentHour = 8;
 
@@ -766,6 +766,7 @@ void goToGameArea() {
             ++slot;
         }
 
+        playSFX("SFXCustomer.mp3", 90);
         // 4. Display order notification in the game area
         displayOrderNotification(customer);
 

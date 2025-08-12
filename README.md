@@ -30,9 +30,9 @@ g++ -o test main.cpp Utility.cpp GUI.cpp prep.cpp Scenes.cpp Station.cpp -lsfml-
 Note: Edit path to your project
 
 - CMD:
-Start-Process "cmd.exe" -ArgumentList "/k", "C:\Users\dreyyan\Downloads\code\Projects\Project.12.ILGYL\test.exe"
+Start-Process "cmd.exe" -ArgumentList "/k", "C:\Users\ADT07\Downloads\code\Projects\Project.12.ILGYL\test.exe"
 
   
 - PowerShell:
 
-Start-Process "powershell.exe" -ArgumentList "-NoExit", "-Command", "C:\Users\dreyyan\Downloads\code\Projects\Project.12.ILGYL\test.exe"  
+Start-Process "powershell.exe" -ArgumentList "-NoExit", "-Command", "C:\Users\ADT07\Downloads\code\Projects\Project.12.I.L.G.Y.L\test.exe"  

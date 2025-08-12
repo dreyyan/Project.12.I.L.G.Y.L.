@@ -616,3 +616,87 @@ Customer #1: Chris
 Sugar Level: 100%
  Ice Amount: Extra Ice
 ##############################
+Customer #1: Charlie
+     Slices: 2
+   Cup Size: Large
+Sugar Level: 100%
+ Ice Amount: Regular
+##############################
+Customer #1: Jordan
+     Slices: 2
+   Cup Size: Large
+Sugar Level: 50%
+ Ice Amount: None
+##############################
+Customer #1: Jamie
+     Slices: 1
+   Cup Size: Large
+Sugar Level: 75%
+ Ice Amount: Extra Ice
+##############################
+Customer #2: Casey
+     Slices: 3
+   Cup Size: Small
+Sugar Level: 0%
+ Ice Amount: Regular
+##############################
+Customer #1: Jordan
+     Slices: 2
+   Cup Size: Small
+Sugar Level: 25%
+ Ice Amount: Less Ice
+##############################
+Customer #1: Alex
+     Slices: 1
+   Cup Size: Large
+Sugar Level: 50%
+ Ice Amount: Regular
+##############################
+Customer #1: Chris
+     Slices: 3
+   Cup Size: Medium
+Sugar Level: 75%
+ Ice Amount: None
+##############################
+Customer #1: Charlie
+     Slices: 3
+   Cup Size: Large
+Sugar Level: 25%
+ Ice Amount: Regular
+##############################
+Customer #1: Taylor
+     Slices: 2
+   Cup Size: Large
+Sugar Level: 75%
+ Ice Amount: None
+##############################
+Customer #1: Jordan
+     Slices: 1
+   Cup Size: Medium
+Sugar Level: 0%
+ Ice Amount: Regular
+##############################
+Customer #1: Charlie
+     Slices: 3
+   Cup Size: Large
+Sugar Level: 50%
+ Ice Amount: Less Ice
+##############################
+Customer #1: Chris
+     Slices: 2
+   Cup Size: Large
+Sugar Level: 50%
+ Ice Amount: Regular
+##############################
+Customer #2: Jamie
+     Slices: 3
+   Cup Size: Medium
+Sugar Level: 25%
+ Ice Amount: None
+##############################
+Customer #1: Sam
+     Slices: 3
+   Cup Size: Medium
+Sugar Level: 50%
+ Ice Amount: Extra Ice
+##############################
