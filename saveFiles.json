@@ -1,22 +1,22 @@
 [
   {
     "player_data": {
-      "characterName": "Mr. Citrus",
-      "standName": "The Citrus Show",
+      "characterName": "",
+      "standName": "",
       "level": 1,
       "day": 1,
       "currentChapter": 1,
-      "saveTimestamp": "2025-04-15 15:30",
+      "saveTimestamp": "",
       "playtimeDuration": 0
     },
     "financial_statistics": {
-      "money": 50.0,
+      "money": 0.0,
       "revenue": 0.0,
       "expenses": 0.0
     },  
     "stocks": {
-      "lemons": 100,
-      "water": 10000,
+      "lemons": 50,
+      "water": 5000,
       "sugar": 100,
       "ice": 100,
       "cups": 100

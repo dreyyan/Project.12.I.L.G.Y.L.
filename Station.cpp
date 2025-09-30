@@ -125,6 +125,12 @@ int performSkillCheck(int difficulty) {
     if (successPercentage < 0) successPercentage = 0;
     if (successPercentage > 100) successPercentage = 100;
 
+    if (successPercentage) {
+        playSFX("SFXEarnPoint.mp3", 70);
+    } else {
+        playSFX("SFXNoPoint.mp3", 100);
+    }
+
     return successPercentage;
 }
 
@@ -216,6 +222,8 @@ void customerEvaluation(Customer& customer) {
     do {
         key1 = _getch();
     } while (key1 != 13);
+
+    playSFX("SFXPurchase.mp3", 60);
 }
 
 // Final staton for serving lemonade
@@ -312,13 +320,16 @@ void mixingStation(Customer& customer) {
         if (input == targetKey) {
             double reactionTime = chrono::duration<double>(end - start).count();
             if (reactionTime <= 1.0) {
+                playSFX("SFXEarnPoint.mp3", 70);
                 centerText("Perfect timing! +20%"); space(1);
                 score3 = 20;
             } else {
+                playSFX("SFXEarnPoint.mp3", 70);
                 centerText("Good, but a little slow. +10%"); space(1);
                 score3 = 10;
             }
         } else {
+            playSFX("SFXNoPoint.mp3", 100);
             centerText("Oops! Wrong key. +0%"); space(1);
         }
 
@@ -439,9 +450,11 @@ void preparationStation(Customer& customer) {
         // Score based on correctness and speed
         if (input == targetKey) {
             if (reactionTime <= 1.0) {
+                playSFX("SFXEarnPoint.mp3", 70);
                 centerText("Perfect! 100%"); space(2);
                 score1 = 100;
             } else {
+                playSFX("SFXNoPoint.mp3", 100);
                 // Calculate score based on reaction time
                 score1 = static_cast<int>(100 - (reactionTime - 1.0) * 40);
                 if (score1 < 10) score1 = 10; // Minimum score1
@@ -496,9 +509,11 @@ void preparationStation(Customer& customer) {
         space(1);
 
         if (chosenLevel == customer.sugarLevel) {
+            playSFX("SFXEarnPoint.mp3", 70);
             centerText("Perfect match!");
             score2 = 100;
         } else {
+            playSFX("SFXNoPoint.mp3", 100);
             // Calculate closeness by index difference
             int customerIndex = find(sugarLevels.begin(), sugarLevels.end(), customer.sugarLevel) - sugarLevels.begin();
             int diff = abs(customerIndex - index);
